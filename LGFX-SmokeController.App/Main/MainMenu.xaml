@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="LGFX_SmokeController.App.Main.MainMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:LGFX_SmokeController.App.Main"
+             mc:Ignorable="d"
+             d:DesignHeight="32" d:DesignWidth="1000">
+    <Menu>
+        <MenuItem Header="_File">
+            <MenuItem Header="_New Workspace"/>
+            <MenuItem Header="_Save Workspace"/>
+            <MenuItem Header="_Open Workspace"/>
+        </MenuItem>
+        
+        <MenuItem Header="_Settings" Click="OnSettingsClick"/>
+        
+        <MenuItem Header="_Smoke Settings" Click="OnSmokeSettingsClick"/>
+    </Menu>
+</UserControl>
