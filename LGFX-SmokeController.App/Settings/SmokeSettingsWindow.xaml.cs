@@ -16,4 +16,10 @@ public partial class SmokeSettingsWindow : Window
     {
         Close();
     }
+
+    private void OnAddClick( object sender, RoutedEventArgs e )
+    {
+        var window = new AddSmokeMachineWindow();
+        window.Show();
+    }
 }

@@ -1,0 +1,95 @@
+﻿<Window x:Class="LGFX_SmokeController.App.Settings.AddSmokeMachineWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:LGFX_SmokeController.App.Settings"
+        xmlns:controls="clr-namespace:LGFX_SmokeController.App.Controls"
+        mc:Ignorable="d"
+        Title="Add Smoke Machine"
+        Height="140"
+        Width="400"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Style="{StaticResource WindowStyle}">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="32"
+                      ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
+    </WindowChrome.WindowChrome>
+
+    <DockPanel>
+
+        <Grid DockPanel.Dock="Top" Height="32" Background="Black">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" VerticalAlignment="Center"
+                       Margin="4,0,8,0"
+                       FontSize="14" Foreground="White"
+                       Text="Add Smoke Machine"
+                       FontWeight="Bold">
+            </TextBlock>
+
+
+            <Button
+                Grid.Column="2"
+                Style="{StaticResource TitleBarButton}"
+                Click="OnCloseClick">
+                <Path
+                    Width="46"
+                    Height="32"
+                    Data="M 18,11 27,20 M 18,20 27,11"
+                    Stroke="{Binding Path=Foreground,
+						 RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                    StrokeThickness="1" />
+            </Button>
+        </Grid>
+
+
+        <Grid Margin="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Margin="0,0,0,4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Preset"></TextBlock>
+                <ComboBox Grid.Column="1"></ComboBox>
+            </Grid>
+
+            <controls:ByteSliderWithInputAndDefaults
+                Grid.Row="1"
+                Margin="0,0,0,4"
+                Label="Address"
+                Number="1"
+                Minimum="1"
+                Maximum="255"
+                Default="1"
+                Defaults="{Binding RelativeSource={RelativeSource AncestorType=local:AddSmokeMachineWindow}, Path=AddressDefaults, Mode=OneWay}" />
+
+            <controls:TextBoxWithLabel Grid.Row="2" Margin="0,0,0,4" Label="Name"></controls:TextBoxWithLabel>
+            
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="70"/>
+                </Grid.ColumnDefinitions>
+                
+                <Button Grid.Column="1" Margin="0,0,4,0">Add</Button>
+                <Button Grid.Column="2" Click="OnCloseClick">Cancel</Button>
+            </Grid>
+        </Grid>
+
+    </DockPanel>
+</Window>

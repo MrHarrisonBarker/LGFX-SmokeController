@@ -61,7 +61,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <Button Grid.Column="0" Margin="0,0,4,0">Add</Button>
+                <Button Grid.Column="0" Margin="0,0,4,0" Click="OnAddClick">Add</Button>
                 <Button Grid.Column="1">Remove</Button>
             </Grid>
             <Grid Grid.Row="1">
@@ -78,7 +78,7 @@
 
                 <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" ResizeDirection="Columns" />
 
-                <TabControl Grid.Column="2" SelectedIndex="0">
+                <TabControl Grid.Column="2" SelectedIndex="1">
                     <TabItem Header="_Smoke">
                         <Grid Margin="4">
                             <Grid.RowDefinitions>
@@ -88,25 +88,23 @@
                             </Grid.RowDefinitions>
 
                             <CheckBox Grid.Row="0">Variable Smoke</CheckBox>
-                            <controls:IntSliderWithInputAndDefaults 
+                            <controls:IntSliderWithInputAndDefaults
                                 Grid.Row="1"
                                 Label="Time On (s)"
                                 Number="20"
                                 Minimum="10"
                                 Maximum="120"
                                 Default="20"
-                                Defaults="{Binding RelativeSource={RelativeSource AncestorType=local:SmokeSettingsWindow}, Path=SmokeTimingDefaults, Mode=OneWay}"
-                                />
-                            
-                            <controls:IntSliderWithInputAndDefaults 
+                                Defaults="{Binding RelativeSource={RelativeSource AncestorType=local:SmokeSettingsWindow}, Path=SmokeTimingDefaults, Mode=OneWay}" />
+
+                            <controls:IntSliderWithInputAndDefaults
                                 Grid.Row="2"
                                 Label="Time Off (s)"
                                 Number="20"
                                 Minimum="10"
                                 Maximum="120"
                                 Default="20"
-                                Defaults="{Binding RelativeSource={RelativeSource AncestorType=local:SmokeSettingsWindow}, Path=SmokeTimingDefaults, Mode=OneWay}"
-                            />
+                                Defaults="{Binding RelativeSource={RelativeSource AncestorType=local:SmokeSettingsWindow}, Path=SmokeTimingDefaults, Mode=OneWay}" />
                         </Grid>
                     </TabItem>
 
@@ -120,26 +118,31 @@
                             </Grid.RowDefinitions>
 
                             <CheckBox Grid.Row="0">Variable Fan</CheckBox>
-                            <GroupBox Grid.Row="1" Header="_Mode" Style="{StaticResource DefaultGroupbox}"><ComboBox></ComboBox></GroupBox>
-                            <controls:IntSliderWithInputAndDefaults 
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="Mode"></TextBlock>
+                                <ComboBox Grid.Column="1"></ComboBox>
+                            </Grid>
+                            <controls:IntSliderWithInputAndDefaults
                                 Grid.Row="2"
                                 Label="Lead Time (s)"
                                 Number="0"
                                 Minimum="0"
                                 Maximum="120"
                                 Default="0"
-                                Defaults="{Binding RelativeSource={RelativeSource AncestorType=local:SmokeSettingsWindow}, Path=SmokeTimingDefaults, Mode=OneWay}"
-                            />
-                            
-                            <controls:IntSliderWithInputAndDefaults 
+                                Defaults="{Binding RelativeSource={RelativeSource AncestorType=local:SmokeSettingsWindow}, Path=SmokeTimingDefaults, Mode=OneWay}" />
+
+                            <controls:IntSliderWithInputAndDefaults
                                 Grid.Row="3"
                                 Label="Purge Time (s)"
                                 Number="20"
                                 Minimum="0"
                                 Maximum="120"
                                 Default="20"
-                                Defaults="{Binding RelativeSource={RelativeSource AncestorType=local:SmokeSettingsWindow}, Path=SmokeTimingDefaults, Mode=OneWay}"
-                            />
+                                Defaults="{Binding RelativeSource={RelativeSource AncestorType=local:SmokeSettingsWindow}, Path=SmokeTimingDefaults, Mode=OneWay}" />
                         </Grid>
                     </TabItem>
 
@@ -150,16 +153,15 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <CheckBox Grid.Row="0">Three Channel Mode</CheckBox>
-                            
-                            <controls:ByteSliderWithInputAndDefaults 
+
+                            <controls:ByteSliderWithInputAndDefaults
                                 Grid.Row="1"
                                 Label="Address"
                                 Number="1"
                                 Minimum="1"
                                 Maximum="255"
                                 Default="1"
-                                Defaults="{Binding RelativeSource={RelativeSource AncestorType=local:SmokeSettingsWindow}, Path=AddressDefaults, Mode=OneWay}"
-                            />
+                                Defaults="{Binding RelativeSource={RelativeSource AncestorType=local:SmokeSettingsWindow}, Path=AddressDefaults, Mode=OneWay}" />
                         </Grid>
                     </TabItem>
                 </TabControl>
