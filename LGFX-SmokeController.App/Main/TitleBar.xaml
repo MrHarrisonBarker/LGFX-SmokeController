@@ -7,14 +7,6 @@
              mc:Ignorable="d"
              d:DesignHeight="32" d:DesignWidth="1000">
 
-    <UserControl.Resources>
-        <Style x:Key="TitleBarButton" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
-            <Setter Property="Padding" Value="0" />
-            <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-            <Setter Property="IsTabStop" Value="False" />
-        </Style>
-    </UserControl.Resources>
-
     <Grid Background="Black">
 
         <Grid.ColumnDefinitions>

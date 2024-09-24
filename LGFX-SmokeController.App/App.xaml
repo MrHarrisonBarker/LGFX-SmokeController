@@ -24,7 +24,14 @@
             </ResourceDictionary.MergedDictionaries>
 
             <local:PercentageConverter x:Key="PercentageConverter" />
-            
+            <local:InverseBooleanConverter x:Key="Not" />
+
+            <Style x:Key="TitleBarButton" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+                <Setter Property="IsTabStop" Value="False" />
+            </Style>
+
             <Style x:Key="FocusVisual">
                 <Setter Property="Control.Template">
                     <Setter.Value>
