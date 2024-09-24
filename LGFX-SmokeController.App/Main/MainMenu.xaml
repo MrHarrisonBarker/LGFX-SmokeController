@@ -8,9 +8,9 @@
              d:DesignHeight="32" d:DesignWidth="1000">
     <Menu>
         <MenuItem Header="_File">
-            <MenuItem Header="_New Workspace"/>
-            <MenuItem Header="_Save Workspace"/>
-            <MenuItem Header="_Open Workspace"/>
+            <MenuItem Header="_Default Preset" Click="OnDefaultPresetClick"/>
+            <MenuItem Header="_Save Preset" Click="OnSavePresetClick"/>
+            <MenuItem Header="_Open Preset" Click="OnOpenPresetClick"/>
         </MenuItem>
         
         <MenuItem Header="_Settings" Click="OnSettingsClick"/>

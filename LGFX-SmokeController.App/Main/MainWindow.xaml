@@ -45,6 +45,10 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                     <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
 
                 </Grid.ColumnDefinitions>
                 <app:LiveSmokeControl></app:LiveSmokeControl>
@@ -53,6 +57,10 @@
                 <app:LiveSmokeControl Grid.Column="3"></app:LiveSmokeControl>
                 <app:LiveSmokeControl Grid.Column="4"></app:LiveSmokeControl>
                 <app:LiveSmokeControl Grid.Column="5"></app:LiveSmokeControl>
+                <app:LiveSmokeControl Grid.Column="6"></app:LiveSmokeControl>
+                <app:LiveSmokeControl Grid.Column="7"></app:LiveSmokeControl>
+                <app:LiveSmokeControl Grid.Column="8"></app:LiveSmokeControl>
+                <app:LiveSmokeControl Grid.Column="9"></app:LiveSmokeControl>
             </Grid>
 
 

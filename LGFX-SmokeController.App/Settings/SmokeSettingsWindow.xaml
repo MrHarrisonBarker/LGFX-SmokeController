@@ -8,8 +8,8 @@
         xmlns:controls="clr-namespace:LGFX_SmokeController.App.Controls"
         mc:Ignorable="d"
         Title="Smoke Settings"
-        Height="600"
-        Width="800"
+        Height="300"
+        Width="700"
         WindowStartupLocation="CenterScreen"
         Style="{StaticResource WindowStyle}">
 
@@ -87,9 +87,10 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <CheckBox Grid.Row="0">Variable Smoke</CheckBox>
+                            <CheckBox Grid.Row="0"  Margin="0,0,0,4">Variable Smoke</CheckBox>
                             <controls:IntSliderWithInputAndDefaults
                                 Grid.Row="1"
+                                Margin="0,0,0,4"
                                 Label="Time On (s)"
                                 Number="20"
                                 Minimum="10"
@@ -99,6 +100,7 @@
 
                             <controls:IntSliderWithInputAndDefaults
                                 Grid.Row="2"
+                                Margin="0,0,0,4"
                                 Label="Time Off (s)"
                                 Number="20"
                                 Minimum="10"
@@ -117,8 +119,8 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <CheckBox Grid.Row="0">Variable Fan</CheckBox>
-                            <Grid Grid.Row="1">
+                            <CheckBox Grid.Row="0"  Margin="0,0,0,4">Variable Fan</CheckBox>
+                            <Grid Grid.Row="1"  Margin="0,0,0,4">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="80"/>
                                     <ColumnDefinition/>
@@ -128,7 +130,8 @@
                             </Grid>
                             <controls:IntSliderWithInputAndDefaults
                                 Grid.Row="2"
-                                Label="Lead Time (s)"
+                                Margin="0,0,0,4"
+                                Label="Lead (s)"
                                 Number="0"
                                 Minimum="0"
                                 Maximum="120"
@@ -137,7 +140,8 @@
 
                             <controls:IntSliderWithInputAndDefaults
                                 Grid.Row="3"
-                                Label="Purge Time (s)"
+                                Margin="0,0,0,4"
+                                Label="Purge (s)"
                                 Number="20"
                                 Minimum="0"
                                 Maximum="120"
@@ -152,10 +156,12 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <CheckBox Grid.Row="0">Three Channel Mode</CheckBox>
+                            
+                            <CheckBox Grid.Row="0" Margin="0,0,0,4">Three Channel Mode</CheckBox>
 
                             <controls:ByteSliderWithInputAndDefaults
                                 Grid.Row="1"
+                                Margin="0,0,0,4"
                                 Label="Address"
                                 Number="1"
                                 Minimum="1"
