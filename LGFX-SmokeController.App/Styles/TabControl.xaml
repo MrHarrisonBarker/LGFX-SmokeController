@@ -1017,7 +1017,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type TabControl}">
+    <Style TargetType="{x:Type TabControl}" x:Key="DefaultTabControl">
         <Setter Property="Padding" Value="0" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />

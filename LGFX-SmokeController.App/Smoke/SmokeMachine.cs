@@ -16,6 +16,9 @@ public class SmokeMachine : ObservableObject
     private string _Status = STOPPED;
     private bool _SmokeOn;
     private bool _FanOn;
+    private SmokeMachineMode _SmokeMode;
+    private bool _VariableSmoke;
+    private bool _VariableFan;
 
     #region Config
 
@@ -27,11 +30,25 @@ public class SmokeMachine : ObservableObject
     public short Address { get; set; }
     public short FanAddress { get; set; }
 
-    public SmokeMachineMode SmokeMode { get; set; }
+    public SmokeMachineMode SmokeMode
+    {
+        get => _SmokeMode;
+        set => SetProperty( ref _SmokeMode, value );
+    }
+
     public FanMode FanMode { get; set; }
-    
-    public bool VariableSmoke { get; set; }
-    public bool VariableFan { get; set; }
+
+    public bool VariableSmoke
+    {
+        get => _VariableSmoke;
+        set => SetProperty( ref _VariableSmoke, value );
+    }
+
+    public bool VariableFan
+    {
+        get => _VariableFan;
+        set => SetProperty( ref _VariableFan, value );
+    }
 
     public int LeadTime { get; set; } = 0;
     public int PurgeTime { get; set; } = 20;

@@ -67,7 +67,7 @@
         </Grid>
 
         <Grid>
-            <TabControl SelectedIndex="1">
+            <TabControl Style="{StaticResource DefaultTabControl}">
                 <TabItem Header="_Art-Net">
 
                     <Grid Margin="4">

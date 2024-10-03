@@ -6,6 +6,8 @@ public class TimedMode : SmokeMachineMode
     {
     }
 
+    public override string Name => "Timed";
+
     public override void Start()
     {
         Console.WriteLine($"Starting {Machine.Name}:{Machine.Address} in [TimedMode]");

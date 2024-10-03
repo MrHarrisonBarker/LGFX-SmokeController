@@ -63,7 +63,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Grid.Column="0" Margin="0,0,4,0" Click="OnAddClick">Add</Button>
-                <Button Grid.Column="1">Remove</Button>
+                <Button Grid.Column="1" Click="OnRemoveClick" IsEnabled="{Binding ElementName=ListOfMachines, Path=SelectedItem, Mode=OneWay, Converter={StaticResource IsNotNullConverter}}">Remove</Button>
             </Grid>
             <Grid Grid.Row="1">
 
@@ -87,9 +87,24 @@
 
                 <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" ResizeDirection="Columns" />
 
-                <TabControl Grid.Column="2" DataContext="{Binding ElementName=ListOfMachines, Path=SelectedItem, Mode=OneWay}"
+                <TabControl Grid.Column="2" 
+                            DataContext="{Binding ElementName=ListOfMachines, Path=SelectedItem, Mode=OneWay}"
                             d:DataContext="{d:DesignInstance smoke:SmokeMachine}">
-                    <TabItem Header="{Binding Name}"></TabItem>
+                    
+                    <TabControl.Style>
+                        <Style TargetType="{x:Type TabControl}" BasedOn="{StaticResource DefaultTabControl}">
+                            <Setter Property="Visibility" Value="Visible"></Setter>
+                            
+                            <Style.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding ElementName=ListOfMachines, Path=SelectedItem, Mode=OneWay}"
+                                    Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Hidden"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TabControl.Style>
+                    
                     <TabItem Header="_Smoke">
                         <Grid Margin="4">
                             <Grid.RowDefinitions>

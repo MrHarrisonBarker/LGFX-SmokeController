@@ -6,6 +6,8 @@ public class TriggerMode : SmokeMachineMode
     {
     }
 
+    public override string Name => "Trigger";
+
     public override void Start()
     {
         Machine.IsOn = true;

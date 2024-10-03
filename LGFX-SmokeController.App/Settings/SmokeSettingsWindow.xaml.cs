@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using LGFX_SmokeController.App.Smoke;
 
 namespace LGFX_SmokeController.App.Settings;
 
@@ -29,5 +30,14 @@ public partial class SmokeSettingsWindow : Window
     private void OnMachineSelected( object sender, SelectionChangedEventArgs e )
     {
         
+    }
+
+    private void OnRemoveClick( object sender, RoutedEventArgs e )
+    {
+        if ( ListOfMachines.SelectedItem is SmokeMachine machine )
+        {
+            App.SmokeMachines.Remove( machine );
+            ListOfMachines.SelectedItem = null;
+        }
     }
 }

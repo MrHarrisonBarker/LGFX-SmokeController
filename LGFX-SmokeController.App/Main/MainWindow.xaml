@@ -44,14 +44,13 @@
                 
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <!-- <WrapPanel Orientation="Horizontal"/> -->
-                        <StackPanel Orientation="Horizontal"/>
+                        <UniformGrid Columns="{Binding RelativeSource={ RelativeSource AncestorType=local:MainWindow }, Path=App.SmokeMachines.Count}"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type smoke:SmokeMachine}">
-                        <smoke:LiveSmokeControl Machine="{Binding}"></smoke:LiveSmokeControl>
+                        <smoke:LiveSmokeControl HorizontalAlignment="Stretch" Machine="{Binding}"></smoke:LiveSmokeControl>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
 

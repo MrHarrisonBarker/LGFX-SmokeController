@@ -25,8 +25,31 @@
                 <ColumnDefinition Width="24" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Rectangle Grid.Column="0" Fill="Green"></Rectangle>
-            <Button Grid.Column="1">Trigger</Button>
+            <Rectangle Grid.Column="0">
+                <Rectangle.Style>
+                    <Style TargetType="{x:Type Rectangle}">
+                        <Setter Property="Fill" Value="Transparent"/>
+                        
+                        <Style.Triggers>
+                            <DataTrigger
+                                Binding="{Binding Machine.SmokeMode.Name, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor} }"
+                                Value="Trigger">
+                                <Setter Property="Fill" Value="Green"/>
+                            </DataTrigger>
+                            
+                            <DataTrigger
+                                Binding="{Binding Machine.SmokeMode.Name, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor} }"
+                                Value="Timed">
+                                <Setter Property="Fill" Value="Red"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Rectangle.Style>
+            </Rectangle>
+            <Button 
+                Grid.Column="1" 
+                Click="OnModeClick"
+                Content="{Binding Path=Machine.SmokeMode.Name, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}}"></Button>
         </Grid>
 
         <Grid Grid.Row="1" Margin="0,0,0,4">
@@ -107,23 +130,7 @@
 
 
         <Button Grid.Row="3" Click="OnTriggerClick" FontWeight="SemiBold" FontSize="15">
-            
-            <TextBlock VerticalAlignment="Center" Text="{Binding Path=Machine.Status, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}}">
-                <!-- <TextBlock.Style> -->
-                <!--     <Style TargetType="{x:Type TextBlock}"> -->
-                <!--         <Setter Property="Text" Value="STOPPED"></Setter> -->
-                <!--          -->
-                <!--         <Style.Triggers> -->
-                <!--             <DataTrigger -->
-                <!--                 Binding="{Binding Machine.IsOn, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor} }" -->
-                <!--                 Value="True"> -->
-                <!--                 <Setter Property="Text" Value="RUNNING"></Setter> -->
-                <!--             </DataTrigger> -->
-                <!--         </Style.Triggers> -->
-                <!--     </Style> -->
-                <!-- </TextBlock.Style> -->
-            </TextBlock>
-            
+            <TextBlock VerticalAlignment="Center" Text="{Binding Path=Machine.Status, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}}"/>
         </Button>
 
         <Border Grid.Row="4">

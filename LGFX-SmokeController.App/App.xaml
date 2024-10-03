@@ -24,6 +24,8 @@
             </ResourceDictionary.MergedDictionaries>
 
             <local:PercentageConverter x:Key="PercentageConverter" />
+            <local:IsNullConverter x:Key="IsNullConverter" />
+            <local:IsNotNullConverter x:Key="IsNotNullConverter" />
             <local:InverseBooleanConverter x:Key="Not" />
 
             <Style x:Key="TitleBarButton" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
