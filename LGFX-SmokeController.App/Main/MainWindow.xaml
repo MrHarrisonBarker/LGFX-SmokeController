@@ -51,7 +51,7 @@
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type smoke:SmokeMachine}">
-                        <app:LiveSmokeControl Machine="{Binding}"></app:LiveSmokeControl>
+                        <smoke:LiveSmokeControl Machine="{Binding}"></smoke:LiveSmokeControl>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
 

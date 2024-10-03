@@ -1,8 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using LGFX_SmokeController.App.Smoke;
 
-namespace LGFX_SmokeController.App;
+namespace LGFX_SmokeController.App.Smoke;
 
 public partial class LiveSmokeControl : UserControl
 {
@@ -21,5 +20,6 @@ public partial class LiveSmokeControl : UserControl
 
     private void OnTriggerClick( object sender, RoutedEventArgs e )
     {
+        Machine.Toggle();
     }
 }

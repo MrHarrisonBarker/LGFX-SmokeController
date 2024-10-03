@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:LGFX_SmokeController.App.Settings"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:controls="clr-namespace:LGFX_SmokeController.App.Controls"
+        xmlns:smoke="clr-namespace:LGFX_SmokeController.App.Smoke"
         mc:Ignorable="d"
         Title="Smoke Settings"
         Height="300"
@@ -72,13 +73,23 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <ListBox Grid.Column="0">
-                    <ListBoxItem>MDG 1</ListBoxItem>
+                <ListBox
+                    Grid.Column="0"
+                    ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=local:SmokeSettingsWindow}, Path=App.SmokeMachines}"
+                    SelectionChanged="OnMachineSelected"
+                    Name="ListOfMachines">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="{x:Type smoke:SmokeMachine}">
+                            <TextBlock Text="{Binding Name}"></TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
                 </ListBox>
 
                 <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" ResizeDirection="Columns" />
 
-                <TabControl Grid.Column="2" SelectedIndex="1">
+                <TabControl Grid.Column="2" DataContext="{Binding ElementName=ListOfMachines, Path=SelectedItem, Mode=OneWay}"
+                            d:DataContext="{d:DesignInstance smoke:SmokeMachine}">
+                    <TabItem Header="{Binding Name}"></TabItem>
                     <TabItem Header="_Smoke">
                         <Grid Margin="4">
                             <Grid.RowDefinitions>
@@ -87,12 +98,12 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <CheckBox Grid.Row="0"  Margin="0,0,0,4">Variable Smoke</CheckBox>
+                            <CheckBox Grid.Row="0" Margin="0,0,0,4" IsChecked="{Binding VariableSmoke}">Variable Smoke</CheckBox>
                             <controls:IntSliderWithInputAndDefaults
                                 Grid.Row="1"
                                 Margin="0,0,0,4"
                                 Label="Time On (s)"
-                                Number="20"
+                                Number="{Binding TimeOn}"
                                 Minimum="10"
                                 Maximum="120"
                                 Default="20"
@@ -102,7 +113,7 @@
                                 Grid.Row="2"
                                 Margin="0,0,0,4"
                                 Label="Time Off (s)"
-                                Number="20"
+                                Number="{Binding TimeOff}"
                                 Minimum="10"
                                 Maximum="120"
                                 Default="20"
@@ -119,11 +130,11 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <CheckBox Grid.Row="0"  Margin="0,0,0,4">Variable Fan</CheckBox>
-                            <Grid Grid.Row="1"  Margin="0,0,0,4">
+                            <CheckBox Grid.Row="0" Margin="0,0,0,4" IsChecked="{Binding VariableFan}">Variable Fan</CheckBox>
+                            <Grid Grid.Row="1" Margin="0,0,0,4">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="80"/>
-                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="80" />
+                                    <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" Text="Mode"></TextBlock>
                                 <ComboBox Grid.Column="1"></ComboBox>
@@ -132,7 +143,7 @@
                                 Grid.Row="2"
                                 Margin="0,0,0,4"
                                 Label="Lead (s)"
-                                Number="0"
+                                Number="{Binding LeadTime}"
                                 Minimum="0"
                                 Maximum="120"
                                 Default="0"
@@ -142,7 +153,7 @@
                                 Grid.Row="3"
                                 Margin="0,0,0,4"
                                 Label="Purge (s)"
-                                Number="20"
+                                Number="{Binding PurgeTime}"
                                 Minimum="0"
                                 Maximum="120"
                                 Default="20"
@@ -156,16 +167,16 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            
-                            <CheckBox Grid.Row="0" Margin="0,0,0,4">Three Channel Mode</CheckBox>
 
-                            <controls:ByteSliderWithInputAndDefaults
+                            <CheckBox Grid.Row="0" Margin="0,0,0,4" IsChecked="{Binding IsThreeChannel}">Three Channel Mode</CheckBox>
+
+                            <controls:IntSliderWithInputAndDefaults
                                 Grid.Row="1"
                                 Margin="0,0,0,4"
                                 Label="Address"
-                                Number="1"
+                                Number="{Binding Address}"
                                 Minimum="1"
-                                Maximum="255"
+                                Maximum="512"
                                 Default="1"
                                 Defaults="{Binding RelativeSource={RelativeSource AncestorType=local:SmokeSettingsWindow}, Path=AddressDefaults, Mode=OneWay}" />
                         </Grid>

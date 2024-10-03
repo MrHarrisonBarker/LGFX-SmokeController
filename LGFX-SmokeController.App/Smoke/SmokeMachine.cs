@@ -1,7 +1,12 @@
-﻿namespace LGFX_SmokeController.App.Smoke;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-public class SmokeMachine
+namespace LGFX_SmokeController.App.Smoke;
+
+public class SmokeMachine : ObservableObject
 {
+    private bool _IsOn;
+    private int _TimeOn = 20;
+
     #region Config
 
     public string Name { get; set; }
@@ -15,9 +20,26 @@ public class SmokeMachine
     public bool VariableSmoke { get; set; }
     public bool VariableFan { get; set; }
 
+    public int LeadTime { get; set; } = 0;
+    public int PurgeTime { get; set; } = 20;
+
+    public int TimeOn
+    {
+        get => _TimeOn;
+        set => SetProperty( ref _TimeOn, value );
+    }
+
+    public int TimeOff { get; set; } = 20;
+
     #endregion
 
     #region State
+
+    public bool IsOn
+    {
+        get => _IsOn;
+        private set => SetProperty( ref _IsOn, value );
+    }
 
     public bool HeatOn { get; set; } = true;
     public bool SmokeOn { get; set; }
@@ -58,10 +80,20 @@ public class SmokeMachine
 
     public void Trigger()
     {
+        IsOn = true;
     }
 
     public void Stop()
     {
-        
+        IsOn = false;
+    }
+
+    public void Toggle()
+    {
+        Console.WriteLine( $"Toggling machine: {Name}" );
+        if ( IsOn )
+            Stop();
+        else
+            Trigger();
     }
 }
