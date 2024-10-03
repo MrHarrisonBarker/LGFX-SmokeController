@@ -16,19 +16,27 @@
         <!--     ~1~ </Border> @1@ -->
         <!-- </StatusBarItem> -->
         <!-- -->
-        <!-- <StatusBarItem> -->
-        <!--     <Border BorderBrush="Gray" BorderThickness="1" Padding="4,0,4,0"> -->
-        <!--         <Grid> -->
-        <!--             <Grid.ColumnDefinitions> -->
-        <!--                 <ColumnDefinition/> -->
-        <!--                 <ColumnDefinition/> -->
-        <!--             </Grid.ColumnDefinitions> -->
-        <!--      -->
-        <!--             <TextBlock Grid.Column="0" Text="Adapter: "></TextBlock> -->
-        <!--             ~1~ <TextBlock Grid.Column="1" Text="{Binding RelativeSource={RelativeSource AncestorType=local:LiveStatus}, Path=Subsystems.DmxService.DmxInterface.Adapter.Name}"></TextBlock> @1@ -->
-        <!--         </Grid> -->
-        <!--     </Border> -->
-        <!-- </StatusBarItem> -->
+        
+        <StatusBarItem>
+            <Border BorderBrush="Gray" BorderThickness="1" Padding="4,0,4,0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+        
+                    <TextBlock Grid.Column="0" Text="Adapter: "></TextBlock>
+                    <TextBlock Grid.Column="1" Text="{Binding RelativeSource={RelativeSource AncestorType=local:LiveStatus}, Path=ArtNetService.Adapter.Address}"></TextBlock>
+                </Grid>
+            </Border>
+        </StatusBarItem>
+        
+        <StatusBarItem>
+            <ItemsControl ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=local:LiveStatus}, Path=ArtNetService.NodesSendingTo, Mode=OneWay}">
+                
+            </ItemsControl>
+        </StatusBarItem>
         
         <StatusBarItem HorizontalAlignment="Right">
             <Image VerticalAlignment="Center" Height="12" Source="../Assets/lgx-inline.png"></Image>

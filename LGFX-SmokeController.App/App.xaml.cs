@@ -1,17 +1,14 @@
-﻿using System.Configuration;
-using System.Data;
-using System.Reflection;
-using System.Windows;
+﻿using System.Windows;
+using LGFX_SmokeController.App.ArtNet;
 
-namespace LGFX_SmokeController.App
+namespace LGFX_SmokeController.App;
+
+public partial class App : Application
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
-    public partial class App : Application
-    {
-        
-        
-    }
+    public ArtNetService ArtNetService;
 
+    public App()
+    {
+        ArtNetService = new ArtNetService( Dispatcher );
+    }
 }

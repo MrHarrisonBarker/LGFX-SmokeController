@@ -1,0 +1,91 @@
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Net;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
+using System.Runtime.CompilerServices;
+using System.Windows.Threading;
+using ART.NET;
+
+namespace LGFX_SmokeController.App.ArtNet;
+
+public class ArtNetService : INotifyPropertyChanged
+{
+    public ART.NET.NetworkInterface? Adapter { get; set; }
+
+    public IEnumerable<ART.NET.NetworkInterface> AvailableAdapters
+    {
+        get
+        {
+            var interfaces = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces();
+
+            var supportedInterfaces = interfaces
+                .Where( networkInterface => networkInterface is
+                    { SupportsMulticast: true, OperationalStatus: OperationalStatus.Up } );
+
+            foreach ( var supportedInterface in supportedInterfaces )
+            {
+                foreach ( var uniCastAddress in supportedInterface.GetIPProperties()
+                             .UnicastAddresses )
+                {
+                    if ( uniCastAddress.Address.AddressFamily == AddressFamily.InterNetwork )
+                        yield return new ART.NET.NetworkInterface(
+                            supportedInterface.NetworkInterfaceType == NetworkInterfaceType.Loopback
+                                ? "Local host"
+                                : supportedInterface.Description, uniCastAddress.Address, uniCastAddress.IPv4Mask );
+                }
+            }
+        }
+    }
+
+    public ArtNetNodeManager? NodeManager { get; }
+    public ObservableCollection<ArtNetNode> CustomNodes { get; set; } = [ ];
+    public ArtNetSocket? Socket { get; set; }
+
+    public IEnumerable<ArtNetNode> NodesSendingTo
+    {
+        get
+        {
+            return ( NodeManager?.Nodes.Where( n => n.IsSending ) ?? [] ).Concat( CustomNodes.Where( n => n.IsSending ) );
+         // return  new ArtNetNode[] { new ArtNetNode("","",IPAddress.Any, true) };   
+        }
+    }
+    // = new ArtNetNode[] { new ArtNetNode("","",IPAddress.Any, true) };
+    // {
+    //     get
+    //     {
+    //         return ( NodeManager?.Nodes.Where( n => n.IsSending ) ?? [] ).Concat( CustomNodes.Where( n => n.IsSending ) );
+    //     }
+    // }
+
+    public ArtNetService( Dispatcher dispatcher )
+    {
+        Adapter = AvailableAdapters.FirstOrDefault();
+
+        if ( Adapter is not null )
+        {
+            Socket = new ArtNetSocket( Adapter );
+            NodeManager = new ArtNetNodeManager( Socket, "LGFX", "LGFX Smoke Controller", dispatcher );
+            NodeManager.Nodes.CollectionChanged += ( _, _ ) =>
+            {
+                Console.WriteLine("NODES CHANGED");
+                OnPropertyChanged(nameof(NodesSendingTo));
+            };
+        }
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    protected virtual void OnPropertyChanged( [CallerMemberName] string? propertyName = null )
+    {
+        PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
+    }
+
+    protected bool SetField<T>( ref T field, T value, [CallerMemberName] string? propertyName = null )
+    {
+        if ( EqualityComparer<T>.Default.Equals( field, value ) ) return false;
+        field = value;
+        OnPropertyChanged( propertyName );
+        return true;
+    }
+}
