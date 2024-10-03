@@ -6,11 +6,11 @@ namespace LGFX_SmokeController.App.Smoke;
 
 public class SmokeMachine : ObservableObject
 {
-    public static string STARTING = "Starting";
-    public static string RUNNING = "Running";
-    public static string STOPPING = "Stopping";
-    public static string STOPPED = "Stopped";
-    
+    public const string STARTING = "Starting";
+    public const string RUNNING = "Running";
+    public const string STOPPING = "Stopping";
+    public const string STOPPED = "Stopped";
+
     private bool _IsOn;
     private int _TimeOn = 20;
     private string _Status = STOPPED;
@@ -19,6 +19,9 @@ public class SmokeMachine : ObservableObject
     private SmokeMachineMode _SmokeMode;
     private bool _VariableSmoke;
     private bool _VariableFan;
+    private short _Address;
+    private short _FanAddress;
+    private short _HeatAddress;
 
     #region Config
 
@@ -26,9 +29,36 @@ public class SmokeMachine : ObservableObject
     public bool IsThreeChannel { get; set; }
 
 
-    public short HeatAddress { get; set; }
-    public short Address { get; set; }
-    public short FanAddress { get; set; }
+    public short HeatAddress
+    {
+        get => _HeatAddress;
+        set => SetProperty( ref _HeatAddress, value );
+    }
+
+    public short Address
+    {
+        get => _Address;
+        set
+        {
+            if ( IsThreeChannel )
+            {
+                HeatAddress = value;
+                SetProperty( ref _Address, ( short )( value - 1 ) );
+                FanAddress = ( short )(value + 2);
+            }
+            else
+            {
+                SetProperty( ref _Address, value );
+                FanAddress = ( short )( value + 1 );
+            }
+        }
+    }
+
+    public short FanAddress
+    {
+        get => _FanAddress;
+        set => SetProperty( ref _FanAddress, value );
+    }
 
     public SmokeMachineMode SmokeMode
     {

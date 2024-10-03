@@ -71,7 +71,11 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Border Grid.Row="0" Margin="0,0,1,0">
-                    <TextBlock Text="Smoke" TextAlignment="Center"></TextBlock>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="S:"/>
+                        <TextBlock Text="{Binding Path=Machine.Address, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}}"/>
+                    </StackPanel>
+                    
                 </Border>
 
                 <Slider
@@ -103,7 +107,10 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Border Grid.Row="0" Margin="1,0,0,0">
-                    <TextBlock Text="Fan" TextAlignment="Center"></TextBlock>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="F:"/>
+                        <TextBlock Text="{Binding Path=Machine.FanAddress, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}}"/>
+                    </StackPanel>
                 </Border>
                 <Slider
                     x:Name="FanSlider"

@@ -21,34 +21,48 @@
 
     <DockPanel>
 
-        <Grid DockPanel.Dock="Top" Height="32" Background="Black">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
+        <Grid DockPanel.Dock="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="32" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            
+            <Grid Background="Black" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="0" VerticalAlignment="Center"
-                       Margin="4,0,8,0"
-                       FontSize="14" Foreground="White"
-                       Text="Smoke Settings"
-                       FontWeight="Bold">
-            </TextBlock>
+                <TextBlock Grid.Column="0" VerticalAlignment="Center"
+                           Margin="4,0,8,0"
+                           FontSize="14" Foreground="White"
+                           Text="Smoke Settings"
+                           FontWeight="Bold">
+                </TextBlock>
 
 
-            <Button
-                Grid.Column="2"
-                Style="{StaticResource TitleBarButton}"
-                Click="OnCloseClick">
-                <Path
-                    Width="46"
-                    Height="32"
-                    Data="M 18,11 27,20 M 18,20 27,11"
-                    Stroke="{Binding Path=Foreground,
+                <Button
+                    Grid.Column="2"
+                    Style="{StaticResource TitleBarButton}"
+                    Click="OnCloseClick">
+                    <Path
+                        Width="46"
+                        Height="32"
+                        Data="M 18,11 27,20 M 18,20 27,11"
+                        Stroke="{Binding Path=Foreground,
 						 RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                    StrokeThickness="1" />
-            </Button>
+                        StrokeThickness="1" />
+                </Button>
+            </Grid>
+            
+            <Menu Grid.Row="1">
+                <MenuItem Header="_Add" Click="OnAddClick"></MenuItem>
+                <MenuItem Header="_Remove" Click="OnRemoveClick" IsEnabled="{Binding ElementName=ListOfMachines, Path=SelectedItem, Mode=OneWay, Converter={StaticResource IsNotNullConverter}}"></MenuItem>
+            </Menu>
         </Grid>
+        
+        
 
         <Grid>
             <Grid.RowDefinitions>
@@ -56,15 +70,6 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0" Margin="4">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <Button Grid.Column="0" Margin="0,0,4,0" Click="OnAddClick">Add</Button>
-                <Button Grid.Column="1" Click="OnRemoveClick" IsEnabled="{Binding ElementName=ListOfMachines, Path=SelectedItem, Mode=OneWay, Converter={StaticResource IsNotNullConverter}}">Remove</Button>
-            </Grid>
             <Grid Grid.Row="1">
 
                 <Grid.ColumnDefinitions>
@@ -189,7 +194,7 @@
                                 Grid.Row="1"
                                 Margin="0,0,0,4"
                                 Label="Address"
-                                Number="{Binding Address}"
+                                Number="{Binding Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 Minimum="1"
                                 Maximum="512"
                                 Default="1"
