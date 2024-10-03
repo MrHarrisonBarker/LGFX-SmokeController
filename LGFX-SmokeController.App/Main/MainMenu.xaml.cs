@@ -1,12 +1,29 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Controls;
 using LGFX_SmokeController.App.Settings;
 using Microsoft.Win32;
 
 namespace LGFX_SmokeController.App.Main;
 
-public partial class MainMenu : UserControl
+public partial class MainMenu : UserControl, INotifyPropertyChanged
 {
+    private bool _IsSettingsWindowNotOpen = true;
+    private bool _IsSmokeSettingsWindowNotOpen = true;
+
+    public bool IsSettingsWindowNotOpen
+    {
+        get => _IsSettingsWindowNotOpen;
+        set => SetField( ref _IsSettingsWindowNotOpen, value );
+    }
+
+    public bool IsSmokeSettingsWindowNotOpen
+    {
+        get => _IsSmokeSettingsWindowNotOpen;
+        set => SetField( ref _IsSmokeSettingsWindowNotOpen, value );
+    }
+
     public MainMenu()
     {
         InitializeComponent();
@@ -14,19 +31,22 @@ public partial class MainMenu : UserControl
 
     private void OnSettingsClick( object sender, RoutedEventArgs e )
     {
+        IsSettingsWindowNotOpen = false;
         var window = new SettingsWindow();
+        window.Closed += ( _, _ ) => IsSettingsWindowNotOpen = true;
         window.Show();
     }
 
     private void OnSmokeSettingsClick( object sender, RoutedEventArgs e )
     {
+        IsSmokeSettingsWindowNotOpen = false;
         var window = new SmokeSettingsWindow();
+        window.Closed += ( _, _ ) => IsSmokeSettingsWindowNotOpen = true;
         window.Show();
     }
 
     private void OnDefaultPresetClick( object sender, RoutedEventArgs e )
     {
-        
     }
 
     private void OnSavePresetClick( object sender, RoutedEventArgs e )
@@ -36,7 +56,7 @@ public partial class MainMenu : UserControl
             DefaultExt = LgfxSmokeFileExtension.Extension,
             Filter = LgfxSmokeFileExtension.Filter
         };
-        
+
         dialog.ShowDialog();
     }
 
@@ -52,5 +72,20 @@ public partial class MainMenu : UserControl
         };
 
         dialog.ShowDialog();
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    protected virtual void OnPropertyChanged( [CallerMemberName] string? propertyName = null )
+    {
+        PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
+    }
+
+    protected bool SetField<T>( ref T field, T value, [CallerMemberName] string? propertyName = null )
+    {
+        if ( EqualityComparer<T>.Default.Equals( field, value ) ) return false;
+        field = value;
+        OnPropertyChanged( propertyName );
+        return true;
     }
 }

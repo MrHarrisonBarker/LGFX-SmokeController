@@ -13,8 +13,13 @@
             <MenuItem Header="_Open Preset" Click="OnOpenPresetClick"/>
         </MenuItem>
         
-        <MenuItem Header="_Settings" Click="OnSettingsClick"/>
+        <MenuItem Header="_Settings" 
+                  Click="OnSettingsClick" 
+                  IsEnabled="{Binding Path=IsSettingsWindowNotOpen, RelativeSource={RelativeSource AncestorType=local:MainMenu}}"/>
         
-        <MenuItem Header="_Smoke Settings" Click="OnSmokeSettingsClick"/>
+        <MenuItem 
+            Header="_Smoke Settings" 
+            Click="OnSmokeSettingsClick"
+            IsEnabled="{Binding Path=IsSmokeSettingsWindowNotOpen, RelativeSource={RelativeSource AncestorType=local:MainMenu}}"/>
     </Menu>
 </UserControl>

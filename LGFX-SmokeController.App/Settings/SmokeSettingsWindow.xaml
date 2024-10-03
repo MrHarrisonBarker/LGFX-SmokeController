@@ -57,7 +57,7 @@
             </Grid>
             
             <Menu Grid.Row="1">
-                <MenuItem Header="_Add" Click="OnAddClick"></MenuItem>
+                <MenuItem Header="_Add" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=local:SmokeSettingsWindow}, Path=IsAddNotOpen, Mode=OneWay}" Click="OnAddClick"></MenuItem>
                 <MenuItem Header="_Remove" Click="OnRemoveClick" IsEnabled="{Binding ElementName=ListOfMachines, Path=SelectedItem, Mode=OneWay, Converter={StaticResource IsNotNullConverter}}"></MenuItem>
             </Menu>
         </Grid>
