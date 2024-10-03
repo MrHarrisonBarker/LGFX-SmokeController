@@ -98,9 +98,9 @@
                     <RowDefinition Height="2*" />
                 </Grid.RowDefinitions>
 
-                <Button Grid.Row="0">Stop All</Button>
-                <Button Grid.Row="1">Trigger 100%</Button>
-                <Button Grid.Row="2">Trigger All</Button>
+                <Button Grid.Row="0" Click="OnStopAllClick">Stop All</Button>
+                <Button Grid.Row="1" Click="OnTriggerAll100">Trigger 100%</Button>
+                <Button Grid.Row="2" Click="OnTriggerAll">Trigger All</Button>
             </Grid>
         </Grid>
 

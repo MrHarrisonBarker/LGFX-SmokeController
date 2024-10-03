@@ -7,6 +7,10 @@
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="150">
 
+    <UserControl.Resources>
+        
+    </UserControl.Resources>
+    
     <Grid Margin="1,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -104,20 +108,20 @@
 
         <Button Grid.Row="3" Click="OnTriggerClick" FontWeight="SemiBold" FontSize="15">
             
-            <TextBlock VerticalAlignment="Center">
-                <TextBlock.Style>
-                    <Style TargetType="{x:Type TextBlock}">
-                        <Setter Property="Text" Value="STOPPED"></Setter>
-                        
-                        <Style.Triggers>
-                            <DataTrigger
-                                Binding="{Binding Machine.IsOn, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor} }"
-                                Value="True">
-                                <Setter Property="Text" Value="RUNNING"></Setter>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
+            <TextBlock VerticalAlignment="Center" Text="{Binding Path=Machine.Status, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}}">
+                <!-- <TextBlock.Style> -->
+                <!--     <Style TargetType="{x:Type TextBlock}"> -->
+                <!--         <Setter Property="Text" Value="STOPPED"></Setter> -->
+                <!--          -->
+                <!--         <Style.Triggers> -->
+                <!--             <DataTrigger -->
+                <!--                 Binding="{Binding Machine.IsOn, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor} }" -->
+                <!--                 Value="True"> -->
+                <!--                 <Setter Property="Text" Value="RUNNING"></Setter> -->
+                <!--             </DataTrigger> -->
+                <!--         </Style.Triggers> -->
+                <!--     </Style> -->
+                <!-- </TextBlock.Style> -->
             </TextBlock>
             
         </Button>
@@ -128,8 +132,49 @@
                     <ColumnDefinition Width="20" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Rectangle Grid.Column="0" Fill="Green"></Rectangle>
-                <Rectangle Grid.Column="1" Fill="Transparent"></Rectangle>
+                <Rectangle Grid.Column="0">
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="Fill" Value="Red"/>
+                            <Style.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding Machine.IsOn, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor} }"
+                                    Value="True">
+                                    <Setter Property="Fill" Value="Green"/>
+                                    
+                                    <DataTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation From="Transparent" To="Green" AutoReverse="True" Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)" RepeatBehavior="Forever" Duration="0:0:1"></ColorAnimation>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.EnterActions>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+                </Rectangle>
+                
+                <Rectangle Grid.Column="1">
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="Fill" Value="Transparent"/>
+                            <Style.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding Machine.FanOn, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor} }"
+                                    Value="True">
+                                    <Setter Property="Fill" Value="Yellow"/>
+                                </DataTrigger>
+                                
+                                <DataTrigger
+                                    Binding="{Binding Machine.SmokeOn, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor} }"
+                                    Value="True">
+                                    <Setter Property="Fill" Value="Green"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+                </Rectangle>
             </Grid>
 
         </Border>

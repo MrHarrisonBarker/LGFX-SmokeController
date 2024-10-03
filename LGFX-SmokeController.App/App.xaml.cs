@@ -15,6 +15,10 @@ public partial class App : Application
         new SmokeMachine( "SL 2", 3, SmokeMachinePresets.Hazer ),
         new SmokeMachine( "SR 3", 5, SmokeMachinePresets.Hazer ),
         new SmokeMachine( "SR 4", 7, SmokeMachinePresets.Hazer ),
+        new SmokeMachine( "FOH 4", 7, SmokeMachinePresets.Hazer ),
+        new SmokeMachine( "FOH 5", 7, SmokeMachinePresets.Hazer ),
+        new SmokeMachine( "DELAY 6", 7, SmokeMachinePresets.Hazer ),
+        new SmokeMachine( "DELAY 7", 7, SmokeMachinePresets.Hazer ),
     ];
 
     public App()

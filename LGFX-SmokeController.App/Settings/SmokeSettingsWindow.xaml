@@ -103,8 +103,8 @@
                                 Grid.Row="1"
                                 Margin="0,0,0,4"
                                 Label="Time On (s)"
-                                Number="{Binding TimeOn}"
-                                Minimum="10"
+                                Number="{Binding Path=TimeOn, Mode=TwoWay}"
+                                Minimum="1"
                                 Maximum="120"
                                 Default="20"
                                 Defaults="{Binding RelativeSource={RelativeSource AncestorType=local:SmokeSettingsWindow}, Path=SmokeTimingDefaults, Mode=OneWay}" />
@@ -113,8 +113,8 @@
                                 Grid.Row="2"
                                 Margin="0,0,0,4"
                                 Label="Time Off (s)"
-                                Number="{Binding TimeOff}"
-                                Minimum="10"
+                                Number="{Binding Path=TimeOff, Mode=TwoWay}"
+                                Minimum="1"
                                 Maximum="120"
                                 Default="20"
                                 Defaults="{Binding RelativeSource={RelativeSource AncestorType=local:SmokeSettingsWindow}, Path=SmokeTimingDefaults, Mode=OneWay}" />

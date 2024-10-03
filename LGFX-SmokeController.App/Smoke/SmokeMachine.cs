@@ -1,11 +1,21 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using LGFX_SmokeController.App.Smoke.FanModes;
+using LGFX_SmokeController.App.Smoke.SmokeModes;
 
 namespace LGFX_SmokeController.App.Smoke;
 
 public class SmokeMachine : ObservableObject
 {
+    public static string STARTING = "Starting";
+    public static string RUNNING = "Running";
+    public static string STOPPING = "Stopping";
+    public static string STOPPED = "Stopped";
+    
     private bool _IsOn;
     private int _TimeOn = 20;
+    private string _Status = STOPPED;
+    private bool _SmokeOn;
+    private bool _FanOn;
 
     #region Config
 
@@ -17,6 +27,9 @@ public class SmokeMachine : ObservableObject
     public short Address { get; set; }
     public short FanAddress { get; set; }
 
+    public SmokeMachineMode SmokeMode { get; set; }
+    public FanMode FanMode { get; set; }
+    
     public bool VariableSmoke { get; set; }
     public bool VariableFan { get; set; }
 
@@ -38,16 +51,32 @@ public class SmokeMachine : ObservableObject
     public bool IsOn
     {
         get => _IsOn;
-        private set => SetProperty( ref _IsOn, value );
+        internal set => SetProperty( ref _IsOn, value );
+    }
+
+    public string Status
+    {
+        get => _Status;
+        set => SetProperty( ref _Status, value );
     }
 
     public bool HeatOn { get; set; } = true;
-    public bool SmokeOn { get; set; }
-    public bool FanOn { get; set; }
+
+    public bool SmokeOn
+    {
+        get => _SmokeOn;
+        set => SetProperty( ref _SmokeOn, value );
+    }
+
+    public bool FanOn
+    {
+        get => _FanOn;
+        set => SetProperty( ref _FanOn, value );
+    }
 
 
-    public byte SmokeLevel { get; set; }
-    public byte FanLevel { get; set; }
+    public byte SmokeLevel { get; set; } = 255;
+    public byte FanLevel { get; set; } = 255;
 
 
     public byte SmokeValue() => SmokeOn ? SmokeLevel : byte.MinValue;
@@ -75,17 +104,20 @@ public class SmokeMachine : ObservableObject
                 VariableFan = true;
                 break;
         }
+
+        SmokeMode = new TimedMode( this );
+        FanMode = new InstantFanMode( this );
     }
 
 
     public void Trigger()
     {
-        IsOn = true;
+        SmokeMode.Start();
     }
 
     public void Stop()
     {
-        IsOn = false;
+        SmokeMode.Stop();
     }
 
     public void Toggle()
