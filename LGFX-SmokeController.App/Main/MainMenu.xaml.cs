@@ -31,7 +31,13 @@ public partial class MainMenu : UserControl
 
     private void OnSavePresetClick( object sender, RoutedEventArgs e )
     {
+        var dialog = new SaveFileDialog()
+        {
+            DefaultExt = LgfxSmokeFileExtension.Extension,
+            Filter = LgfxSmokeFileExtension.Filter
+        };
         
+        dialog.ShowDialog();
     }
 
     private void OnOpenPresetClick( object sender, RoutedEventArgs e )

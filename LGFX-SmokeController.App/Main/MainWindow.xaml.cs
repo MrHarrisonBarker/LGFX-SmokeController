@@ -1,15 +1,13 @@
 ﻿using System.Windows;
 
-namespace LGFX_SmokeController.App.Main
+namespace LGFX_SmokeController.App.Main;
+
+public partial class MainWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+    public App App => ( App )Application.Current;
+        
+    public MainWindow()
     {
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

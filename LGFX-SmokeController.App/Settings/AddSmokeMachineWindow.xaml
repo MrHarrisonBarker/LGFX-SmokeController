@@ -5,6 +5,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:LGFX_SmokeController.App.Settings"
         xmlns:controls="clr-namespace:LGFX_SmokeController.App.Controls"
+        xmlns:app="clr-namespace:LGFX_SmokeController.App"
+        xmlns:smokeMachine="clr-namespace:LGFX_SmokeController.App.Smoke"
         mc:Ignorable="d"
         Title="Add Smoke Machine"
         Height="140"
@@ -64,29 +66,36 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="Preset"></TextBlock>
-                <ComboBox Grid.Column="1"></ComboBox>
+                <ComboBox
+                    Grid.Column="1"
+                    SelectedItem="{Binding RelativeSource={RelativeSource AncestorType=local:AddSmokeMachineWindow}, Path=MachinePreset, Mode=TwoWay}"
+                    ItemsSource="{Binding Source={app:EnumBindingSource {x:Type smokeMachine:SmokeMachinePresets}}}" />
             </Grid>
 
             <controls:ByteSliderWithInputAndDefaults
                 Grid.Row="1"
                 Margin="0,0,0,4"
                 Label="Address"
-                Number="1"
+                Number="{Binding RelativeSource={RelativeSource AncestorType=local:AddSmokeMachineWindow}, Path=MachineAddress, Mode=TwoWay}"
                 Minimum="1"
                 Maximum="255"
                 Default="1"
                 Defaults="{Binding RelativeSource={RelativeSource AncestorType=local:AddSmokeMachineWindow}, Path=AddressDefaults, Mode=OneWay}" />
 
-            <controls:TextBoxWithLabel Grid.Row="2" Margin="0,0,0,4" Label="Name"></controls:TextBoxWithLabel>
-            
+            <controls:TextBoxWithLabel 
+                Grid.Row="2" 
+                Margin="0,0,0,4" 
+                Text="{Binding RelativeSource={RelativeSource AncestorType=local:AddSmokeMachineWindow}, Path=MachineName, Mode=TwoWay}"
+                Label="Name"/>
+
             <Grid Grid.Row="3">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="60"/>
-                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="60" />
+                    <ColumnDefinition Width="70" />
                 </Grid.ColumnDefinitions>
-                
-                <Button Grid.Column="1" Margin="0,0,4,0">Add</Button>
+
+                <Button Grid.Column="1" Margin="0,0,4,0" Click="OnAddClick">Add</Button>
                 <Button Grid.Column="2" Click="OnCloseClick">Cancel</Button>
             </Grid>
         </Grid>

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LGFX_SmokeController.App.Main"
         xmlns:app="clr-namespace:LGFX_SmokeController.App"
+        xmlns:smoke="clr-namespace:LGFX_SmokeController.App.Smoke"
         mc:Ignorable="d"
         Title="MainWindow"
         Height="450"
@@ -37,31 +38,50 @@
                 <ColumnDefinition Width="100" />
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
+            <ItemsControl
+                Grid.Column="0"
+                ItemsSource="{Binding RelativeSource={ RelativeSource AncestorType=local:MainWindow }, Path=App.SmokeMachines}">
+                
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <!-- <WrapPanel Orientation="Horizontal"/> -->
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
 
-                </Grid.ColumnDefinitions>
-                <app:LiveSmokeControl></app:LiveSmokeControl>
-                <app:LiveSmokeControl Grid.Column="1"></app:LiveSmokeControl>
-                <app:LiveSmokeControl Grid.Column="2"></app:LiveSmokeControl>
-                <app:LiveSmokeControl Grid.Column="3"></app:LiveSmokeControl>
-                <app:LiveSmokeControl Grid.Column="4"></app:LiveSmokeControl>
-                <app:LiveSmokeControl Grid.Column="5"></app:LiveSmokeControl>
-                <app:LiveSmokeControl Grid.Column="6"></app:LiveSmokeControl>
-                <app:LiveSmokeControl Grid.Column="7"></app:LiveSmokeControl>
-                <app:LiveSmokeControl Grid.Column="8"></app:LiveSmokeControl>
-                <app:LiveSmokeControl Grid.Column="9"></app:LiveSmokeControl>
-            </Grid>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type smoke:SmokeMachine}">
+                        <app:LiveSmokeControl Machine="{Binding}"></app:LiveSmokeControl>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+            </ItemsControl>
+
+            <!-- <Grid Grid.Column="0"> -->
+            <!--     <Grid.ColumnDefinitions> -->
+            <!--         <ColumnDefinition /> -->
+            <!--         <ColumnDefinition /> -->
+            <!--         <ColumnDefinition /> -->
+            <!--         <ColumnDefinition /> -->
+            <!--         <ColumnDefinition /> -->
+            <!--         <ColumnDefinition /> -->
+            <!--         <ColumnDefinition /> -->
+            <!--         <ColumnDefinition /> -->
+            <!--         <ColumnDefinition /> -->
+            <!--         <ColumnDefinition /> -->
+            <!-- -->
+            <!--     </Grid.ColumnDefinitions> -->
+            <!--     <app:LiveSmokeControl></app:LiveSmokeControl> -->
+            <!--     <app:LiveSmokeControl Grid.Column="1"></app:LiveSmokeControl> -->
+            <!--     <app:LiveSmokeControl Grid.Column="2"></app:LiveSmokeControl> -->
+            <!--     <app:LiveSmokeControl Grid.Column="3"></app:LiveSmokeControl> -->
+            <!--     <app:LiveSmokeControl Grid.Column="4"></app:LiveSmokeControl> -->
+            <!--     <app:LiveSmokeControl Grid.Column="5"></app:LiveSmokeControl> -->
+            <!--     <app:LiveSmokeControl Grid.Column="6"></app:LiveSmokeControl> -->
+            <!--     <app:LiveSmokeControl Grid.Column="7"></app:LiveSmokeControl> -->
+            <!--     <app:LiveSmokeControl Grid.Column="8"></app:LiveSmokeControl> -->
+            <!--     <app:LiveSmokeControl Grid.Column="9"></app:LiveSmokeControl> -->
+            <!-- </Grid> -->
 
 
             <GridSplitter
