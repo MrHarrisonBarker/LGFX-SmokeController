@@ -80,6 +80,10 @@
     <Content Include="Assets\computer_link.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Remove="Assets\transmit.png" />
+    <Content Include="Assets\transmit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

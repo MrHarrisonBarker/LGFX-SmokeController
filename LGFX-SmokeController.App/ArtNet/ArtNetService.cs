@@ -57,8 +57,6 @@ public class ArtNetService : ObservableObject
 
     public ArtNetSocket? Socket { get; set; }
 
-    // public ObservableCollection<ArtNetNode> NodesSendingTo { get; set; } = [ ];
-
     public ArtNetService( Dispatcher dispatcher )
     {
         Adapter = AvailableAdapters.FirstOrDefault();
@@ -67,13 +65,6 @@ public class ArtNetService : ObservableObject
         {
             Socket = new ArtNetSocket( Adapter );
             NodeManager = new ArtNetNodeManager( Socket, "LGFX", "LGFX Smoke Controller", dispatcher );
-            // NodeManager.Nodes.CollectionChanged += ( _, _ ) =>
-            // {
-            //     Console.WriteLine("NODES CHANGED");
-            //     OnPropertyChanged(nameof(NodesSendingTo));
-            // };
         }
-        
-        
     }
 }

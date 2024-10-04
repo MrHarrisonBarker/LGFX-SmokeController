@@ -40,9 +40,6 @@ public sealed class ArtNetNodeManager : INotifyPropertyChanged
             Name = "ListenThread",
             Priority = ThreadPriority.BelowNormal
         };
-
-        PollThread.Start();
-        ListenThread.Start();
     }
 
     private readonly ArtNetPollBuffer PollBuffer = new ();
@@ -50,6 +47,12 @@ public sealed class ArtNetNodeManager : INotifyPropertyChanged
     private DateTime _LastChecked;
 
     public ObservableCollection<ArtNetNode> Nodes { get; set; }
+
+    public void StartPollReply()
+    {
+        PollThread.Start();
+        ListenThread.Start();
+    }
 
     private void Poll()
     {
@@ -92,8 +95,10 @@ public sealed class ArtNetNodeManager : INotifyPropertyChanged
                         Console.WriteLine( $"Nodes -> {string.Join( ",", Nodes )}" );
                     } );
                 }
-
-                
+                else
+                {
+                    existing.IsConnected = true;
+                }
             }
         }
     }
@@ -113,7 +118,7 @@ public sealed class ArtNetNodeManager : INotifyPropertyChanged
     {
         for ( var i = 0; i < Nodes.Count; i++ )
         {
-            Nodes.RemoveAt(0);
+            Nodes.RemoveAt( 0 );
         }
 
         Task.Run( () =>
@@ -123,7 +128,7 @@ public sealed class ArtNetNodeManager : INotifyPropertyChanged
             {
                 Socket.Send( PollBuffer );
                 Socket.Send( PollReplyBuffer );
-                
+
                 LastChecked = DateTime.Now;
                 Thread.Sleep( 250 );
             }
@@ -150,14 +155,14 @@ public class ArtNetNode : ObservableObject
 {
     private bool _IsSending;
     private bool _IsConnected;
-    
-    public ArtNetNode(string shortName, string longName, IPAddress address, bool isSending = false)
+
+    public ArtNetNode( string shortName, string longName, IPAddress address, bool isSending = false, bool isConnected = true )
     {
         IsSending = isSending;
         ShortName = shortName;
         LongName = longName;
         Address = address;
-        IsConnected = true;
+        IsConnected = isConnected;
     }
 
     public bool IsSending
@@ -172,7 +177,7 @@ public class ArtNetNode : ObservableObject
         set => SetProperty( ref _IsConnected, value );
     }
 
-    public string ShortName { get; init; }  
+    public string ShortName { get; init; }
     public string LongName { get; init; }
     public IPAddress Address { get; init; }
 

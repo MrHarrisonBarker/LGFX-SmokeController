@@ -176,7 +176,7 @@
                                                     </Grid>
                                                 </CheckBox>
 
-                                                <Button Grid.Column="2" Content="Remove" Click="OnRemoveNodeClick" Tag="{Binding}"/>
+                                                <Button Grid.Column="2" Margin="0,0,4,0" Width="60" Content="Remove" Click="OnRemoveNodeClick" Tag="{Binding}"/>
                                                 <Image Grid.Column="3">
                                                     <Image.Style>
                                                         <Style TargetType="{x:Type Image}">
@@ -230,6 +230,7 @@
                                             <Grid Margin="0,0,0,4">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*"/>
                                                     <ColumnDefinition Width="Auto" />
                                                 </Grid.ColumnDefinitions>
 
@@ -238,7 +239,7 @@
                                                     <TextBlock Text="{Binding Path=Address}" />
                                                 </CheckBox>
 
-                                                <Button Grid.Column="1" Width="60" Click="OnRemoveCustomNodeClick"
+                                                <Button Grid.Column="2" Width="60" Click="OnRemoveCustomNodeClick"
                                                         Tag="{Binding}">
                                                     Remove
                                                 </Button>
@@ -271,14 +272,6 @@
                                 Enable Broadcast
                             </CheckBox>
                         </GroupBox>
-
-                        <GroupBox Grid.Row="4" Header="_Transmission" Style="{StaticResource DefaultGroupbox}">
-                            <ItemsControl
-                                ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=local:SettingsWindow}, Path=ArtNetService.NodesSendingTo, Mode=OneWay}">
-
-                            </ItemsControl>
-                        </GroupBox>
-
                     </Grid>
 
                 </TabItem>

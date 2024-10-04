@@ -41,8 +41,8 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <Rectangle Grid.Column="0" Width="12" Height="12" Fill="Green" Margin="0,0,4,0"></Rectangle>
-                <TextBlock Grid.Column="1" Text="Broadcasting"></TextBlock>
+                <Image Grid.Column="0" Width="12" Height="12" Margin="0,0,4,0" Source="../Assets/transmit.png"/>
+                <TextBlock Grid.Column="1" Text="Broadcasting"/>
             </Grid>
 
             <Border.Style>
@@ -101,7 +101,6 @@
                                         </Image.Style>
                                     </Image>
 
-                                    <!-- <Rectangle Grid.Column="0" Width="12" Height="12" Fill="Green" Margin="0,0,4,0"></Rectangle> -->
                                     <TextBlock Grid.Column="1" Text="{Binding Path=Address, Mode=OneWay}" />
                                 </Grid>
                             </Border>
@@ -139,7 +138,7 @@
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
 
-                                    <Rectangle Grid.Column="0" Width="12" Height="12" Fill="Green" Margin="0,0,4,0"></Rectangle>
+                                    <Image Grid.Column="0" Width="12" Height="12" Source="../Assets/computer.png"/>
                                     <TextBlock Grid.Column="1" Text="{Binding Path=Address, Mode=OneWay}" />
                                 </Grid>
                             </Border>
