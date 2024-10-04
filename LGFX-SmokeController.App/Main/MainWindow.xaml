@@ -40,11 +40,11 @@
 
             <ItemsControl
                 Grid.Column="0"
-                ItemsSource="{Binding RelativeSource={ RelativeSource AncestorType=local:MainWindow }, Path=App.SmokeMachines}">
+                ItemsSource="{Binding RelativeSource={ RelativeSource AncestorType=local:MainWindow }, Path=Controller.SmokeMachines}">
                 
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Columns="{Binding RelativeSource={ RelativeSource AncestorType=local:MainWindow }, Path=App.SmokeMachines.Count}"/>
+                        <UniformGrid Columns="{Binding RelativeSource={ RelativeSource AncestorType=local:MainWindow }, Path=Controller.SmokeMachines.Count}"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
 

@@ -11,6 +11,8 @@ public class SmokeMachine : ObservableObject
     public const string STOPPING = "Stopping";
     public const string STOPPED = "Stopped";
 
+    #region Underlying Values
+
     private bool _IsOn;
     private int _TimeOn = 20;
     private string _Status = STOPPED;
@@ -23,6 +25,13 @@ public class SmokeMachine : ObservableObject
     private short _FanAddress;
     private short _HeatAddress;
     private string _Name;
+    private FanMode _FanMode;
+    private int _TimeOff = 20;
+    private int _LeadTime = 0;
+    private int _PurgeTime = 20;
+    private bool _IsThreeChannel;
+
+    #endregion
 
     #region Config
 
@@ -32,7 +41,11 @@ public class SmokeMachine : ObservableObject
         set => SetProperty( ref _Name, value );
     }
 
-    public bool IsThreeChannel { get; set; }
+    public bool IsThreeChannel
+    {
+        get => _IsThreeChannel;
+        set => SetProperty( ref _IsThreeChannel, value );
+    }
 
 
     public short HeatAddress
@@ -72,7 +85,11 @@ public class SmokeMachine : ObservableObject
         set => SetProperty( ref _SmokeMode, value );
     }
 
-    public FanMode FanMode { get; set; }
+    public FanMode FanMode
+    {
+        get => _FanMode;
+        set => SetProperty( ref _FanMode, value );
+    }
 
     public bool VariableSmoke
     {
@@ -86,8 +103,17 @@ public class SmokeMachine : ObservableObject
         set => SetProperty( ref _VariableFan, value );
     }
 
-    public int LeadTime { get; set; } = 0;
-    public int PurgeTime { get; set; } = 20;
+    public int LeadTime
+    {
+        get => _LeadTime;
+        set => SetProperty( ref _LeadTime, value );
+    }
+
+    public int PurgeTime
+    {
+        get => _PurgeTime;
+        set => SetProperty( ref _PurgeTime, value );
+    }
 
     public int TimeOn
     {
@@ -95,7 +121,11 @@ public class SmokeMachine : ObservableObject
         set => SetProperty( ref _TimeOn, value );
     }
 
-    public int TimeOff { get; set; } = 20;
+    public int TimeOff
+    {
+        get => _TimeOff;
+        set => SetProperty( ref _TimeOff, value );
+    }
 
     #endregion
 
@@ -141,7 +171,7 @@ public class SmokeMachine : ObservableObject
 
     public SmokeMachine( string name, short address, SmokeMachinePresets preset )
     {
-        Name = name;
+        _Name = name;
         Address = address;
 
         switch ( preset )
@@ -158,8 +188,8 @@ public class SmokeMachine : ObservableObject
                 break;
         }
 
-        SmokeMode = new TimedMode( this );
-        FanMode = new InstantFanMode( this );
+        _SmokeMode = new TimedMode( this );
+        _FanMode = new InstantFanMode( this );
     }
 
 
@@ -175,7 +205,6 @@ public class SmokeMachine : ObservableObject
 
     public void Toggle()
     {
-        Console.WriteLine( $"Toggling machine: {Name}" );
         if ( IsOn )
             Stop();
         else

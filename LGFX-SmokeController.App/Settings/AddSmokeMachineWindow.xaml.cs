@@ -5,6 +5,8 @@ namespace LGFX_SmokeController.App.Settings;
 
 public partial class AddSmokeMachineWindow : Window
 {
+    public Controller Controller => ( ( App )Application.Current ).Controller;
+
     public byte[] AddressDefaults { get; } = [ 1, 3, 5, 7, 9, 11, 13, 15, 17 ];
 
     public SmokeMachinePresets MachinePreset { get; set; } = SmokeMachinePresets.Hazer;
@@ -24,7 +26,7 @@ public partial class AddSmokeMachineWindow : Window
 
     private void OnAddClick( object sender, RoutedEventArgs e )
     {
-        ( ( App )Application.Current ).SmokeMachines.Add( new SmokeMachine( MachineName, ( short )MachineAddress, MachinePreset ) );
+        Controller.SmokeMachines.Add( new SmokeMachine( MachineName, ( short )MachineAddress, MachinePreset ) );
 
         Close();
     }

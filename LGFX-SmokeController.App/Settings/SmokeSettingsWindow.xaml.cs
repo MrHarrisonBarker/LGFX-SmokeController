@@ -10,7 +10,7 @@ namespace LGFX_SmokeController.App.Settings;
 public partial class SmokeSettingsWindow : Window, INotifyPropertyChanged
 {
     private bool _IsAddNotOpen = true;
-    public App App => ( App )Application.Current;
+    public Controller Controller => ( ( App )Application.Current ).Controller;
 
     public int[] SmokeTimingDefaults { get; } = [ 10, 20, 40, 60 ];
     public byte[] AddressDefaults { get; } = [ 1, 3, 5, 7, 9, 11, 13, 15, 17 ];
@@ -26,7 +26,7 @@ public partial class SmokeSettingsWindow : Window, INotifyPropertyChanged
     public SmokeSettingsWindow()
     {
         InitializeComponent();
-        Closed += ( _, _ ) => App.Controller.SelectedMachine = null;
+        Closed += ( _, _ ) => Controller.SelectedMachine = null;
     }
 
     private void OnCloseClick( object sender, RoutedEventArgs e )
@@ -47,7 +47,7 @@ public partial class SmokeSettingsWindow : Window, INotifyPropertyChanged
     {
         if ( sender is ListBox listBox )
         {
-            App.Controller.SelectedMachine = ( SmokeMachine? )listBox.SelectedItem;
+            Controller.SelectedMachine = ( SmokeMachine? )listBox.SelectedItem;
 
             if ( listBox.SelectedItem is SmokeMachine machine )
             {
@@ -60,7 +60,7 @@ public partial class SmokeSettingsWindow : Window, INotifyPropertyChanged
     {
         if ( ListOfMachines.SelectedItem is SmokeMachine machine )
         {
-            App.SmokeMachines.Remove( machine );
+            Controller.SmokeMachines.Remove( machine );
             ListOfMachines.SelectedItem = null;
         }
     }

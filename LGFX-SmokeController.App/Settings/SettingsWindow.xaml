@@ -293,7 +293,7 @@
                         <controls:IntSliderWithInputAndDefaults
                             Margin="4"
                             Label="Universe"
-                            Number="0"
+                            Number="{Binding RelativeSource={RelativeSource AncestorType=local:SettingsWindow}, Path=ArtNetService.Universe, Mode=TwoWay}"
                             Minimum="0"
                             Maximum="512"
                             Default="0"

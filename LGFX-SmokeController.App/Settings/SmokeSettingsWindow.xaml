@@ -110,7 +110,7 @@
 
                 <ListBox
                     Grid.Column="0"
-                    ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=local:SmokeSettingsWindow}, Path=App.SmokeMachines}"
+                    ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=local:SmokeSettingsWindow}, Path=Controller.SmokeMachines}"
                     SelectionChanged="OnMachineSelected"
                     Name="ListOfMachines">
                     <ListBox.ItemTemplate>

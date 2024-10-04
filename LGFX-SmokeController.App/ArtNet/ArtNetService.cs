@@ -12,7 +12,14 @@ namespace LGFX_SmokeController.App.ArtNet;
 public class ArtNetService : ObservableObject
 {
     private bool _IsBroadcasting;
+    private short _Universe;
     public ART.NET.NetworkInterface? Adapter { get; set; }
+
+    public short Universe
+    {
+        get => _Universe;
+        set => SetProperty( ref _Universe, value );
+    }
 
     public IEnumerable<ART.NET.NetworkInterface> AvailableAdapters
     {

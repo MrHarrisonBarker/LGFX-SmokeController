@@ -4,7 +4,7 @@ namespace LGFX_SmokeController.App.Main;
 
 public partial class MainWindow : Window
 {
-    public App App => ( App )Application.Current;
+    public Controller Controller => ( ( App )Application.Current ).Controller;
         
     public MainWindow()
     {
@@ -13,7 +13,7 @@ public partial class MainWindow : Window
 
     private void OnStopAllClick( object sender, RoutedEventArgs e )
     {
-        foreach ( var machine in App.SmokeMachines )
+        foreach ( var machine in Controller.SmokeMachines )
         {
             machine.Stop();
         }
@@ -21,12 +21,17 @@ public partial class MainWindow : Window
 
     private void OnTriggerAll100( object sender, RoutedEventArgs e )
     {
-        
+        foreach ( var machine in Controller.SmokeMachines )
+        {
+            machine.SmokeLevel = 255;
+            machine.FanLevel = 255;
+            machine.Trigger();
+        }
     }
 
     private void OnTriggerAll( object sender, RoutedEventArgs e )
     {
-        foreach ( var machine in App.SmokeMachines )
+        foreach ( var machine in Controller.SmokeMachines )
         {
             machine.Trigger();
         }
