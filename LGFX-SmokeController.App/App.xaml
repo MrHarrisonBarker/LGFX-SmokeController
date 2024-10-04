@@ -27,6 +27,7 @@
             <local:IsNullConverter x:Key="IsNullConverter" />
             <local:IsNotNullConverter x:Key="IsNotNullConverter" />
             <local:InverseBooleanConverter x:Key="Not" />
+            <local:MultiValueEqualityConverter x:Key="MultiValueEqualityConverter"/>
 
             <Style x:Key="TitleBarButton" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
                 <Setter Property="Padding" Value="0" />

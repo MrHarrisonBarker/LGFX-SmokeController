@@ -6,6 +6,7 @@ namespace LGFX_SmokeController.App.Smoke;
 
 public partial class LiveSmokeControl : UserControl
 {
+    public Controller Controller => ( ( App )Application.Current ).Controller;
     public LiveSmokeControl()
     {
         InitializeComponent();

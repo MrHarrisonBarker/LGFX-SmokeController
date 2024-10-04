@@ -8,189 +8,238 @@
              d:DesignHeight="400" d:DesignWidth="150">
 
     <UserControl.Resources>
-        
+
     </UserControl.Resources>
-    
-    <Grid Margin="1,0">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="72" />
-            <RowDefinition Height="20" />
-        </Grid.RowDefinitions>
 
-        <Grid Margin="0,0,0,2" Height="24">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="24" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Rectangle Grid.Column="0">
-                <Rectangle.Style>
-                    <Style TargetType="{x:Type Rectangle}">
-                        <Setter Property="Fill" Value="Transparent"/>
+    <Border>
+        
+        <Border.Style>
+            <Style TargetType="{x:Type Border}">
+                <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                <Setter Property="BorderThickness" Value="1"></Setter>
+                
+                <Style.Triggers>
+                    <DataTrigger
+                       Value="True">
+                        <DataTrigger.Binding>
+                            <MultiBinding  Converter="{StaticResource MultiValueEqualityConverter}">
+                                <Binding Path="Machine" Mode="OneWay" RelativeSource="{RelativeSource AncestorType=UserControl, Mode=FindAncestor}"></Binding>
+                                <Binding Path="Controller.SelectedMachine" Mode="OneWay" RelativeSource="{RelativeSource AncestorType=UserControl, Mode=FindAncestor}"></Binding>
+                            </MultiBinding>
+                        </DataTrigger.Binding>
                         
-                        <Style.Triggers>
-                            <DataTrigger
-                                Binding="{Binding Machine.SmokeMode.Name, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor} }"
-                                Value="Trigger">
-                                <Setter Property="Fill" Value="Green"/>
-                            </DataTrigger>
-                            
-                            <DataTrigger
-                                Binding="{Binding Machine.SmokeMode.Name, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor} }"
-                                Value="Timed">
-                                <Setter Property="Fill" Value="Red"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Rectangle.Style>
-            </Rectangle>
-            <Button 
-                Grid.Column="1" 
-                Click="OnModeClick"
-                Content="{Binding Path=Machine.SmokeMode.Name, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}}"></Button>
-        </Grid>
+                        <Setter Property="BorderBrush" Value="LawnGreen"/>
+                        
+                        <DataTrigger.EnterActions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation 
+                                        From="0" 
+                                        To="1" 
+                                        RepeatBehavior="Forever" 
+                                        AutoReverse="True" 
+                                        Duration="0:0:0.2" 
+                                        Storyboard.TargetProperty="(Border.BorderBrush).(Opacity)"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </DataTrigger.EnterActions>
+                        
+                        <!-- <Setter Property="BorderBrush" Value="Red"></Setter> -->
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Border.Style>
+        
+        <Grid Margin="0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="72" />
+                <RowDefinition Height="20" />
+            </Grid.RowDefinitions>
 
-        <Grid Grid.Row="1" Margin="0,0,0,4">
-            <Border>
-                <TextBlock TextAlignment="Center" Text="{Binding Path=Machine.Name, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}}"></TextBlock>
-            </Border>
-        </Grid>
-
-        <Grid Grid.Row="2" Margin="0,0,0,4">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-
-            <Grid Grid.Column="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Border Grid.Row="0" Margin="0,0,1,0">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <TextBlock Text="S:"/>
-                        <TextBlock Text="{Binding Path=Machine.Address, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}}"/>
-                    </StackPanel>
-                    
-                </Border>
-
-                <Slider
-                    x:Name="SmokeSlider"
-                    Grid.Row="1"
-                    Margin="0,4"
-                    Orientation="Vertical"
-                    Minimum="0"
-                    Maximum="100"
-                    Value="{Binding Path=Machine.SmokeLevel, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}}"
-                    IsEnabled="{Binding Machine.VariableSmoke, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor} }"
-                    TickFrequency="10"
-                    TickPlacement="Both"
-                    VerticalAlignment="Stretch"
-                    HorizontalAlignment="Center"
-                    Background="{DynamicResource LgfxPinkBrush}"
-                    Style="{StaticResource AbletonLiveSlider}">
-                </Slider>
-
-                <Border Grid.Row="2" Margin="0,0,1,0">
-                    <TextBlock TextAlignment="Center"
-                               Text="{Binding ElementName=SmokeSlider, Path=Value, Mode=OneWay, Converter={StaticResource PercentageConverter}}" />
-                </Border>
-            </Grid>
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Border Grid.Row="0" Margin="1,0,0,0">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <TextBlock Text="F:"/>
-                        <TextBlock Text="{Binding Path=Machine.FanAddress, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}}"/>
-                    </StackPanel>
-                </Border>
-                <Slider
-                    x:Name="FanSlider"
-                    Grid.Row="1"
-                    Orientation="Vertical"
-                    Margin="0,4"
-                    Minimum="0"
-                    Maximum="100"
-                    Value="{Binding Path=Machine.FanLevel, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}}"
-                    IsEnabled="{Binding Machine.VariableFan, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor} }"
-                    TickFrequency="10"
-                    TickPlacement="Both"
-                    VerticalAlignment="Stretch"
-                    HorizontalAlignment="Center"
-                    Background="{DynamicResource LgfxRedBrush}"
-                    Style="{StaticResource AbletonLiveSlider}">
-                </Slider>
-                <Border Grid.Row="2" Margin="1,0,0,0">
-                    <TextBlock TextAlignment="Center"
-                               Text="{Binding ElementName=FanSlider, Path=Value, Mode=OneWay, Converter={StaticResource PercentageConverter}}" />
-                </Border>
-            </Grid>
-        </Grid>
-
-
-        <Button Grid.Row="3" Click="OnTriggerClick" FontWeight="SemiBold" FontSize="15">
-            <TextBlock VerticalAlignment="Center" Text="{Binding Path=Machine.Status, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}}"/>
-        </Button>
-
-        <Border Grid.Row="4">
-            <Grid>
+            <Grid Margin="0,0,0,2" Height="24">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="20" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="24" />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Rectangle Grid.Column="0">
                     <Rectangle.Style>
                         <Style TargetType="{x:Type Rectangle}">
-                            <Setter Property="Fill" Value="Red"/>
+                            <Setter Property="Fill" Value="Transparent" />
+
                             <Style.Triggers>
                                 <DataTrigger
-                                    Binding="{Binding Machine.IsOn, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor} }"
-                                    Value="True">
-                                    <Setter Property="Fill" Value="Green"/>
-                                    
-                                    <DataTrigger.EnterActions>
-                                        <BeginStoryboard>
-                                            <Storyboard>
-                                                <ColorAnimation From="Transparent" To="Green" AutoReverse="True" Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)" RepeatBehavior="Forever" Duration="0:0:1"></ColorAnimation>
-                                            </Storyboard>
-                                        </BeginStoryboard>
-                                    </DataTrigger.EnterActions>
+                                    Binding="{Binding Machine.SmokeMode.Name, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor} }"
+                                    Value="Trigger">
+                                    <Setter Property="Fill" Value="Green" />
+                                </DataTrigger>
+
+                                <DataTrigger
+                                    Binding="{Binding Machine.SmokeMode.Name, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor} }"
+                                    Value="Timed">
+                                    <Setter Property="Fill" Value="Red" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </Rectangle.Style>
                 </Rectangle>
-                
-                <Rectangle Grid.Column="1">
-                    <Rectangle.Style>
-                        <Style TargetType="{x:Type Rectangle}">
-                            <Setter Property="Fill" Value="Transparent"/>
-                            <Style.Triggers>
-                                <DataTrigger
-                                    Binding="{Binding Machine.FanOn, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor} }"
-                                    Value="True">
-                                    <Setter Property="Fill" Value="Yellow"/>
-                                </DataTrigger>
-                                
-                                <DataTrigger
-                                    Binding="{Binding Machine.SmokeOn, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor} }"
-                                    Value="True">
-                                    <Setter Property="Fill" Value="Green"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Rectangle.Style>
-                </Rectangle>
+                <Button
+                    Grid.Column="1"
+                    Click="OnModeClick"
+                    Content="{Binding Path=Machine.SmokeMode.Name, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}}">
+                </Button>
             </Grid>
 
-        </Border>
-    </Grid>
+            <Grid Grid.Row="1" Margin="0,0,0,4">
+                <Border>
+                    <TextBlock TextAlignment="Center"
+                               Text="{Binding Path=Machine.Name, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}}">
+                    </TextBlock>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Row="2" Margin="0,0,0,4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Margin="0,0,1,0">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock Text="S:" />
+                            <TextBlock
+                                Text="{Binding Path=Machine.Address, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}}" />
+                        </StackPanel>
+
+                    </Border>
+
+                    <Slider
+                        x:Name="SmokeSlider"
+                        Grid.Row="1"
+                        Margin="0,4"
+                        Orientation="Vertical"
+                        Minimum="0"
+                        Maximum="100"
+                        Value="{Binding Path=Machine.SmokeLevel, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}}"
+                        IsEnabled="{Binding Machine.VariableSmoke, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor} }"
+                        TickFrequency="10"
+                        TickPlacement="Both"
+                        VerticalAlignment="Stretch"
+                        HorizontalAlignment="Center"
+                        Background="{DynamicResource LgfxPinkBrush}"
+                        Style="{StaticResource AbletonLiveSlider}">
+                    </Slider>
+
+                    <Border Grid.Row="2" Margin="0,0,1,0">
+                        <TextBlock TextAlignment="Center"
+                                   Text="{Binding ElementName=SmokeSlider, Path=Value, Mode=OneWay, Converter={StaticResource PercentageConverter}}" />
+                    </Border>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Margin="1,0,0,0">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock Text="F:" />
+                            <TextBlock
+                                Text="{Binding Path=Machine.FanAddress, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}}" />
+                        </StackPanel>
+                    </Border>
+                    <Slider
+                        x:Name="FanSlider"
+                        Grid.Row="1"
+                        Orientation="Vertical"
+                        Margin="0,4"
+                        Minimum="0"
+                        Maximum="100"
+                        Value="{Binding Path=Machine.FanLevel, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}}"
+                        IsEnabled="{Binding Machine.VariableFan, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor} }"
+                        TickFrequency="10"
+                        TickPlacement="Both"
+                        VerticalAlignment="Stretch"
+                        HorizontalAlignment="Center"
+                        Background="{DynamicResource LgfxRedBrush}"
+                        Style="{StaticResource AbletonLiveSlider}">
+                    </Slider>
+                    <Border Grid.Row="2" Margin="1,0,0,0">
+                        <TextBlock TextAlignment="Center"
+                                   Text="{Binding ElementName=FanSlider, Path=Value, Mode=OneWay, Converter={StaticResource PercentageConverter}}" />
+                    </Border>
+                </Grid>
+            </Grid>
+
+
+            <Button Grid.Row="3" Click="OnTriggerClick" FontWeight="SemiBold" FontSize="15">
+                <TextBlock VerticalAlignment="Center"
+                           Text="{Binding Path=Machine.Status, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}}" />
+            </Button>
+
+            <Border Grid.Row="4">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Grid.Column="0">
+                        <Rectangle.Style>
+                            <Style TargetType="{x:Type Rectangle}">
+                                <Setter Property="Fill" Value="Red" />
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding Machine.IsOn, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor} }"
+                                        Value="True">
+                                        <Setter Property="Fill" Value="Green" />
+
+                                        <DataTrigger.EnterActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <ColorAnimation From="Transparent" To="Green" AutoReverse="True"
+                                                                    Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)"
+                                                                    RepeatBehavior="Forever" Duration="0:0:1">
+                                                    </ColorAnimation>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </DataTrigger.EnterActions>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+
+                    <Rectangle Grid.Column="1">
+                        <Rectangle.Style>
+                            <Style TargetType="{x:Type Rectangle}">
+                                <Setter Property="Fill" Value="Transparent" />
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding Machine.FanOn, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor} }"
+                                        Value="True">
+                                        <Setter Property="Fill" Value="Yellow" />
+                                    </DataTrigger>
+
+                                    <DataTrigger
+                                        Binding="{Binding Machine.SmokeOn, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor} }"
+                                        Value="True">
+                                        <Setter Property="Fill" Value="Green" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+                </Grid>
+
+            </Border>
+        </Grid>
+    </Border>
 </UserControl>

@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Threading;
 using ART.NET;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace LGFX_SmokeController.App.ArtNet;
 
@@ -145,38 +146,38 @@ public sealed class ArtNetNodeManager : INotifyPropertyChanged
     }
 }
 
-public record ArtNetNode( string ShortName, string LongName, IPAddress Address, bool IsSending = false ) : INotifyPropertyChanged
+public class ArtNetNode : ObservableObject
 {
-    private bool _IsSending = IsSending;
+    private bool _IsSending;
+    private bool _IsConnected;
+
+    public ArtNetNode(string shortName, string longName, IPAddress address, bool isSending = false)
+    {
+        IsSending = isSending;
+        ShortName = shortName;
+        LongName = longName;
+        Address = address;
+        IsConnected = true;
+    }
 
     public bool IsSending
     {
         get => _IsSending;
-        set
-        {
-            if ( value == _IsSending ) return;
-            _IsSending = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty( ref _IsSending, value );
     }
+
+    public bool IsConnected
+    {
+        get => _IsConnected;
+        set => SetProperty( ref _IsConnected, value );
+    }
+
+    public string ShortName { get; init; }  
+    public string LongName { get; init; }
+    public IPAddress Address { get; init; }
 
     public override string ToString()
     {
         return $"{Address}:{LongName}";
-    }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-
-    protected virtual void OnPropertyChanged( [CallerMemberName] string? propertyName = null )
-    {
-        PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
-    }
-
-    protected bool SetField<T>( ref T field, T value, [CallerMemberName] string? propertyName = null )
-    {
-        if ( EqualityComparer<T>.Default.Equals( field, value ) ) return false;
-        field = value;
-        OnPropertyChanged( propertyName );
-        return true;
     }
 }

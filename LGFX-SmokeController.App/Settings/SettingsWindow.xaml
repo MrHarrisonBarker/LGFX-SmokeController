@@ -10,7 +10,7 @@
         mc:Ignorable="d"
         Title="Settings"
         Height="600"
-        Width="400"
+        Width="500"
         WindowStartupLocation="CenterScreen"
         Style="{StaticResource WindowStyle}">
 
@@ -154,20 +154,47 @@
                                               ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=local:SettingsWindow}, Path=ArtNetService.NodeManager.Nodes, Mode=TwoWay}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate DataType="{x:Type artNet:ArtNetNode}">
-                                            <CheckBox
-                                                IsChecked="{Binding  IsSending, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                Margin="0,0,0,4">
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto" />
-                                                        <ColumnDefinition Width="Auto" />
-                                                    </Grid.ColumnDefinitions>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <CheckBox
+                                                    IsChecked="{Binding  IsSending, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                    Margin="0,0,0,4">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                        </Grid.ColumnDefinitions>
 
-                                                    <TextBlock Grid.Column="0" Margin="0,0,6,0"
-                                                               Text="{Binding Path=Address}" />
-                                                    <TextBlock Grid.Column="1" Text="{Binding Path=LongName}" />
-                                                </Grid>
-                                            </CheckBox>
+                                                        <TextBlock Grid.Column="0" Margin="0,0,6,0"
+                                                                   Text="{Binding Path=Address}" />
+                                                        <TextBlock Grid.Column="1" Text="{Binding Path=LongName}" />
+                                                    </Grid>
+                                                </CheckBox>
+
+                                                <Button Grid.Column="2" Content="Remove" Click="OnRemoveNodeClick"></Button>
+                                                <Image Grid.Column="3">
+                                                    <Image.Style>
+                                                        <Style TargetType="{x:Type Image}">
+                                                            <Setter Property="Source"
+                                                                    Value="../Assets/computer_error.png">
+                                                            </Setter>
+
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Path=IsConnected}"
+                                                                             Value="True">
+                                                                    <Setter Property="Source"
+                                                                            Value="../Assets/computer_link.png" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Image.Style>
+                                                </Image>
+                                            </Grid>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
@@ -239,7 +266,10 @@
                         </GroupBox>
 
                         <GroupBox Grid.Row="3" Header="_Broadcast" Style="{StaticResource DefaultGroupbox}">
-                            <CheckBox x:Name="EnableBroadcast" Margin="4">Enable Broadcast</CheckBox>
+                            <CheckBox x:Name="EnableBroadcast" Margin="4"
+                                      IsChecked="{Binding RelativeSource={RelativeSource AncestorType=local:SettingsWindow}, Path=ArtNetService.IsBroadcasting, Mode=TwoWay}">
+                                Enable Broadcast
+                            </CheckBox>
                         </GroupBox>
 
                         <GroupBox Grid.Row="4" Header="_Transmission" Style="{StaticResource DefaultGroupbox}">
@@ -267,7 +297,7 @@
                             Minimum="0"
                             Maximum="512"
                             Default="0"
-                            Defaults="{Binding RelativeSource={RelativeSource AncestorType=local:SettingsWindow}, Path=UniverseDefaults, Mode=OneTime}"/>
+                            Defaults="{Binding RelativeSource={RelativeSource AncestorType=local:SettingsWindow}, Path=UniverseDefaults, Mode=OneTime}" />
                     </Grid>
                 </TabItem>
             </TabControl>

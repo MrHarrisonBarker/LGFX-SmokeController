@@ -37,4 +37,9 @@ public partial class SettingsWindow : Window
             ArtNetService.CustomNodes.Remove( node );
         }
     }
+
+    private void OnRemoveNodeClick( object sender, RoutedEventArgs e )
+    {
+        
+    }
 }

@@ -11,7 +11,7 @@ public partial class SmokeSettingsWindow : Window, INotifyPropertyChanged
 {
     private bool _IsAddNotOpen = true;
     public App App => ( App )Application.Current;
-    
+
     public int[] SmokeTimingDefaults { get; } = [ 10, 20, 40, 60 ];
     public byte[] AddressDefaults { get; } = [ 1, 3, 5, 7, 9, 11, 13, 15, 17 ];
 
@@ -26,6 +26,7 @@ public partial class SmokeSettingsWindow : Window, INotifyPropertyChanged
     public SmokeSettingsWindow()
     {
         InitializeComponent();
+        Closed += ( _, _ ) => App.Controller.SelectedMachine = null;
     }
 
     private void OnCloseClick( object sender, RoutedEventArgs e )
@@ -37,7 +38,7 @@ public partial class SmokeSettingsWindow : Window, INotifyPropertyChanged
     {
         var window = new AddSmokeMachineWindow();
         window.Closed += ( _, _ ) => IsAddNotOpen = true;
-        
+
         window.Show();
         IsAddNotOpen = false;
     }
@@ -46,6 +47,8 @@ public partial class SmokeSettingsWindow : Window, INotifyPropertyChanged
     {
         if ( sender is ListBox listBox )
         {
+            App.Controller.SelectedMachine = ( SmokeMachine? )listBox.SelectedItem;
+
             if ( listBox.SelectedItem is SmokeMachine machine )
             {
                 FanModeComboBox.SelectedItem = machine.FanMode.Name;
@@ -95,11 +98,10 @@ public partial class SmokeSettingsWindow : Window, INotifyPropertyChanged
                         machine.FanMode = new ConstantFanMode( machine );
                         break;
                 }
-                
+
                 machine.Stop();
             }
         }
-        
     }
 
     private void OnMakeMDGClick( object sender, RoutedEventArgs e )
