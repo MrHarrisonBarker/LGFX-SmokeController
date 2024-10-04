@@ -101,4 +101,24 @@ public partial class SmokeSettingsWindow : Window, INotifyPropertyChanged
         }
         
     }
+
+    private void OnMakeMDGClick( object sender, RoutedEventArgs e )
+    {
+        if ( ListOfMachines.SelectedItem is SmokeMachine machine )
+        {
+            machine.VariableFan = false;
+            machine.VariableSmoke = false;
+            machine.SmokeLevel = byte.MaxValue;
+            machine.FanLevel = byte.MaxValue;
+        }
+    }
+
+    private void OnMakeHAZERClick( object sender, RoutedEventArgs e )
+    {
+        if ( ListOfMachines.SelectedItem is SmokeMachine machine )
+        {
+            machine.VariableFan = true;
+            machine.VariableSmoke = true;
+        }
+    }
 }

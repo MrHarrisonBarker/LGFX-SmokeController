@@ -57,13 +57,39 @@
             </Grid>
 
             <Menu Grid.Row="1">
-                <MenuItem Header="_Add"
+                <Menu.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                    </ItemsPanelTemplate>
+                </Menu.ItemsPanel>
+
+                <MenuItem Grid.Column="0"
+                          Header="_Add"
                           IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=local:SmokeSettingsWindow}, Path=IsAddNotOpen, Mode=OneWay}"
                           Click="OnAddClick">
                 </MenuItem>
-                <MenuItem Header="_Remove" Click="OnRemoveClick"
+                <MenuItem Grid.Column="1"
+                          Header="_Remove"
+                          Click="OnRemoveClick"
                           IsEnabled="{Binding ElementName=ListOfMachines, Path=SelectedItem, Mode=OneWay, Converter={StaticResource IsNotNullConverter}}">
                 </MenuItem>
+
+                <MenuItem Grid.Column="3"
+                          Header="_Make MDG"
+                          Click="OnMakeMDGClick"
+                          IsEnabled="{Binding ElementName=ListOfMachines, Path=SelectedItem, Mode=OneWay, Converter={StaticResource IsNotNullConverter}}" />
+                <MenuItem Grid.Column="4"
+                          Header="_Make HAZER"
+                          Click="OnMakeHAZERClick"
+                          IsEnabled="{Binding ElementName=ListOfMachines, Path=SelectedItem, Mode=OneWay, Converter={StaticResource IsNotNullConverter}}" />
             </Menu>
         </Grid>
 
