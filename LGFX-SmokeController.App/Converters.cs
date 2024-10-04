@@ -13,12 +13,12 @@ public class PercentageConverter : IValueConverter
             return $"{v}%";
         }
 
-        throw new NotImplementedException();
+        throw new NotSupportedException();
     }
 
     public object ConvertBack( object? value, Type targetType, object? parameter, CultureInfo culture )
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException();
     }
 }
 
