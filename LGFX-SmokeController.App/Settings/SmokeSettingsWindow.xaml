@@ -157,7 +157,7 @@
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" Text="Mode"></TextBlock>
-                                <ComboBox Grid.Column="1"></ComboBox>
+                                <ComboBox Grid.Column="1" Name="FanModeComboBox" SelectionChanged="OnFanModeChange" ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=local:SmokeSettingsWindow}, Path=FanModes, Mode=OneWay}"/>
                             </Grid>
                             <controls:IntSliderWithInputAndDefaults
                                 Grid.Row="2"

@@ -6,6 +6,8 @@ public class InstantFanMode : FanMode
     {
     }
 
+    public override string Name => "Instant";
+
     public override void Start()
     {
         Machine.FanOn = true;

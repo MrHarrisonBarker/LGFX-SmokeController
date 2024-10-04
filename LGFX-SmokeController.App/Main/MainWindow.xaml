@@ -56,33 +56,6 @@
 
             </ItemsControl>
 
-            <!-- <Grid Grid.Column="0"> -->
-            <!--     <Grid.ColumnDefinitions> -->
-            <!--         <ColumnDefinition /> -->
-            <!--         <ColumnDefinition /> -->
-            <!--         <ColumnDefinition /> -->
-            <!--         <ColumnDefinition /> -->
-            <!--         <ColumnDefinition /> -->
-            <!--         <ColumnDefinition /> -->
-            <!--         <ColumnDefinition /> -->
-            <!--         <ColumnDefinition /> -->
-            <!--         <ColumnDefinition /> -->
-            <!--         <ColumnDefinition /> -->
-            <!-- -->
-            <!--     </Grid.ColumnDefinitions> -->
-            <!--     <app:LiveSmokeControl></app:LiveSmokeControl> -->
-            <!--     <app:LiveSmokeControl Grid.Column="1"></app:LiveSmokeControl> -->
-            <!--     <app:LiveSmokeControl Grid.Column="2"></app:LiveSmokeControl> -->
-            <!--     <app:LiveSmokeControl Grid.Column="3"></app:LiveSmokeControl> -->
-            <!--     <app:LiveSmokeControl Grid.Column="4"></app:LiveSmokeControl> -->
-            <!--     <app:LiveSmokeControl Grid.Column="5"></app:LiveSmokeControl> -->
-            <!--     <app:LiveSmokeControl Grid.Column="6"></app:LiveSmokeControl> -->
-            <!--     <app:LiveSmokeControl Grid.Column="7"></app:LiveSmokeControl> -->
-            <!--     <app:LiveSmokeControl Grid.Column="8"></app:LiveSmokeControl> -->
-            <!--     <app:LiveSmokeControl Grid.Column="9"></app:LiveSmokeControl> -->
-            <!-- </Grid> -->
-
-
             <GridSplitter
                 Grid.Column="1"
                 Width="5"
@@ -97,9 +70,9 @@
                     <RowDefinition Height="2*" />
                 </Grid.RowDefinitions>
 
-                <Button Grid.Row="0" Click="OnStopAllClick">Stop All</Button>
-                <Button Grid.Row="1" Click="OnTriggerAll100">Trigger 100%</Button>
-                <Button Grid.Row="2" Click="OnTriggerAll">Trigger All</Button>
+                <Button Grid.Row="0" Click="OnStopAllClick" Content="Stop All"/>
+                <Button Grid.Row="1" Click="OnTriggerAll100" Content="Trigger 100%"/>
+                <Button Grid.Row="2" Click="OnTriggerAll" Content="Trigger All"/>
             </Grid>
         </Grid>
 

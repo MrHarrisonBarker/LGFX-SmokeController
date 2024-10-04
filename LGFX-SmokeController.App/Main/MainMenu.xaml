@@ -7,19 +7,39 @@
              mc:Ignorable="d"
              d:DesignHeight="32" d:DesignWidth="1000">
     <Menu>
-        <MenuItem Header="_File">
-            <MenuItem Header="_Default Preset" Click="OnDefaultPresetClick"/>
-            <MenuItem Header="_Save Preset" Click="OnSavePresetClick"/>
-            <MenuItem Header="_Open Preset" Click="OnOpenPresetClick"/>
+        <MenuItem>
+            <MenuItem.Header>
+                <StackPanel Orientation="Horizontal">
+                    <Image Height="16" Width="16" Source="../Assets/page.png" Margin="0,0,4,0"></Image>
+                    <TextBlock Text="File" VerticalAlignment="Center"></TextBlock>
+                </StackPanel>
+            </MenuItem.Header>
+            
+            <MenuItem Header="_Default Preset" Click="OnDefaultPresetClick" />
+            <MenuItem Header="_Save Preset" Click="OnSavePresetClick" />
+            <MenuItem Header="_Open Preset" Click="OnOpenPresetClick" />
         </MenuItem>
-        
-        <MenuItem Header="_Settings" 
-                  Click="OnSettingsClick" 
-                  IsEnabled="{Binding Path=IsSettingsWindowNotOpen, RelativeSource={RelativeSource AncestorType=local:MainMenu}}"/>
-        
-        <MenuItem 
-            Header="_Smoke Settings" 
+
+        <MenuItem
+                  Click="OnSettingsClick"
+                  IsEnabled="{Binding Path=IsSettingsWindowNotOpen, RelativeSource={RelativeSource AncestorType=local:MainMenu}}">
+            <MenuItem.Header>
+                <StackPanel Orientation="Horizontal">
+                    <Image Height="16" Width="16" Source="../Assets/cog.png" Margin="0,0,4,0"></Image>
+                    <TextBlock Text="Settings" VerticalAlignment="Center"></TextBlock>
+                </StackPanel>
+            </MenuItem.Header>
+        </MenuItem>
+
+        <MenuItem
             Click="OnSmokeSettingsClick"
-            IsEnabled="{Binding Path=IsSmokeSettingsWindowNotOpen, RelativeSource={RelativeSource AncestorType=local:MainMenu}}"/>
+            IsEnabled="{Binding Path=IsSmokeSettingsWindowNotOpen, RelativeSource={RelativeSource AncestorType=local:MainMenu}}">
+            <MenuItem.Header>
+                <StackPanel Orientation="Horizontal">
+                    <Image Height="16" Width="16" Source="../Assets/computer.png" Margin="0,0,4,0"></Image>
+                    <TextBlock Text="Smoke Settings" VerticalAlignment="Center"></TextBlock>
+                </StackPanel>
+            </MenuItem.Header>
+        </MenuItem>
     </Menu>
 </UserControl>

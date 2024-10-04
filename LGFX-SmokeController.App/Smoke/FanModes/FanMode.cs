@@ -4,6 +4,7 @@ namespace LGFX_SmokeController.App.Smoke.FanModes;
 
 public abstract class FanMode : ObservableObject
 {
+    public abstract string Name { get; }
     protected readonly SmokeMachine Machine;
 
     protected FanMode( SmokeMachine machine )

@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using LGFX_SmokeController.App.Smoke;
+using LGFX_SmokeController.App.Smoke.FanModes;
 
 namespace LGFX_SmokeController.App.Settings;
 
@@ -13,6 +14,8 @@ public partial class SmokeSettingsWindow : Window, INotifyPropertyChanged
     
     public int[] SmokeTimingDefaults { get; } = [ 10, 20, 40, 60 ];
     public byte[] AddressDefaults { get; } = [ 1, 3, 5, 7, 9, 11, 13, 15, 17 ];
+
+    public string[] FanModes { get; } = [ "Instant", "Timed", "Constant" ];
 
     public bool IsAddNotOpen
     {
@@ -41,7 +44,13 @@ public partial class SmokeSettingsWindow : Window, INotifyPropertyChanged
 
     private void OnMachineSelected( object sender, SelectionChangedEventArgs e )
     {
-        
+        if ( sender is ListBox listBox )
+        {
+            if ( listBox.SelectedItem is SmokeMachine machine )
+            {
+                FanModeComboBox.SelectedItem = machine.FanMode.Name;
+            }
+        }
     }
 
     private void OnRemoveClick( object sender, RoutedEventArgs e )
@@ -66,5 +75,30 @@ public partial class SmokeSettingsWindow : Window, INotifyPropertyChanged
         field = value;
         OnPropertyChanged( propertyName );
         return true;
+    }
+
+    private void OnFanModeChange( object sender, SelectionChangedEventArgs e )
+    {
+        if ( sender is ComboBox comboBox && ListOfMachines.SelectedItem is SmokeMachine machine )
+        {
+            if ( comboBox.SelectedItem as string != machine.FanMode.Name )
+            {
+                switch ( comboBox.SelectedItem as string )
+                {
+                    case "Instant":
+                        machine.FanMode = new InstantFanMode( machine );
+                        break;
+                    case "Timed":
+                        machine.FanMode = new TimedFanMode( machine );
+                        break;
+                    case "Constant":
+                        machine.FanMode = new ConstantFanMode( machine );
+                        break;
+                }
+                
+                machine.Stop();
+            }
+        }
+        
     }
 }

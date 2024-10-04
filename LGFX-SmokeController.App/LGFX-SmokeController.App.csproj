@@ -56,6 +56,22 @@
     <Content Include="Assets\smoke-install-banner.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Remove="Assets\smoke.png" />
+    <Content Include="Assets\smoke.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Assets\cog.png" />
+    <Content Include="Assets\cog.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Assets\computer.png" />
+    <Content Include="Assets\computer.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Assets\page.png" />
+    <Content Include="Assets\page.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
