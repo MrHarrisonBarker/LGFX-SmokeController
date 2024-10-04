@@ -26,7 +26,7 @@
                 <RowDefinition Height="32" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            
+
             <Grid Background="Black" Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -55,14 +55,18 @@
                         StrokeThickness="1" />
                 </Button>
             </Grid>
-            
+
             <Menu Grid.Row="1">
-                <MenuItem Header="_Add" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=local:SmokeSettingsWindow}, Path=IsAddNotOpen, Mode=OneWay}" Click="OnAddClick"></MenuItem>
-                <MenuItem Header="_Remove" Click="OnRemoveClick" IsEnabled="{Binding ElementName=ListOfMachines, Path=SelectedItem, Mode=OneWay, Converter={StaticResource IsNotNullConverter}}"></MenuItem>
+                <MenuItem Header="_Add"
+                          IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=local:SmokeSettingsWindow}, Path=IsAddNotOpen, Mode=OneWay}"
+                          Click="OnAddClick">
+                </MenuItem>
+                <MenuItem Header="_Remove" Click="OnRemoveClick"
+                          IsEnabled="{Binding ElementName=ListOfMachines, Path=SelectedItem, Mode=OneWay, Converter={StaticResource IsNotNullConverter}}">
+                </MenuItem>
             </Menu>
         </Grid>
-        
-        
+
 
         <Grid>
             <Grid.RowDefinitions>
@@ -92,14 +96,14 @@
 
                 <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" ResizeDirection="Columns" />
 
-                <TabControl Grid.Column="2" 
+                <TabControl Grid.Column="2"
                             DataContext="{Binding ElementName=ListOfMachines, Path=SelectedItem, Mode=OneWay}"
                             d:DataContext="{d:DesignInstance smoke:SmokeMachine}">
-                    
+
                     <TabControl.Style>
                         <Style TargetType="{x:Type TabControl}" BasedOn="{StaticResource DefaultTabControl}">
                             <Setter Property="Visibility" Value="Visible"></Setter>
-                            
+
                             <Style.Triggers>
                                 <DataTrigger
                                     Binding="{Binding ElementName=ListOfMachines, Path=SelectedItem, Mode=OneWay}"
@@ -109,7 +113,7 @@
                             </Style.Triggers>
                         </Style>
                     </TabControl.Style>
-                    
+
                     <TabItem Header="_Smoke">
                         <Grid Margin="4">
                             <Grid.RowDefinitions>
@@ -157,7 +161,8 @@
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" Text="Mode"></TextBlock>
-                                <ComboBox Grid.Column="1" Name="FanModeComboBox" SelectionChanged="OnFanModeChange" ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=local:SmokeSettingsWindow}, Path=FanModes, Mode=OneWay}"/>
+                                <ComboBox Grid.Column="1" Name="FanModeComboBox" SelectionChanged="OnFanModeChange"
+                                          ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=local:SmokeSettingsWindow}, Path=FanModes, Mode=OneWay}" />
                             </Grid>
                             <controls:IntSliderWithInputAndDefaults
                                 Grid.Row="2"
@@ -199,6 +204,16 @@
                                 Maximum="512"
                                 Default="1"
                                 Defaults="{Binding RelativeSource={RelativeSource AncestorType=local:SmokeSettingsWindow}, Path=AddressDefaults, Mode=OneWay}" />
+                        </Grid>
+                    </TabItem>
+
+                    <TabItem Header="_Info">
+                        <Grid Margin="4">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <controls:TextBoxWithLabel Label="Name" Text="{Binding Path=Name, Mode=TwoWay}" />
                         </Grid>
                     </TabItem>
                 </TabControl>

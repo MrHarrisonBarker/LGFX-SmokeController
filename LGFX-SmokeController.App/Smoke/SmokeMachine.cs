@@ -22,10 +22,16 @@ public class SmokeMachine : ObservableObject
     private short _Address;
     private short _FanAddress;
     private short _HeatAddress;
+    private string _Name;
 
     #region Config
 
-    public string Name { get; set; }
+    public string Name
+    {
+        get => _Name;
+        set => SetProperty( ref _Name, value );
+    }
+
     public bool IsThreeChannel { get; set; }
 
 

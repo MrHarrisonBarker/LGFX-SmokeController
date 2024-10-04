@@ -12,6 +12,6 @@
         </Grid.ColumnDefinitions>
                 
         <TextBlock Text="{Binding Label, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}}" Grid.Column="0"></TextBlock>
-        <TextBox Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}}" Grid.Column="1"></TextBox>
+        <TextBox Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"></TextBox>
     </Grid>
 </UserControl>

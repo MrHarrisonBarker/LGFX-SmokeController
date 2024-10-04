@@ -3,12 +3,15 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using LGFX_SmokeController.App.Settings;
+using LGFX_SmokeController.App.Smoke;
 using Microsoft.Win32;
 
 namespace LGFX_SmokeController.App.Main;
 
 public partial class MainMenu : UserControl, INotifyPropertyChanged
 {
+    public App App => ( App )Application.Current;
+
     private bool _IsSettingsWindowNotOpen = true;
     private bool _IsSmokeSettingsWindowNotOpen = true;
 
@@ -87,5 +90,40 @@ public partial class MainMenu : UserControl, INotifyPropertyChanged
         field = value;
         OnPropertyChanged( propertyName );
         return true;
+    }
+
+    private void OnFestivalPresetClick( object sender, RoutedEventArgs e )
+    {
+        
+        foreach ( var machine in App.SmokeMachines.ToList() )
+        {
+            App.SmokeMachines.Remove( machine );
+        }
+
+        App.SmokeMachines.Add( new SmokeMachine( "SL 1", 1, SmokeMachinePresets.Hazer ) );
+        App.SmokeMachines.Add( new SmokeMachine( "SL 2", 3, SmokeMachinePresets.Hazer ) );
+        App.SmokeMachines.Add( new SmokeMachine( "SR 3", 5, SmokeMachinePresets.Hazer ) );
+        App.SmokeMachines.Add( new SmokeMachine( "SR 4", 7, SmokeMachinePresets.Hazer ) );
+        App.SmokeMachines.Add( new SmokeMachine( "FOH 4", 9, SmokeMachinePresets.Hazer ) );
+        App.SmokeMachines.Add( new SmokeMachine( "FOH 5", 11, SmokeMachinePresets.Hazer ) );
+        App.SmokeMachines.Add( new SmokeMachine( "DELAY 6", 13, SmokeMachinePresets.Hazer ) );
+        App.SmokeMachines.Add( new SmokeMachine( "DELAY 7", 15, SmokeMachinePresets.Hazer ) );
+    }
+
+    private void OnMDGFestivalPresetClick( object sender, RoutedEventArgs e )
+    {
+    }
+
+    private void OnHAZERSPresetClick( object sender, RoutedEventArgs e )
+    {
+        foreach ( var machine in App.SmokeMachines.ToList() )
+        {
+            App.SmokeMachines.Remove( machine );
+        }
+
+        App.SmokeMachines.Add( new SmokeMachine( "HAZER 1", 1, SmokeMachinePresets.Hazer ) );
+        App.SmokeMachines.Add( new SmokeMachine( "HAZER 2", 3, SmokeMachinePresets.Hazer ) );
+        App.SmokeMachines.Add( new SmokeMachine( "HAZER 3", 5, SmokeMachinePresets.Hazer ) );
+        App.SmokeMachines.Add( new SmokeMachine( "HAZER 4", 7, SmokeMachinePresets.Hazer ) );
     }
 }

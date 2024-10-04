@@ -18,6 +18,12 @@
             <MenuItem Header="_Default Preset" Click="OnDefaultPresetClick" />
             <MenuItem Header="_Save Preset" Click="OnSavePresetClick" />
             <MenuItem Header="_Open Preset" Click="OnOpenPresetClick" />
+            
+            <Separator/>
+            
+            <MenuItem Header="_Festival" Click="OnFestivalPresetClick"/>
+            <MenuItem Header="_MDG Festival" Click="OnMDGFestivalPresetClick"/>
+            <MenuItem Header="_HAZERS" Click="OnHAZERSPresetClick"/>
         </MenuItem>
 
         <MenuItem
