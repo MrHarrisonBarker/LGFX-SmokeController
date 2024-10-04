@@ -24,9 +24,9 @@ public class Controller : ObservableObject
 
     public Controller( Dispatcher dispatcher )
     {
-        ArtNetService = new ArtNetService( dispatcher );
+        ArtNetService = new ArtNetService( dispatcher, this );
         StorageManager = new StorageManager( this );
-        ArtNetService.NodeManager?.StartPollReply();
+        ArtNetService.Start();
     }
 
     public void Save()

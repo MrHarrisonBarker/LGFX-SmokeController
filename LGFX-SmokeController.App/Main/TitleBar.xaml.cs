@@ -27,6 +27,5 @@ public partial class TitleBar : UserControl
     private void OnCloseClick( object sender, RoutedEventArgs e )
     {
         Environment.Exit( 0 );
-        // Application.Current.Shutdown();
     }
 }

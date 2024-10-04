@@ -11,6 +11,9 @@ public class SmokeMachine : ObservableObject
     public const string STOPPING = "Stopping";
     public const string STOPPED = "Stopped";
 
+    public const byte MaxLevel = 100;
+    public const byte MinLevel = 0;
+
     #region Underlying Values
 
     private bool _IsOn;
@@ -30,6 +33,8 @@ public class SmokeMachine : ObservableObject
     private int _LeadTime = 0;
     private int _PurgeTime = 20;
     private bool _IsThreeChannel;
+    private byte _SmokeLevel = 100;
+    private byte _FanLevel = 100;
 
     #endregion
 
@@ -158,12 +163,25 @@ public class SmokeMachine : ObservableObject
     }
 
 
-    public byte SmokeLevel { get; set; } = 255;
-    public byte FanLevel { get; set; } = 255;
+    public byte SmokeLevel
+    {
+        get => _SmokeLevel;
+        set => SetProperty( ref _SmokeLevel, value );
+    }
 
+    public byte FanLevel
+    {
+        get => _FanLevel;
+        set => SetProperty( ref _FanLevel, value );
+    }
 
-    public byte SmokeValue() => SmokeOn ? SmokeLevel : byte.MinValue;
-    public byte FanValue() => FanOn ? FanLevel : byte.MinValue;
+    public static byte Map( byte input, byte fromStart, byte fromEnd, byte toStart, byte toEnd )
+    {
+        return ( byte )( toStart + ( input - fromStart ) * ( toEnd - toStart ) / ( fromEnd - fromStart ) );
+    }
+
+    public byte SmokeValue() => SmokeOn ? Map( SmokeLevel, MinLevel, MaxLevel, byte.MinValue, byte.MaxValue ) : byte.MinValue;
+    public byte FanValue() => FanOn ? Map( FanLevel, MinLevel, MaxLevel, byte.MinValue, byte.MaxValue ) : byte.MinValue;
     public byte HeatValue() => 255;
 
     #endregion
@@ -190,7 +208,7 @@ public class SmokeMachine : ObservableObject
     {
         _Name = name;
         Address = address;
-        
+
         _SmokeMode = new TimedMode( this );
         _FanMode = new InstantFanMode( this );
     }

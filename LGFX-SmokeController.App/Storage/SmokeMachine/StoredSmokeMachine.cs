@@ -7,8 +7,8 @@ public class StoredSmokeMachine
 {
     public int TimeOn { get; set; } = 20;
     public int TimeOff { get; set; } = 20;
-    public byte SmokeLevel { get; set; } = 255;
-    public byte FanLevel { get; set; } = 255;
+    public byte SmokeLevel { get; set; } = 100;
+    public byte FanLevel { get; set; } = 100;
     public string SmokeMode { get; set; } = "Timed";
     public string FanMode { get; set; } = "Instant";
     public bool VariableSmoke { get; set; } = true;

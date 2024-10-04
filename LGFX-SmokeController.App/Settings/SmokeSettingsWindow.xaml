@@ -227,7 +227,7 @@
                                 Label="Address"
                                 Number="{Binding Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 Minimum="1"
-                                Maximum="512"
+                                Maximum="511"
                                 Default="1"
                                 Defaults="{Binding RelativeSource={RelativeSource AncestorType=local:SmokeSettingsWindow}, Path=AddressDefaults, Mode=OneWay}" />
                         </Grid>

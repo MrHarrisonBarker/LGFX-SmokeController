@@ -140,7 +140,7 @@
 
                     <Border Grid.Row="2" Margin="0,0,1,0">
                         <TextBlock TextAlignment="Center"
-                                   Text="{Binding ElementName=SmokeSlider, Path=Value, Mode=OneWay, Converter={StaticResource PercentageConverter}}" />
+                                   Text="{Binding Path=Machine.SmokeLevel, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, Converter={StaticResource PercentageConverter}}" />
                     </Border>
                 </Grid>
                 <Grid Grid.Column="1">
@@ -174,7 +174,7 @@
                     </Slider>
                     <Border Grid.Row="2" Margin="1,0,0,0">
                         <TextBlock TextAlignment="Center"
-                                   Text="{Binding ElementName=FanSlider, Path=Value, Mode=OneWay, Converter={StaticResource PercentageConverter}}" />
+                                   Text="{Binding Path=Machine.FanLevel, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, Converter={StaticResource PercentageConverter}}" />
                     </Border>
                 </Grid>
             </Grid>

@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using LGFX_SmokeController.App.Smoke;
 
 namespace LGFX_SmokeController.App.Main;
 
@@ -23,8 +24,8 @@ public partial class MainWindow : Window
     {
         foreach ( var machine in Controller.SmokeMachines )
         {
-            machine.SmokeLevel = 255;
-            machine.FanLevel = 255;
+            machine.SmokeLevel = SmokeMachine.MaxLevel;
+            machine.FanLevel = SmokeMachine.MaxLevel;
             machine.Trigger();
         }
     }

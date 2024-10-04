@@ -1,32 +1,37 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Windows.Data;
 
 namespace LGFX_SmokeController.App;
 
+[ValueConversion( typeof( byte ), typeof( string ) )]
 public class PercentageConverter : IValueConverter
 {
     public object Convert( object? value, Type targetType, object? parameter, CultureInfo culture )
     {
-        return ( value?.ToString() ?? "" ) + "%";
+        if ( value is byte v )
+        {
+            return $"{v}%";
+        }
+
+        throw new NotImplementedException();
     }
 
     public object ConvertBack( object? value, Type targetType, object? parameter, CultureInfo culture )
     {
-        return 0;
+        throw new NotImplementedException();
     }
 }
 
 public class MultiValueEqualityConverter : IMultiValueConverter
 {
-    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+    public object Convert( object[] values, Type targetType, object parameter, CultureInfo culture )
     {
-        return values?.All(o => o?.Equals(values[0]) == true) == true || values?.All(o => o == null) == true;
+        return values?.All( o => o?.Equals( values[ 0 ] ) == true ) == true || values?.All( o => o == null ) == true;
     }
 
-    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+    public object[] ConvertBack( object value, Type[] targetTypes, object parameter, CultureInfo culture )
     {
-        return [];
+        return [ ];
     }
 }
 
