@@ -40,6 +40,9 @@ public partial class SettingsWindow : Window
 
     private void OnRemoveNodeClick( object sender, RoutedEventArgs e )
     {
-        
+        if ( ( ( Button )sender ).Tag is ArtNetNode node )
+        {
+            ArtNetService.NodeManager?.Nodes.Remove( node );
+        }
     }
 }
