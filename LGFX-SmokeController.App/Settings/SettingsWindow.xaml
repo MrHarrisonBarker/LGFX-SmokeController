@@ -150,7 +150,6 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <ItemsControl Grid.Row="0"
-                                              IsEnabled="{Binding Path=IsChecked, ElementName=EnableBroadcast, Mode=OneWay, Converter={StaticResource Not}}"
                                               ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=local:SettingsWindow}, Path=ArtNetService.NodeManager.Nodes, Mode=TwoWay}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate DataType="{x:Type artNet:ArtNetNode}">
@@ -163,6 +162,7 @@
                                                 </Grid.ColumnDefinitions>
                                                 <CheckBox
                                                     IsChecked="{Binding  IsSending, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                    IsEnabled="{Binding Path=IsChecked, ElementName=EnableBroadcast, Mode=OneWay, Converter={StaticResource Not}}"
                                                     Margin="0,0,0,4">
                                                     <Grid>
                                                         <Grid.ColumnDefinitions>
@@ -170,9 +170,11 @@
                                                             <ColumnDefinition Width="Auto" />
                                                         </Grid.ColumnDefinitions>
 
-                                                        <TextBlock Grid.Column="0" Margin="0,0,6,0"
+                                                        <TextBlock Grid.Column="0" 
+                                                                   Margin="0,0,6,0"
                                                                    Text="{Binding Path=Address}" />
-                                                        <TextBlock Grid.Column="1" Text="{Binding Path=LongName}" />
+                                                        <TextBlock Grid.Column="1" 
+                                                                   Text="{Binding Path=LongName}" />
                                                     </Grid>
                                                 </CheckBox>
 
@@ -223,7 +225,6 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <ItemsControl Grid.Row="0"
-                                              IsEnabled="{Binding Path=IsChecked, ElementName=EnableBroadcast, Mode=OneWay, Converter={StaticResource Not}}"
                                               ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=local:SettingsWindow}, Path=ArtNetService.CustomNodes, Mode=TwoWay}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate DataType="{x:Type artNet:ArtNetNode}">
@@ -234,8 +235,11 @@
                                                     <ColumnDefinition Width="Auto" />
                                                 </Grid.ColumnDefinitions>
 
-                                                <CheckBox Grid.Column="0" IsChecked="{Binding  IsSending}"
-                                                          Margin="0,0,8,0">
+                                                <CheckBox 
+                                                    Grid.Column="0" 
+                                                    IsChecked="{Binding  IsSending}"
+                                                    IsEnabled="{Binding Path=IsChecked, ElementName=EnableBroadcast, Mode=OneWay, Converter={StaticResource Not}}"
+                                                    Margin="0,0,8,0">
                                                     <TextBlock Text="{Binding Path=Address}" />
                                                 </CheckBox>
 

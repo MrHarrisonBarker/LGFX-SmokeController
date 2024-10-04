@@ -18,7 +18,7 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <Image Source="../Assets/lgx.jpg" Margin="4,0" Height="28" Width="28" VerticalAlignment="Center"
+        <Image Source="../Assets/lgx.jpg" Margin="4,0" Height="24" Width="24" VerticalAlignment="Center"
                Stretch="UniformToFill" />
 
         <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">

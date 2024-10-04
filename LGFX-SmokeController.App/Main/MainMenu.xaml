@@ -18,11 +18,11 @@
             <MenuItem Header="_Save" Click="OnSaveClick"/>
             <MenuItem Header="_New" Click="OnNewClick"/>
             
-            <Separator/>
-            
-            <MenuItem Header="_Default Preset" Click="OnDefaultPresetClick" />
-            <MenuItem Header="_Save Preset" Click="OnSavePresetClick" />
-            <MenuItem Header="_Open Preset" Click="OnOpenPresetClick" />
+            <!-- <Separator/> -->
+            <!-- -->
+            <!-- <MenuItem Header="_Default Preset" Click="OnDefaultPresetClick" /> -->
+            <!-- <MenuItem Header="_Save Preset" Click="OnSavePresetClick" /> -->
+            <!-- <MenuItem Header="_Open Preset" Click="OnOpenPresetClick" /> -->
             
             <Separator/>
             

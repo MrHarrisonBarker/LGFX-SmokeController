@@ -10,12 +10,14 @@ public partial class AddSmokeMachineWindow : Window
     public byte[] AddressDefaults { get; } = [ 1, 3, 5, 7, 9, 11, 13, 15, 17 ];
 
     public SmokeMachinePresets MachinePreset { get; set; } = SmokeMachinePresets.Hazer;
-    public int MachineAddress { get; set; } = 1;
+    public int MachineAddress { get; set; }
     public string MachineName { get; set; } = "SL";
 
 
     public AddSmokeMachineWindow()
     {
+        MachineAddress = Controller.SmokeMachines.LastOrDefault()?.Address + 2 ?? 1;
+        
         InitializeComponent();
     }
 

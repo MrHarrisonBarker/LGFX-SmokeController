@@ -112,6 +112,20 @@ public partial class MainMenu : UserControl, INotifyPropertyChanged
 
     private void OnMDGFestivalPresetClick( object sender, RoutedEventArgs e )
     {
+        Controller.ClearMachines();
+
+        Controller.SetMachines(
+            new SmokeMachine( "SL 1", 1, SmokeMachinePresets.Mdg ),
+            new SmokeMachine( "SL 2", 3, SmokeMachinePresets.Mdg ),
+            new SmokeMachine( "SR 3", 5, SmokeMachinePresets.Mdg ),
+            new SmokeMachine( "SR 4", 7, SmokeMachinePresets.Mdg ),
+            new SmokeMachine( "FOH 4", 9, SmokeMachinePresets.Hazer ),
+            new SmokeMachine( "FOH 5", 11, SmokeMachinePresets.Hazer ),
+            new SmokeMachine( "DELAY 6", 13, SmokeMachinePresets.Hazer ),
+            new SmokeMachine( "DELAY 7", 15, SmokeMachinePresets.Hazer )
+        );
+
+        Controller.Save();
     }
 
     private void OnHAZERSPresetClick( object sender, RoutedEventArgs e )
