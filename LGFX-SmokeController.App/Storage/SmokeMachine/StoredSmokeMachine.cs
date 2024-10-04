@@ -1,4 +1,7 @@
-﻿namespace LGFX_SmokeController.App.Storage.SmokeMachine;
+﻿using LGFX_SmokeController.App.Smoke.FanModes;
+using LGFX_SmokeController.App.Smoke.SmokeModes;
+
+namespace LGFX_SmokeController.App.Storage.SmokeMachine;
 
 public class StoredSmokeMachine
 {
@@ -33,6 +36,40 @@ public class StoredSmokeMachine
 
     public StoredSmokeMachine()
     {
-        
+    }
+
+    public static Smoke.SmokeMachine SmokeMachine( StoredSmokeMachine stored )
+    {
+        var smokeMachine = new Smoke.SmokeMachine( stored.Name, stored.Address )
+        {
+            TimeOn = stored.TimeOn,
+            TimeOff = stored.TimeOff,
+            SmokeLevel = stored.SmokeLevel,
+            FanLevel = stored.FanLevel,
+            VariableSmoke = stored.VariableSmoke,
+            VariableFan = stored.VariableFan,
+            FanAddress = stored.FanAddress,
+            HeatAddress = stored.HeatAddress
+        };
+
+        if ( stored.SmokeMode == "Trigger" )
+        {
+            smokeMachine.SmokeMode = new TriggerMode( smokeMachine );
+        }
+
+        switch ( stored.FanMode )
+        {
+            case "Instant":
+                smokeMachine.FanMode = new InstantFanMode( smokeMachine );
+                break;
+            case "Timed":
+                smokeMachine.FanMode = new TimedFanMode( smokeMachine );
+                break;
+            case "Constant":
+                smokeMachine.FanMode = new ConstantFanMode( smokeMachine );
+                break;
+        }
+
+        return smokeMachine;
     }
 }

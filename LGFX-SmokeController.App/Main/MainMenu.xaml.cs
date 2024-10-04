@@ -94,20 +94,19 @@ public partial class MainMenu : UserControl, INotifyPropertyChanged
 
     private void OnFestivalPresetClick( object sender, RoutedEventArgs e )
     {
-        foreach ( var machine in Controller.SmokeMachines.ToList() )
-        {
-            Controller.SmokeMachines.Remove( machine );
-        }
+        Controller.ClearMachines();
 
-        Controller.SmokeMachines.Add( new SmokeMachine( "SL 1", 1, SmokeMachinePresets.Hazer ) );
-        Controller.SmokeMachines.Add( new SmokeMachine( "SL 2", 3, SmokeMachinePresets.Hazer ) );
-        Controller.SmokeMachines.Add( new SmokeMachine( "SR 3", 5, SmokeMachinePresets.Hazer ) );
-        Controller.SmokeMachines.Add( new SmokeMachine( "SR 4", 7, SmokeMachinePresets.Hazer ) );
-        Controller.SmokeMachines.Add( new SmokeMachine( "FOH 4", 9, SmokeMachinePresets.Hazer ) );
-        Controller.SmokeMachines.Add( new SmokeMachine( "FOH 5", 11, SmokeMachinePresets.Hazer ) );
-        Controller.SmokeMachines.Add( new SmokeMachine( "DELAY 6", 13, SmokeMachinePresets.Hazer ) );
-        Controller.SmokeMachines.Add( new SmokeMachine( "DELAY 7", 15, SmokeMachinePresets.Hazer ) );
-        
+        Controller.SetMachines(
+            new SmokeMachine( "SL 1", 1, SmokeMachinePresets.Hazer ),
+            new SmokeMachine( "SL 2", 3, SmokeMachinePresets.Hazer ),
+            new SmokeMachine( "SR 3", 5, SmokeMachinePresets.Hazer ),
+            new SmokeMachine( "SR 4", 7, SmokeMachinePresets.Hazer ),
+            new SmokeMachine( "FOH 4", 9, SmokeMachinePresets.Hazer ),
+            new SmokeMachine( "FOH 5", 11, SmokeMachinePresets.Hazer ),
+            new SmokeMachine( "DELAY 6", 13, SmokeMachinePresets.Hazer ),
+            new SmokeMachine( "DELAY 7", 15, SmokeMachinePresets.Hazer )
+        );
+
         Controller.Save();
     }
 
@@ -117,16 +116,15 @@ public partial class MainMenu : UserControl, INotifyPropertyChanged
 
     private void OnHAZERSPresetClick( object sender, RoutedEventArgs e )
     {
-        foreach ( var machine in Controller.SmokeMachines.ToList() )
-        {
-            Controller.SmokeMachines.Remove( machine );
-        }
+        Controller.ClearMachines();
 
-        Controller.SmokeMachines.Add( new SmokeMachine( "HAZER 1", 1, SmokeMachinePresets.Hazer ) );
-        Controller.SmokeMachines.Add( new SmokeMachine( "HAZER 2", 3, SmokeMachinePresets.Hazer ) );
-        Controller.SmokeMachines.Add( new SmokeMachine( "HAZER 3", 5, SmokeMachinePresets.Hazer ) );
-        Controller.SmokeMachines.Add( new SmokeMachine( "HAZER 4", 7, SmokeMachinePresets.Hazer ) );
-        
+        Controller.SetMachines(
+            new SmokeMachine( "HAZER 1", 1, SmokeMachinePresets.Hazer ),
+            new SmokeMachine( "HAZER 2", 3, SmokeMachinePresets.Hazer ),
+            new SmokeMachine( "HAZER 3", 5, SmokeMachinePresets.Hazer ),
+            new SmokeMachine( "HAZER 4", 7, SmokeMachinePresets.Hazer )
+        );
+
         Controller.Save();
     }
 

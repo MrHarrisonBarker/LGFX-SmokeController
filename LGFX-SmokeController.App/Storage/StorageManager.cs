@@ -10,11 +10,32 @@ public class StorageManager
     public StorageManager( Controller controller )
     {
         Controller = controller;
+        Load();
     }
 
     public void Save()
     {
-        new StoredSmokeMachines( Controller.SmokeMachines.Select(m => new StoredSmokeMachine(m)).ToList() ).Save();
+        new StoredSmokeMachines( Controller.SmokeMachines.Select( m => new StoredSmokeMachine( m ) ).ToList() ).Save();
         new StoredNetwork( Controller.ArtNetService ).Save();
+    }
+
+    public void SaveToFile( string path )
+    {
+    }
+
+    public void Load()
+    {
+        var storedSmokeMachines = StoredSmokeMachines.Load();
+
+        if ( storedSmokeMachines is not null )
+        {
+            Controller.SetMachines( storedSmokeMachines.SmokeMachines.Select( StoredSmokeMachine.SmokeMachine ).ToArray() );
+        }
+
+        var storedNetwork = StoredNetwork.Load();
+    }
+
+    public void LoadFromFile( string path )
+    {
     }
 }

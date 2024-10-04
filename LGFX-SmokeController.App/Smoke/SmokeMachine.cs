@@ -63,7 +63,7 @@ public class SmokeMachine : ObservableObject
             {
                 HeatAddress = value;
                 SetProperty( ref _Address, ( short )( value - 1 ) );
-                FanAddress = ( short )(value + 2);
+                FanAddress = ( short )( value + 2 );
             }
             else
             {
@@ -169,11 +169,8 @@ public class SmokeMachine : ObservableObject
     #endregion
 
 
-    public SmokeMachine( string name, short address, SmokeMachinePresets preset )
+    public SmokeMachine( string name, short address, SmokeMachinePresets preset ) : this( name, address )
     {
-        _Name = name;
-        Address = address;
-
         switch ( preset )
         {
             case SmokeMachinePresets.Mdg:
@@ -187,7 +184,13 @@ public class SmokeMachine : ObservableObject
                 VariableFan = true;
                 break;
         }
+    }
 
+    public SmokeMachine( string name, short address )
+    {
+        _Name = name;
+        Address = address;
+        
         _SmokeMode = new TimedMode( this );
         _FanMode = new InstantFanMode( this );
     }

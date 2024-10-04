@@ -28,20 +28,11 @@ public class StoredNetwork
 
     public void Save()
     {
-        using var writer = new StreamWriter( Files.Network, Encoding.UTF8, new FileStreamOptions
-        {
-            Access = FileAccess.Write,
-            Mode = FileMode.OpenOrCreate
-        } );
-
-        var xml = new XmlSerializer( typeof( StoredNetwork ) );
-        xml.Serialize( writer, this );
+        Files.Save( this, Files.Network );
     }
 
     public static StoredNetwork? Load()
     {
-        using var reader = new StreamReader( Files.Network );
-        var xml = new XmlSerializer( typeof( StoredNetwork ) );
-        return xml.Deserialize( reader ) as StoredNetwork;
+        return Files.Load<StoredNetwork>( Files.Network );
     }
 }

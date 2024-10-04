@@ -39,7 +39,23 @@ public class Controller : ObservableObject
         {
             SmokeMachines.Remove( machine );
         }
-        
+
         StorageManager.Save();
+    }
+
+    public void ClearMachines()
+    {
+        foreach ( var machine in SmokeMachines.ToList() )
+        {
+            SmokeMachines.Remove( machine );
+        }
+    }
+
+    public void SetMachines( params SmokeMachine[] smokeMachines )
+    {
+        foreach ( var smokeMachine in smokeMachines )
+        {
+            SmokeMachines.Add( smokeMachine );
+        }
     }
 }

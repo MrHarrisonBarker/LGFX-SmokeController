@@ -20,20 +20,11 @@ public class StoredSmokeMachines
 
     public void Save()
     {
-        using var writer = new StreamWriter( Files.SmokeMachines, Encoding.UTF8, new FileStreamOptions
-        {
-            Access = FileAccess.Write,
-            Mode = FileMode.OpenOrCreate
-        } );
-        
-        var xml = new XmlSerializer( typeof( StoredSmokeMachines ) );
-        xml.Serialize( writer, this );
+        Files.Save( this, Files.SmokeMachines );
     }
 
     public static StoredSmokeMachines? Load()
     {
-        using var reader = new StreamReader( Files.SmokeMachines );
-        var xml = new XmlSerializer( typeof( StoredSmokeMachines ) );
-        return xml.Deserialize( reader ) as StoredSmokeMachines;
+        return Files.Load<StoredSmokeMachines>( Files.SmokeMachines );
     }
 }
