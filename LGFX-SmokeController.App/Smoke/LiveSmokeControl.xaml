@@ -200,14 +200,17 @@
                                         Binding="{Binding Machine.IsOn, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor} }"
                                         Value="True">
                                         <Setter Property="Fill" Value="Green" />
-
+                        
                                         <DataTrigger.EnterActions>
                                             <BeginStoryboard>
                                                 <Storyboard>
-                                                    <ColorAnimation From="Transparent" To="Green" AutoReverse="True"
-                                                                    Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)"
-                                                                    RepeatBehavior="Forever" Duration="0:0:1">
-                                                    </ColorAnimation>
+                                                    <DoubleAnimation 
+                                                        From="0" 
+                                                        To="1" 
+                                                        RepeatBehavior="Forever" 
+                                                        AutoReverse="True" 
+                                                        Duration="0:0:1" 
+                                                        Storyboard.TargetProperty="(Rectangle.Fill).(Opacity)"/>
                                                 </Storyboard>
                                             </BeginStoryboard>
                                         </DataTrigger.EnterActions>

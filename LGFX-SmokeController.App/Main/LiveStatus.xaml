@@ -83,7 +83,7 @@
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     
-                                    <Image Grid.Column="0">
+                                    <Image Grid.Column="0" Width="12" Height="12">
                                         <Image.Style>
                                             <Style TargetType="{x:Type Image}">
                                                 <Setter Property="Source"

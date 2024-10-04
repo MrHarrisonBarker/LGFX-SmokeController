@@ -150,11 +150,6 @@ public class ArtNetNode : ObservableObject
 {
     private bool _IsSending;
     private bool _IsConnected;
-
-    public ArtNetNode()
-    {
-        
-    }
     
     public ArtNetNode(string shortName, string longName, IPAddress address, bool isSending = false)
     {
