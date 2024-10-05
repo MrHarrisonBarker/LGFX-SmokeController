@@ -1,7 +1,9 @@
 ﻿using System.Collections.ObjectModel;
+using System.IO;
 using System.Net;
 using ART.NET;
 using LGFX_SmokeController.App.ArtNet;
+using LGFX_SmokeController.App.Smoke;
 using LGFX_SmokeController.App.Storage.Network;
 using LGFX_SmokeController.App.Storage.SmokeMachine;
 
@@ -19,6 +21,8 @@ public class StorageManager
 
     public void Save()
     {
+        if ( !Directory.Exists( Files.Directory )  ) Directory.CreateDirectory( Files.Directory );
+
         new StoredSmokeMachines( Controller.SmokeMachines.Select( m => new StoredSmokeMachine( m ) ).ToList() ).Save();
         new StoredNetwork( Controller.ArtNetService ).Save();
     }
@@ -34,6 +38,18 @@ public class StorageManager
         if ( storedSmokeMachines is not null )
         {
             Controller.SetMachines( storedSmokeMachines.SmokeMachines.Select( StoredSmokeMachine.SmokeMachine ).ToArray() );
+        } else
+        {
+            Controller.SetMachines(
+                new Smoke.SmokeMachine("SL 1", 1, SmokeMachinePresets.Hazer),
+                new Smoke.SmokeMachine("SL 2", 3, SmokeMachinePresets.Hazer),
+                new Smoke.SmokeMachine("SR 3", 5, SmokeMachinePresets.Hazer),
+                new Smoke.SmokeMachine("SR 4", 7, SmokeMachinePresets.Hazer),
+                new Smoke.SmokeMachine("FOH 4", 9, SmokeMachinePresets.Hazer),
+                new Smoke.SmokeMachine("FOH 5", 11, SmokeMachinePresets.Hazer),
+                new Smoke.SmokeMachine("DELAY 6", 13, SmokeMachinePresets.Hazer),
+                new Smoke.SmokeMachine("DELAY 7", 15, SmokeMachinePresets.Hazer)
+            );
         }
 
         var storedNetwork = StoredNetwork.Load();
