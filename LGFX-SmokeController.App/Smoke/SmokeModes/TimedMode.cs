@@ -13,7 +13,7 @@ public class TimedMode : SmokeMachineMode
         Console.WriteLine($"Starting {Machine.Name}:{Machine.Address} in [TimedMode]");
 
         Machine.IsOn = true;
-        Machine.Status = SmokeMachine.STARTING;
+        Machine.Status = SmokeMachineStatus.Starting;
         
         Task.Run( async () =>
         {
@@ -21,10 +21,10 @@ public class TimedMode : SmokeMachineMode
             {
                 Console.WriteLine( $"Turning on for {Machine.TimeOn}s {Machine.Name}:{Machine.Address} in [TimedMode]" );
 
-                Machine.FanMode.Start();
+                await Machine.FanMode.Start();
 
                 Machine.SmokeOn = true;
-                Machine.Status = SmokeMachine.RUNNING;
+                Machine.Status = SmokeMachineStatus.Running;
 
                 await Task.Delay( Machine.TimeOn * 1000, Token );
 
@@ -33,7 +33,7 @@ public class TimedMode : SmokeMachineMode
 
                 Machine.SmokeOn = false;
 
-                Machine.FanMode.Stop();
+                await Machine.FanMode.Stop();
 
                 await Task.Delay( Machine.TimeOff * 1000, Token );
             }

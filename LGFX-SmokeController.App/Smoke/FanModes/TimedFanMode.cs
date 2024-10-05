@@ -7,16 +7,16 @@ public class TimedFanMode : FanMode
     }
 
     public override string Name => "Timed";
-    public override void Start()
+    public override async Task Start()
     {
         Machine.FanOn = true;
         
-        Thread.Sleep( Machine.FanLeadTime * 1000 );
+        await Task.Delay( Machine.FanLeadTime * 1000, Token );
     }
 
-    public override void Stop()
+    public override async Task Stop()
     {
-        Thread.Sleep( Machine.FanPurgeTime * 1000 );
+        await Task.Delay( Machine.FanPurgeTime * 1000, Token );
 
         Machine.FanOn = false;
     }

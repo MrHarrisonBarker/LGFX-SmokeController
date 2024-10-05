@@ -19,7 +19,7 @@ public abstract class SmokeMachineMode : ObservableObject
 
     public virtual void Stop()
     {
-        Machine.Status = SmokeMachine.STOPPING;
+        Machine.Status = SmokeMachineStatus.Stopping;
 
         Machine.SmokeOn = false;
         Machine.IsOn = false;
@@ -27,20 +27,21 @@ public abstract class SmokeMachineMode : ObservableObject
         TokenSource.Cancel( false );
         TokenSource = new CancellationTokenSource();
 
-        Task.Run( () =>
+        Task.Run( async () =>
         {
-            Machine.FanMode.Stop();
+            await Machine.FanMode.Stop();
 
-            Machine.Status = SmokeMachine.STOPPED;
+            Machine.Status = SmokeMachineStatus.Stopped;
         }, Token );
     }
 
     public void StopImmediately()
     {
+        Machine.IsOn = false;
         TokenSource.Cancel( false );
         TokenSource = new CancellationTokenSource();
         Machine.SmokeOn = false;
         Machine.FanMode.StopImmediately();
-        Machine.Status = SmokeMachine.STOPPED;
+        Machine.Status = SmokeMachineStatus.Stopped;
     }
 }

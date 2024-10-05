@@ -11,15 +11,15 @@ public class TriggerMode : SmokeMachineMode
     public override void Start()
     {
         Machine.IsOn = true;
-        Machine.Status = SmokeMachine.STARTING;
+        Machine.Status = SmokeMachineStatus.Starting;
 
-        Task.Run( () =>
+        Task.Run( async () =>
         {
-            Machine.FanMode.Start();
+            await Machine.FanMode.Start();
 
             Machine.SmokeOn = true;
-            Machine.Status = SmokeMachine.RUNNING;
-        } );
+            Machine.Status = SmokeMachineStatus.Running;
+        }, Token );
         
     }
 }

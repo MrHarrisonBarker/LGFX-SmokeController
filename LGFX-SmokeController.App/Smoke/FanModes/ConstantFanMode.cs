@@ -8,13 +8,15 @@ public class ConstantFanMode : FanMode
     }
 
     public override string Name => "Constant";
-    public override void Start()
+    public override Task Start()
     {
         Machine.FanOn = true;
+        return Task.CompletedTask;
     }
 
-    public override void Stop()
+    public override Task Stop()
     {
         Machine.FanOn = true;
+        return Task.CompletedTask;
     }
 }

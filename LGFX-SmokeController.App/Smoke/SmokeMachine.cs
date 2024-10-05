@@ -6,11 +6,6 @@ namespace LGFX_SmokeController.App.Smoke;
 
 public class SmokeMachine : ObservableObject
 {
-    public const string STARTING = "Starting";
-    public const string RUNNING = "Running";
-    public const string STOPPING = "Stopping";
-    public const string STOPPED = "Stopped";
-
     public const byte MaxLevel = 100;
     public const byte MinLevel = 0;
 
@@ -23,7 +18,7 @@ public class SmokeMachine : ObservableObject
 
     private bool _IsOn;
     private int _TimeOn = DefaultTimeOn;
-    private string _Status = STOPPED;
+    private SmokeMachineStatus _Status = SmokeMachineStatus.Stopped;
     private bool _SmokeOn;
     private bool _FanOn;
     private SmokeMachineMode _SmokeMode;
@@ -147,7 +142,7 @@ public class SmokeMachine : ObservableObject
         internal set => SetProperty( ref _IsOn, value );
     }
 
-    public string Status
+    public SmokeMachineStatus Status
     {
         get => _Status;
         set => SetProperty( ref _Status, value );
@@ -221,16 +216,27 @@ public class SmokeMachine : ObservableObject
 
     public void Trigger()
     {
-        SmokeMode.Start();
+        if ( !IsOn && Status is SmokeMachineStatus.Stopping )
+        {
+            StopImmediately();
+            SmokeMode.Start();
+        }
+        else if ( !IsOn && Status is not SmokeMachineStatus.Starting ) 
+            SmokeMode.Start();
+        
     }
 
     public void Stop()
     {
-        SmokeMode.Stop();
+        if ( IsOn && ( Status is SmokeMachineStatus.Starting or SmokeMachineStatus.Stopping ) )
+            StopImmediately();
+        else if ( IsOn && Status != SmokeMachineStatus.Stopping ) 
+            SmokeMode.Stop();
     }
-    
+
     public void StopImmediately()
     {
+        Console.WriteLine( "Stopping immediately" );
         SmokeMode.StopImmediately();
     }
 

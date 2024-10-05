@@ -8,13 +8,15 @@ public class InstantFanMode : FanMode
 
     public override string Name => "Instant";
 
-    public override void Start()
+    public override Task Start()
     {
         Machine.FanOn = true;
+        return Task.CompletedTask;
     }
 
-    public override void Stop()
+    public override Task Stop()
     {
         Machine.FanOn = false;
+        return Task.CompletedTask;
     }
 }
