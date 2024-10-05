@@ -14,4 +14,9 @@ public abstract class FanMode : ObservableObject
 
     public abstract void Start();
     public abstract void Stop();
+
+    public void StopImmediately()
+    {
+        Machine.FanOn = false;
+    }
 }

@@ -14,10 +14,15 @@ public class SmokeMachine : ObservableObject
     public const byte MaxLevel = 100;
     public const byte MinLevel = 0;
 
+    public const int DefaultTimeOn = 20;
+    public const int DefaultTimeOff = 20;
+    public const int DefaultFanLeadTime = 2;
+    public const int DefaultFanPurgeTime = 2;
+
     #region Underlying Values
 
     private bool _IsOn;
-    private int _TimeOn = 20;
+    private int _TimeOn = DefaultTimeOn;
     private string _Status = STOPPED;
     private bool _SmokeOn;
     private bool _FanOn;
@@ -29,12 +34,12 @@ public class SmokeMachine : ObservableObject
     private short _HeatAddress;
     private string _Name;
     private FanMode _FanMode;
-    private int _TimeOff = 20;
-    private int _LeadTime = 0;
-    private int _PurgeTime = 20;
+    private int _TimeOff = DefaultTimeOff;
+    private int _FanLeadTime = DefaultFanLeadTime;
+    private int _FanPurgeTime = DefaultFanPurgeTime;
     private bool _IsThreeChannel;
-    private byte _SmokeLevel = 100;
-    private byte _FanLevel = 100;
+    private byte _SmokeLevel = MaxLevel;
+    private byte _FanLevel = MaxLevel;
 
     #endregion
 
@@ -108,16 +113,16 @@ public class SmokeMachine : ObservableObject
         set => SetProperty( ref _VariableFan, value );
     }
 
-    public int LeadTime
+    public int FanLeadTime
     {
-        get => _LeadTime;
-        set => SetProperty( ref _LeadTime, value );
+        get => _FanLeadTime;
+        set => SetProperty( ref _FanLeadTime, value );
     }
 
-    public int PurgeTime
+    public int FanPurgeTime
     {
-        get => _PurgeTime;
-        set => SetProperty( ref _PurgeTime, value );
+        get => _FanPurgeTime;
+        set => SetProperty( ref _FanPurgeTime, value );
     }
 
     public int TimeOn
@@ -210,7 +215,7 @@ public class SmokeMachine : ObservableObject
         Address = address;
 
         _SmokeMode = new TimedMode( this );
-        _FanMode = new InstantFanMode( this );
+        _FanMode = new TimedFanMode( this );
     }
 
 
@@ -222,6 +227,11 @@ public class SmokeMachine : ObservableObject
     public void Stop()
     {
         SmokeMode.Stop();
+    }
+    
+    public void StopImmediately()
+    {
+        SmokeMode.StopImmediately();
     }
 
     public void Toggle()

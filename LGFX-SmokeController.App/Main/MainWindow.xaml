@@ -4,12 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LGFX_SmokeController.App.Main"
-        xmlns:app="clr-namespace:LGFX_SmokeController.App"
         xmlns:smoke="clr-namespace:LGFX_SmokeController.App.Smoke"
         mc:Ignorable="d"
         Title="MainWindow"
         Height="450"
         Width="1000"
+        MinWidth="440"
+        MinHeight="300"
         WindowStartupLocation="CenterScreen"
         Style="{StaticResource WindowStyle}">
 

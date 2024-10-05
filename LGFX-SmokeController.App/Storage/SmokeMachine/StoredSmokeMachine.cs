@@ -5,12 +5,14 @@ namespace LGFX_SmokeController.App.Storage.SmokeMachine;
 
 public class StoredSmokeMachine
 {
-    public int TimeOn { get; set; } = 20;
-    public int TimeOff { get; set; } = 20;
-    public byte SmokeLevel { get; set; } = 100;
-    public byte FanLevel { get; set; } = 100;
+    public int TimeOn { get; set; } = Smoke.SmokeMachine.DefaultTimeOn;
+    public int TimeOff { get; set; } = Smoke.SmokeMachine.DefaultTimeOff;
+    public int FanLeadTime { get; set; } = Smoke.SmokeMachine.DefaultFanLeadTime;
+    public int FanPurgeTime { get; set; } = Smoke.SmokeMachine.DefaultFanPurgeTime;
+    public byte SmokeLevel { get; set; } = Smoke.SmokeMachine.MaxLevel;
+    public byte FanLevel { get; set; } = Smoke.SmokeMachine.MaxLevel;
     public string SmokeMode { get; set; } = "Timed";
-    public string FanMode { get; set; } = "Instant";
+    public string FanMode { get; set; } = "Timed";
     public bool VariableSmoke { get; set; } = true;
     public bool VariableFan { get; set; } = true;
     public short Address { get; set; } = 1;
@@ -22,6 +24,8 @@ public class StoredSmokeMachine
     {
         TimeOn = machine.TimeOn;
         TimeOff = machine.TimeOff;
+        FanLeadTime = machine.FanLeadTime;
+        FanPurgeTime = machine.FanPurgeTime;
         SmokeLevel = machine.SmokeLevel;
         FanLevel = machine.FanLevel;
         SmokeMode = machine.SmokeMode.Name;
@@ -44,6 +48,8 @@ public class StoredSmokeMachine
         {
             TimeOn = stored.TimeOn,
             TimeOff = stored.TimeOff,
+            FanLeadTime = stored.FanLeadTime,
+            FanPurgeTime = stored.FanPurgeTime,
             SmokeLevel = stored.SmokeLevel,
             FanLevel = stored.FanLevel,
             VariableSmoke = stored.VariableSmoke,

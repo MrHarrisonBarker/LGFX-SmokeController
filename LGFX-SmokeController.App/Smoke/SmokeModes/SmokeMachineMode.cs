@@ -27,8 +27,20 @@ public abstract class SmokeMachineMode : ObservableObject
         TokenSource.Cancel( false );
         TokenSource = new CancellationTokenSource();
 
-        Machine.FanMode.Stop();
+        Task.Run( () =>
+        {
+            Machine.FanMode.Stop();
 
+            Machine.Status = SmokeMachine.STOPPED;
+        }, Token );
+    }
+
+    public void StopImmediately()
+    {
+        TokenSource.Cancel( false );
+        TokenSource = new CancellationTokenSource();
+        Machine.SmokeOn = false;
+        Machine.FanMode.StopImmediately();
         Machine.Status = SmokeMachine.STOPPED;
     }
 }

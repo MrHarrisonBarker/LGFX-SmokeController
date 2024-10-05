@@ -21,19 +21,31 @@
         <Image Source="../Assets/lgx.jpg" Margin="4,0" Height="24" Width="24" VerticalAlignment="Center"
                Stretch="UniformToFill" />
 
-        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-            <TextBlock VerticalAlignment="Bottom" Margin="4,0,8,0" FontSize="14" Foreground="White"
-                       Text="LGFX SMOKE CONTROLLER" FontWeight="Bold">
-            </TextBlock>
-            
+        <Grid Grid.Column="1" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
             <TextBlock
+                Grid.Column="0"
+                VerticalAlignment="Bottom"
+                Margin="4,0,8,0"
+                FontSize="14"
+                Foreground="White"
+                Text="LGFX SMOKE CONTROLLER"
+                TextWrapping="WrapWithOverflow"
+                FontWeight="Bold" />
+
+            <TextBlock
+                Grid.Column="1"
                 VerticalAlignment="Bottom"
                 FontWeight="SemiBold"
                 Foreground="White"
                 FontSize="12"
                 Text="{Binding RelativeSource={RelativeSource AncestorType=local:TitleBar}, Path=Version, Mode=OneWay}">
             </TextBlock>
-        </StackPanel>
+        </Grid>
 
 
         <Button

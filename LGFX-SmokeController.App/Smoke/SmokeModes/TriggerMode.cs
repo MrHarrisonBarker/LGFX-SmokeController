@@ -13,9 +13,13 @@ public class TriggerMode : SmokeMachineMode
         Machine.IsOn = true;
         Machine.Status = SmokeMachine.STARTING;
 
-        Machine.FanMode.Start();
+        Task.Run( () =>
+        {
+            Machine.FanMode.Start();
 
-        Machine.SmokeOn = true;
-        Machine.Status = SmokeMachine.RUNNING;
+            Machine.SmokeOn = true;
+            Machine.Status = SmokeMachine.RUNNING;
+        } );
+        
     }
 }

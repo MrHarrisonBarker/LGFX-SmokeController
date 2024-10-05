@@ -9,11 +9,15 @@ public class TimedFanMode : FanMode
     public override string Name => "Timed";
     public override void Start()
     {
-        throw new NotImplementedException();
+        Machine.FanOn = true;
+        
+        Thread.Sleep( Machine.FanLeadTime * 1000 );
     }
 
     public override void Stop()
     {
-        throw new NotImplementedException();
+        Thread.Sleep( Machine.FanPurgeTime * 1000 );
+
+        Machine.FanOn = false;
     }
 }

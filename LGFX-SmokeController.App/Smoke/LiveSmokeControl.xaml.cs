@@ -27,7 +27,7 @@ public partial class LiveSmokeControl : UserControl
 
     private void OnModeClick( object sender, RoutedEventArgs e )
     {
-        Machine.Stop();
+        Machine.StopImmediately();
 
         if ( Machine.SmokeMode is TimedMode )
         {

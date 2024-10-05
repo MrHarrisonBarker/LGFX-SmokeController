@@ -9,7 +9,7 @@
         xmlns:smokeMachine="clr-namespace:LGFX_SmokeController.App.Smoke"
         mc:Ignorable="d"
         Title="Add Smoke Machine"
-        Height="140"
+        Height="180"
         Width="400"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
@@ -58,6 +58,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0" Margin="0,0,0,4">
@@ -82,13 +83,26 @@
                 Default="1"
                 Defaults="{Binding RelativeSource={RelativeSource AncestorType=local:AddSmokeMachineWindow}, Path=AddressDefaults, Mode=OneWay}" />
 
-            <controls:TextBoxWithLabel 
-                Grid.Row="2" 
-                Margin="0,0,0,4" 
+            <controls:TextBoxWithLabel
+                Grid.Row="2"
+                Margin="0,0,0,4"
                 Text="{Binding RelativeSource={RelativeSource AncestorType=local:AddSmokeMachineWindow}, Path=MachineName, Mode=TwoWay}"
-                Label="Name"/>
+                Label="Name" />
 
-            <Grid Grid.Row="3">
+            <Grid Grid.Row="3" Margin="0,0,0,4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Fan Mode"></TextBlock>
+                <ComboBox
+                    Grid.Column="1"
+                    Margin="0,0,0,4"
+                    ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=local:AddSmokeMachineWindow}, Path=FanModes, Mode=OneWay}"
+                    SelectedItem="{Binding RelativeSource={RelativeSource AncestorType=local:AddSmokeMachineWindow}, Path=FanMode, Mode=TwoWay}"/>
+            </Grid>
+
+            <Grid Grid.Row="4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="60" />

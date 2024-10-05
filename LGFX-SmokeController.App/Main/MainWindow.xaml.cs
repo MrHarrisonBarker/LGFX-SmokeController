@@ -9,7 +9,11 @@ public partial class MainWindow : Window
         
     public MainWindow()
     {
+        
+        
         InitializeComponent();
+        
+        Width = double.Max( ( Controller.SmokeMachines.Count * 120 ) + 120, 440 );
     }
 
     private void OnStopAllClick( object sender, RoutedEventArgs e )

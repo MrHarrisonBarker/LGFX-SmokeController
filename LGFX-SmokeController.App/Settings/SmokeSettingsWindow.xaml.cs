@@ -90,6 +90,8 @@ public partial class SmokeSettingsWindow : Window, INotifyPropertyChanged
         {
             if ( comboBox.SelectedItem as string != machine.FanMode.Name )
             {
+                machine.StopImmediately();
+                
                 switch ( comboBox.SelectedItem as string )
                 {
                     case "Instant":
@@ -102,8 +104,6 @@ public partial class SmokeSettingsWindow : Window, INotifyPropertyChanged
                         machine.FanMode = new ConstantFanMode( machine );
                         break;
                 }
-
-                machine.Stop();
             }
         }
     }

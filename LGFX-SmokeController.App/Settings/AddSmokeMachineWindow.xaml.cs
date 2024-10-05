@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using LGFX_SmokeController.App.Smoke;
+using LGFX_SmokeController.App.Smoke.FanModes;
 
 namespace LGFX_SmokeController.App.Settings;
 
@@ -13,6 +14,9 @@ public partial class AddSmokeMachineWindow : Window
     public int MachineAddress { get; set; }
     public string MachineName { get; set; } = "SL";
 
+    public string[] FanModes { get; } = [ "Instant", "Timed", "Constant" ];
+
+    public string FanMode { get; set; } = "Timed";
 
     public AddSmokeMachineWindow()
     {
@@ -28,7 +32,22 @@ public partial class AddSmokeMachineWindow : Window
 
     private void OnAddClick( object sender, RoutedEventArgs e )
     {
-        Controller.SmokeMachines.Add( new SmokeMachine( MachineName, ( short )MachineAddress, MachinePreset ) );
+        var smokeMachine = new SmokeMachine( MachineName, ( short )MachineAddress, MachinePreset );
+        
+        switch ( FanMode )
+        {
+            case "Instant":
+                smokeMachine.FanMode = new InstantFanMode( smokeMachine );
+                break;
+            case "Timed":
+                smokeMachine.FanMode = new TimedFanMode( smokeMachine );
+                break;
+            case "Constant":
+                smokeMachine.FanMode = new ConstantFanMode( smokeMachine );
+                break;
+        }
+        
+        Controller.SmokeMachines.Add( smokeMachine );
 
         Close();
     }
