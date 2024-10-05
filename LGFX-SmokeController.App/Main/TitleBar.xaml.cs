@@ -7,7 +7,8 @@ namespace LGFX_SmokeController.App.Main;
 public partial class TitleBar : UserControl
 {
     private Window Window => ( ( Window )( ( DockPanel )( ( Grid )Parent ).Parent ).Parent );
-    public string Version => Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "UNKNOWN";
+    private static Version AssemblyVersion => Assembly.GetExecutingAssembly().GetName().Version ?? new Version(0,0,0);
+    public string Version => $"v{AssemblyVersion.Major}.{AssemblyVersion.Minor}.{AssemblyVersion.MinorRevision}";
 
     public TitleBar()
     {
