@@ -1,30 +1,26 @@
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Net;
-using System.Runtime.CompilerServices;
-using System.Windows.Threading;
 using ART.NET;
-using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace LGFX_SmokeController.App.ArtNet;
 
-public sealed class ArtNetNodeManager : INotifyPropertyChanged
+public delegate void NodePollEvent( ArtNetNode node );
+
+public sealed class ArtNetNodeManager
 {
-    private readonly Dispatcher Dispatcher;
+    public event NodePollEvent? PollReceived;
+
     private const int PollRate = 1000 * 30;
-    private readonly ArtNetSocket Socket;
+    public ArtNetSocket Socket { get; set; }
 
     private readonly Thread PollThread;
     private readonly Thread ListenThread;
 
     private readonly CancellationTokenSource CancellationTokenSource = new ();
 
-    public ArtNetNodeManager( ArtNetSocket socket, string shortName, string longName, Dispatcher dispatcher )
+    public ArtNetNodeManager( ArtNetSocket socket, string shortName, string longName )
     {
         Socket = socket;
-        Dispatcher = dispatcher;
         PollReplyBuffer = new ArtNetPollReplyBuffer( socket.NetworkInterface.Address, shortName, longName );
-        Nodes = new ObservableCollection<ArtNetNode>();
 
         Socket.ListenFor( ArtNetOpCodes.Poll, ArtNetOpCodes.PollReply );
 
@@ -43,14 +39,13 @@ public sealed class ArtNetNodeManager : INotifyPropertyChanged
 
     private readonly ArtNetPollBuffer PollBuffer = new ();
     private readonly ArtNetPollReplyBuffer PollReplyBuffer;
-    private DateTime _LastChecked;
 
-    public ObservableCollection<ArtNetNode> Nodes { get; set; }
 
     public void StartPollReply()
     {
-        PollThread.Start();
-        ListenThread.Start();
+        Console.WriteLine( "Starting poll reply" );
+        if ( !PollThread.IsAlive ) PollThread.Start();
+        if ( !ListenThread.IsAlive ) ListenThread.Start();
     }
 
     private void Poll()
@@ -61,65 +56,42 @@ public sealed class ArtNetNodeManager : INotifyPropertyChanged
             Socket.Send( PollBuffer );
             Socket.Send( PollReplyBuffer );
 
-            LastChecked = DateTime.Now;
+            // LastChecked = DateTime.Now;
             Thread.Sleep( PollRate );
         }
     }
 
     private void Listen()
     {
-        while ( !CancellationTokenSource.IsCancellationRequested )
+        while ( !CancellationTokenSource.Token.IsCancellationRequested )
         {
             Console.WriteLine( "Listening for polls" );
-            var nextBuffer = Socket.RxQueue.Take();
-
-            if ( nextBuffer is ArtNetPollBuffer )
+            try
             {
-                Console.WriteLine( "Received poll, replying" );
-                Socket.Send( PollReplyBuffer );
-            }
-            else if ( nextBuffer is ArtNetPollReplyBuffer reply )
-            {
-                Console.WriteLine( "Received poll reply" );
-                var ip = new IPAddress( reply.IpAddress );
+                var nextBuffer = Socket.RxQueue.Take( CancellationTokenSource.Token );
 
-                var existing = Nodes.FirstOrDefault( x => Equals( x.Address, ip ) );
-
-                if ( existing is null )
+                if ( nextBuffer is ArtNetPollBuffer )
                 {
-                    Console.WriteLine( Dispatcher );
-                    Dispatcher.Invoke( () =>
-                    {
-                        Nodes.Add( new ArtNetNode( reply.ShortName, reply.LongName, ip ) );
-                        Console.WriteLine( $"Nodes -> {string.Join( ",", Nodes )}" );
-                    } );
+                    Console.WriteLine( "Received poll, replying" );
+                    Socket.Send( PollReplyBuffer );
                 }
-                else
+                else if ( nextBuffer is ArtNetPollReplyBuffer reply )
                 {
-                    existing.IsConnected = true;
+                    Console.WriteLine( "Received poll reply" );
+                    var ip = new IPAddress( reply.IpAddress );
+
+                    PollReceived?.Invoke( new ArtNetNode( reply.ShortName, reply.LongName, ip ) );
                 }
             }
-        }
-    }
-
-    public DateTime LastChecked
-    {
-        get => _LastChecked;
-        private set
-        {
-            if ( value.Equals( _LastChecked ) ) return;
-            _LastChecked = value;
-            OnPropertyChanged();
+            catch ( Exception e )
+            {
+                Console.WriteLine( e );
+            }
         }
     }
 
     public void Refresh()
     {
-        for ( var i = 0; i < Nodes.Count; i++ )
-        {
-            Nodes.RemoveAt( 0 );
-        }
-
         Task.Run( () =>
         {
             Thread.Sleep( 250 );
@@ -128,60 +100,13 @@ public sealed class ArtNetNodeManager : INotifyPropertyChanged
                 Socket.Send( PollBuffer );
                 Socket.Send( PollReplyBuffer );
 
-                LastChecked = DateTime.Now;
                 Thread.Sleep( 250 );
             }
         } );
     }
 
-    public event PropertyChangedEventHandler? PropertyChanged;
-
-    private void OnPropertyChanged( [CallerMemberName] string? propertyName = null )
+    public void Stop()
     {
-        PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
-    }
-
-    private bool SetField<T>( ref T field, T value, [CallerMemberName] string? propertyName = null )
-    {
-        if ( EqualityComparer<T>.Default.Equals( field, value ) ) return false;
-        field = value;
-        OnPropertyChanged( propertyName );
-        return true;
-    }
-}
-
-public class ArtNetNode : ObservableObject
-{
-    private bool _IsSending;
-    private bool _IsConnected;
-
-    public ArtNetNode( string shortName, string longName, IPAddress address, bool isSending = false, bool isConnected = true )
-    {
-        IsSending = isSending;
-        ShortName = shortName;
-        LongName = longName;
-        Address = address;
-        IsConnected = isConnected;
-    }
-
-    public bool IsSending
-    {
-        get => _IsSending;
-        set => SetProperty( ref _IsSending, value );
-    }
-
-    public bool IsConnected
-    {
-        get => _IsConnected;
-        set => SetProperty( ref _IsConnected, value );
-    }
-
-    public string ShortName { get; init; }
-    public string LongName { get; init; }
-    public IPAddress Address { get; init; }
-
-    public override string ToString()
-    {
-        return $"{Address}:{LongName}";
+        CancellationTokenSource.Cancel();
     }
 }

@@ -1,19 +1,50 @@
 ﻿using System.Collections.ObjectModel;
-using System.Net.NetworkInformation;
-using System.Net.Sockets;
 using System.Windows.Threading;
 using ART.NET;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Haukcode.HighResolutionTimer;
+using NetworkInterface = ART.NET.NetworkInterface;
 
 namespace LGFX_SmokeController.App.ArtNet;
 
 public class ArtNetService : ObservableObject
 {
+    private const int ArtNetFrequency = 250;
+
+    private readonly Dispatcher Dispatcher;
     private readonly Controller Controller;
+
+    private readonly ArtNetDmxBuffer Buffer = new ();
+    private readonly byte[] DmxBuffer = new byte[ 512 ];
+
+
+    private readonly CancellationTokenSource TokenSource = new ();
+    private CancellationToken Token => TokenSource.Token;
+    private readonly HighResolutionTimer Timer = new ();
+
+
+    private ArtNetSocket? Socket { get; set; }
+    private readonly Thread ArtNetThread;
+
+
+    private NetworkInterface? _Adapter;
     private bool _IsBroadcasting;
     private short _Universe;
-    public ART.NET.NetworkInterface? Adapter { get; set; }
+
+    private ArtNetNodeManager? NodeManager { get; set; }
+    public ObservableCollection<ArtNetNode> CustomNodes { get; set; } = [ ];
+    public ObservableCollection<ArtNetNode> Nodes { get; set; } = [ ];
+
+    public NetworkInterface? Adapter
+    {
+        get => _Adapter;
+        set
+        {
+            if ( value == _Adapter ) return;
+            SetProperty( ref _Adapter, value );
+            CreateSocketForAdapter();
+        }
+    }
 
     public short Universe
     {
@@ -21,33 +52,6 @@ public class ArtNetService : ObservableObject
         set => SetProperty( ref _Universe, value );
     }
 
-    public IEnumerable<ART.NET.NetworkInterface> AvailableAdapters
-    {
-        get
-        {
-            var interfaces = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces();
-
-            var supportedInterfaces = interfaces
-                .Where( networkInterface => networkInterface is
-                    { SupportsMulticast: true, OperationalStatus: OperationalStatus.Up } );
-
-            foreach ( var supportedInterface in supportedInterfaces )
-            {
-                foreach ( var uniCastAddress in supportedInterface.GetIPProperties()
-                             .UnicastAddresses )
-                {
-                    if ( uniCastAddress.Address.AddressFamily == AddressFamily.InterNetwork )
-                        yield return new ART.NET.NetworkInterface(
-                            supportedInterface.NetworkInterfaceType == NetworkInterfaceType.Loopback
-                                ? "Local host"
-                                : supportedInterface.Description, uniCastAddress.Address, uniCastAddress.IPv4Mask );
-                }
-            }
-        }
-    }
-
-    public ArtNetNodeManager? NodeManager { get; }
-    public ObservableCollection<ArtNetNode> CustomNodes { get; set; } = [ ];
 
     public bool IsBroadcasting
     {
@@ -55,22 +59,12 @@ public class ArtNetService : ObservableObject
         set => SetProperty( ref _IsBroadcasting, value );
     }
 
-    private ArtNetSocket? Socket { get; set; }
-    private readonly Thread ArtNetThread;
-    private const int ArtNetFrequency = 250;
-    private CancellationTokenSource TokenSource = new ();
-
 
     public ArtNetService( Dispatcher dispatcher, Controller controller )
     {
+        Dispatcher = dispatcher;
         Controller = controller;
-        Adapter = AvailableAdapters.FirstOrDefault();
-
-        if ( Adapter is not null )
-        {
-            Socket = new ArtNetSocket( Adapter );
-            NodeManager = new ArtNetNodeManager( Socket, "LGFX", "LGFX Smoke Controller", dispatcher );
-        }
+        Adapter = NetworkInterface.AvailableInterfaces.FirstOrDefault();
 
         ArtNetThread = new Thread( SendArtNet )
         {
@@ -78,14 +72,58 @@ public class ArtNetService : ObservableObject
         };
     }
 
-    private readonly HighResolutionTimer Timer = new ();
+    private void CreateSocketForAdapter()
+    {
+        if ( Adapter is not null )
+        {
+            Console.WriteLine( "Creating new socket from adapter" );
+            if ( NodeManager is not null ) NodeManager.PollReceived -= NodeManagerOnPollReceived;
+            ClearNodes();
+            NodeManager?.Stop();
 
-    private readonly ArtNetDmxBuffer Buffer = new ();
-    private byte[] DmxBuffer = new byte[ 512 ];
+            Socket?.Dispose();
+            Socket?.Close();
+
+            Socket = new ArtNetSocket( Adapter );
+            NodeManager = new ArtNetNodeManager( Socket, "LGFX", "LGFX Smoke Controller" );
+            NodeManager.StartPollReply();
+
+            NodeManager.PollReceived += NodeManagerOnPollReceived;
+        }
+    }
+
+    private void NodeManagerOnPollReceived( ArtNetNode node )
+    {
+        Console.WriteLine( $"Got node!, {node}" );
+        var existing = Nodes.FirstOrDefault( x => Equals( x.Address, node.Address ) );
+
+        if ( existing is null )
+        {
+            Console.WriteLine( Dispatcher );
+            Dispatcher.Invoke( () =>
+            {
+                Nodes.Add( new ArtNetNode( node.ShortName, node.LongName, node.Address ) );
+                Console.WriteLine( $"Nodes -> {string.Join( ",", Nodes )}" );
+            } );
+        }
+        else
+        {
+            existing.IsConnected = true;
+        }
+    }
+
+    private void ClearNodes()
+    {
+        Console.WriteLine( "Clearing nodes" );
+        foreach ( var node in Nodes.ToList() )
+        {
+            Nodes.Remove( node );
+        }
+    }
 
     public void Start()
     {
-        NodeManager?.StartPollReply();
+        Console.WriteLine( $"Socket {Socket}, {Adapter}s" );
         ArtNetThread.Start();
     }
 
@@ -96,11 +134,12 @@ public class ArtNetService : ObservableObject
 
         byte sequence = 0;
 
-        while ( !TokenSource.IsCancellationRequested )
+        while ( !Token.IsCancellationRequested )
         {
             Timer.WaitForTrigger();
 
-            Console.WriteLine( "Updating DMX buffer" );
+            // Console.WriteLine( "Updating DMX buffer" );
+            // Console.WriteLine( $"Socket {Socket?.NetworkInterface}" );
 
             for ( var i = 0; i < 512; i++ )
             {
@@ -118,9 +157,9 @@ public class ArtNetService : ObservableObject
                 DmxBuffer[ Controller.SmokeMachines[ c ].FanAddress - 1 ] = Controller.SmokeMachines[ c ].FanValue();
             }
 
-            Console.WriteLine( "Sending ArtNet data" );
+            // Console.WriteLine( "Sending ArtNet data" );
 
-            Buffer.SetSequence( sequence );
+            Buffer.SetSequence( sequence++ );
             Buffer.SetUniverse( Universe );
             Buffer.SetData( DmxBuffer );
 
@@ -132,11 +171,11 @@ public class ArtNetService : ObservableObject
             {
                 if ( NodeManager is not null )
                 {
-                    for ( var n = 0; n < NodeManager.Nodes.Count; n++ )
+                    for ( var n = 0; n < Nodes.Count; n++ )
                     {
-                        if ( NodeManager.Nodes[ n ].IsSending )
+                        if ( Nodes[ n ].IsSending )
                         {
-                            Socket?.Send( Buffer, NodeManager.Nodes[ n ].Address );
+                            Socket?.Send( Buffer, Nodes[ n ].Address );
                         }
                     }
 
@@ -150,5 +189,11 @@ public class ArtNetService : ObservableObject
                 }
             }
         }
+    }
+
+    public void RefreshNodes()
+    {
+        ClearNodes();
+        NodeManager?.Refresh();
     }
 }

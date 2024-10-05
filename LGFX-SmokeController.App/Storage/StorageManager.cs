@@ -48,18 +48,14 @@ public class StorageManager
                     new IPAddress( storedNetwork.Adapter.Subnet )
                 );
 
-                if ( Controller.ArtNetService.AvailableAdapters.Contains( networkInterface ) )
+                if ( NetworkInterface.AvailableInterfaces.Contains( networkInterface ) )
                 {
                     Controller.ArtNetService.Adapter = networkInterface;
                 }
             }
 
             Controller.ArtNetService.CustomNodes = new ObservableCollection<ArtNetNode>( storedNetwork.CustomNodes.Select( node => new ArtNetNode( node.ShortName, node.LongName, new IPAddress( node.Address ), node.IsSending ) ) );
-
-            if ( Controller.ArtNetService.NodeManager != null )
-            {
-                Controller.ArtNetService.NodeManager.Nodes = new ObservableCollection<ArtNetNode>( storedNetwork.ConnectedNodes.Select( node => new ArtNetNode( node.ShortName, node.LongName, new IPAddress( node.Address ), node.IsSending, false ) ) );
-            }
+            Controller.ArtNetService.Nodes = new ObservableCollection<ArtNetNode>( storedNetwork.ConnectedNodes.Select( node => new ArtNetNode( node.ShortName, node.LongName, new IPAddress( node.Address ), node.IsSending, false ) ) );
 
             Controller.ArtNetService.IsBroadcasting = storedNetwork.IsBroadcasting;
             Controller.ArtNetService.Universe = storedNetwork.Universe;

@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Windows;
 using System.Windows.Controls;
+using ART.NET;
 using LGFX_SmokeController.App.ArtNet;
 
 namespace LGFX_SmokeController.App.Settings;
@@ -9,6 +10,8 @@ public partial class SettingsWindow : Window
 {
     public int[] UniverseDefaults { get; } = [ 0, 1, 2, 3, 4, 5 ];
     public ArtNetService ArtNetService => ( ( App )Application.Current ).Controller.ArtNetService;
+
+    public IEnumerable<NetworkInterface> Adapters => NetworkInterface.AvailableInterfaces;
 
     public SettingsWindow()
     {
@@ -22,7 +25,7 @@ public partial class SettingsWindow : Window
 
     private void OnRefreshNodesClick( object sender, RoutedEventArgs e )
     {
-        ArtNetService.NodeManager?.Refresh();
+        ArtNetService.RefreshNodes();
     }
 
     private void OnAddCustomNodeClick( object sender, RoutedEventArgs e )
@@ -42,7 +45,7 @@ public partial class SettingsWindow : Window
     {
         if ( ( ( Button )sender ).Tag is ArtNetNode node )
         {
-            ArtNetService.NodeManager?.Nodes.Remove( node );
+            ArtNetService.Nodes.Remove( node );
         }
     }
 }

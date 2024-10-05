@@ -11,7 +11,7 @@ public class Controller : ObservableObject
 {
     private SmokeMachine? _SelectedMachine = null;
 
-    public ArtNetService ArtNetService;
+    public readonly ArtNetService ArtNetService;
 
     public SmokeMachine? SelectedMachine
     {

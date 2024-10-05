@@ -87,7 +87,7 @@
                                 </Grid.RowDefinitions>
 
                                 <ComboBox Grid.Row="0" VerticalAlignment="Top"
-                                          ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=local:SettingsWindow}, Path=ArtNetService.AvailableAdapters, Mode=OneWay}"
+                                          ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=local:SettingsWindow}, Path=Adapters, Mode=OneWay}"
                                           SelectedItem="{Binding RelativeSource={RelativeSource AncestorType=local:SettingsWindow}, Path=ArtNetService.Adapter, Mode=TwoWay}">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
@@ -150,7 +150,7 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <ItemsControl Grid.Row="0"
-                                              ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=local:SettingsWindow}, Path=ArtNetService.NodeManager.Nodes, Mode=TwoWay}">
+                                              ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=local:SettingsWindow}, Path=ArtNetService.Nodes, Mode=TwoWay}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate DataType="{x:Type artNet:ArtNetNode}">
                                             <Grid>
@@ -209,9 +209,9 @@
                                     </Grid.ColumnDefinitions>
 
                                     <TextBlock Grid.Column="0" VerticalAlignment="Bottom" Margin="0,0,4,0">Last Checked:</TextBlock>
-                                    <TextBlock Grid.Column="1" VerticalAlignment="Bottom"
-                                               Text="{Binding RelativeSource={RelativeSource AncestorType=local:SettingsWindow}, Path=ArtNetService.NodeManager.LastChecked}">
-                                    </TextBlock>
+                                    <!-- <TextBlock Grid.Column="1" VerticalAlignment="Bottom" -->
+                                    <!--            Text="{Binding RelativeSource={RelativeSource AncestorType=local:SettingsWindow}, Path=ArtNetService.NodeManager.LastChecked}"> -->
+                                    <!-- </TextBlock> -->
                                     <Button Grid.Column="2" Width="60" Click="OnRefreshNodesClick">Refresh</Button>
                                 </Grid>
                             </Grid>

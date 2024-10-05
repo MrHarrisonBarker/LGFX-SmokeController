@@ -18,7 +18,7 @@ public class StoredNetwork
         IsBroadcasting = service.IsBroadcasting;
         Universe = service.Universe;
         CustomNodes = service.CustomNodes.Select( x => new StoredArtNetNode( x ) ).ToList();
-        ConnectedNodes = service.NodeManager?.Nodes.Select( x => new StoredArtNetNode( x ) ).ToList() ?? [ ];
+        ConnectedNodes = service.Nodes.Select( x => new StoredArtNetNode( x ) ).ToList() ?? [ ];
         Adapter = service.Adapter is not null ? new StoredNetworkInterface( service.Adapter ) : null;
     }
 

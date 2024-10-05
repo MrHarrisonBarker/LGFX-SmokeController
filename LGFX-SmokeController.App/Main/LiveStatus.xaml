@@ -67,7 +67,7 @@
             </Grid.ColumnDefinitions>
             <ItemsControl
                 Grid.Column="0"
-                ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=local:LiveStatus}, Path=ArtNetService.NodeManager.Nodes, Mode=OneWay}">
+                ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=local:LiveStatus}, Path=ArtNetService.Nodes, Mode=OneWay}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Horizontal" />
@@ -83,7 +83,7 @@
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     
-                                    <Image Grid.Column="0" Width="12" Height="12">
+                                    <Image Grid.Column="0" Width="12" Height="12" Margin="0,0,2,0">
                                         <Image.Style>
                                             <Style TargetType="{x:Type Image}">
                                                 <Setter Property="Source"
@@ -138,7 +138,7 @@
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
 
-                                    <Image Grid.Column="0" Width="12" Height="12" Source="../Assets/computer.png"/>
+                                    <Image Grid.Column="0" Width="12" Height="12" Margin="0,0,2,0" Source="../Assets/computer.png"/>
                                     <TextBlock Grid.Column="1" Text="{Binding Path=Address, Mode=OneWay}" />
                                 </Grid>
                             </Border>
