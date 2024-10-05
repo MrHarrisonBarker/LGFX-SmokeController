@@ -34,7 +34,7 @@ public partial class SettingsWindow : Window
 
     private void OnAddCustomNodeClick( object sender, RoutedEventArgs e )
     {
-        ArtNetService.CustomNodes.Add( new ArtNetNode( "", "", new IPAddress( CustomNodeIp.IpAddressBytes ), true ) );
+        ArtNetService.CustomNodes.Add( new ArtNetNode( "", "", new IPAddress( CustomNodeIp.GetByteArray() ), true ) );
     }
 
     private void OnRemoveCustomNodeClick( object sender, RoutedEventArgs e )

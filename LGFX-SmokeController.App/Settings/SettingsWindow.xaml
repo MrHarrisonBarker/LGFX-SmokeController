@@ -4,7 +4,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:LGFX_SmokeController.App.Settings"
-        xmlns:ipUserControls="clr-namespace:IPUserControls;assembly=IPUserControls"
         xmlns:artNet="clr-namespace:LGFX_SmokeController.App.ArtNet"
         xmlns:controls="clr-namespace:LGFX_SmokeController.App.Controls"
         mc:Ignorable="d"
@@ -254,18 +253,19 @@
 
                                 <Grid Grid.Row="1">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="150" />
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
 
-                                    <ipUserControls:IpField Grid.Column="0" VerticalAlignment="Bottom" Margin="0,0,2,0"
-                                                            Name="CustomNodeIp">
-                                    </ipUserControls:IpField>
-                                    <Button Grid.Column="1" VerticalAlignment="Bottom" Width="40" Height="22"
-                                            Click="OnAddCustomNodeClick">
-                                        Add
-                                    </Button>
+                                    <controls:IpInput BorderBrush="{DynamicResource TextBox.Static.Border}" BorderThickness="1" Padding="2" x:Name="CustomNodeIp" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,4,0"></controls:IpInput>
+                                    
+                                    <Button Grid.Column="1" 
+                                            VerticalAlignment="Center" 
+                                            Width="40" 
+                                            Height="22"
+                                            Click="OnAddCustomNodeClick" 
+                                            Content="Add"/>
                                 </Grid>
                             </Grid>
                         </GroupBox>
