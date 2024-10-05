@@ -60,7 +60,7 @@ public class StoredSmokeMachine
 
         if ( stored.SmokeMode == "Trigger" )
         {
-            smokeMachine.SmokeMode = new TriggerMode( smokeMachine );
+            smokeMachine.SmokeMode = new TriggerSmokeMode( smokeMachine );
         }
 
         switch ( stored.FanMode )

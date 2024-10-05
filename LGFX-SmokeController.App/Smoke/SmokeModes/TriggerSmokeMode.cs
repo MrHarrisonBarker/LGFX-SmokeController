@@ -1,8 +1,8 @@
 ﻿namespace LGFX_SmokeController.App.Smoke.SmokeModes;
 
-public class TriggerMode : SmokeMachineMode
+public class TriggerSmokeMode : SmokeMode
 {
-    public TriggerMode( SmokeMachine machine ) : base( machine )
+    public TriggerSmokeMode( SmokeMachine machine ) : base( machine )
     {
     }
 

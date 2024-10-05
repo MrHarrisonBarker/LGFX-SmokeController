@@ -1,8 +1,8 @@
 ﻿namespace LGFX_SmokeController.App.Smoke.SmokeModes;
 
-public class TimedMode : SmokeMachineMode
+public class TimedSmokeMode : SmokeMode
 {
-    public TimedMode( SmokeMachine machine ) : base( machine )
+    public TimedSmokeMode( SmokeMachine machine ) : base( machine )
     {
     }
 

@@ -21,7 +21,7 @@ public class SmokeMachine : ObservableObject
     private SmokeMachineStatus _Status = SmokeMachineStatus.Stopped;
     private bool _SmokeOn;
     private bool _FanOn;
-    private SmokeMachineMode _SmokeMode;
+    private SmokeMode _SmokeMode;
     private bool _VariableSmoke;
     private bool _VariableFan;
     private short _Address;
@@ -84,7 +84,7 @@ public class SmokeMachine : ObservableObject
         set => SetProperty( ref _FanAddress, value );
     }
 
-    public SmokeMachineMode SmokeMode
+    public SmokeMode SmokeMode
     {
         get => _SmokeMode;
         set => SetProperty( ref _SmokeMode, value );
@@ -148,8 +148,6 @@ public class SmokeMachine : ObservableObject
         set => SetProperty( ref _Status, value );
     }
 
-    public bool HeatOn { get; set; } = true;
-
     public bool SmokeOn
     {
         get => _SmokeOn;
@@ -182,7 +180,6 @@ public class SmokeMachine : ObservableObject
 
     public byte SmokeValue() => SmokeOn ? Map( SmokeLevel, MinLevel, MaxLevel, byte.MinValue, byte.MaxValue ) : byte.MinValue;
     public byte FanValue() => FanOn ? Map( FanLevel, MinLevel, MaxLevel, byte.MinValue, byte.MaxValue ) : byte.MinValue;
-    public byte HeatValue() => 255;
 
     #endregion
 
@@ -209,7 +206,7 @@ public class SmokeMachine : ObservableObject
         _Name = name;
         Address = address;
 
-        _SmokeMode = new TimedMode( this );
+        _SmokeMode = new TimedSmokeMode( this );
         _FanMode = new TimedFanMode( this );
     }
 
@@ -236,7 +233,6 @@ public class SmokeMachine : ObservableObject
 
     public void StopImmediately()
     {
-        Console.WriteLine( "Stopping immediately" );
         SmokeMode.StopImmediately();
     }
 

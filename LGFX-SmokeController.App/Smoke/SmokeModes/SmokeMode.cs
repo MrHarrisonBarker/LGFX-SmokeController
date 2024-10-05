@@ -2,7 +2,7 @@
 
 namespace LGFX_SmokeController.App.Smoke.SmokeModes;
 
-public abstract class SmokeMachineMode : ObservableObject
+public abstract class SmokeMode : ObservableObject
 {
     private CancellationTokenSource TokenSource = new ();
     protected CancellationToken Token => TokenSource.Token;
@@ -10,7 +10,7 @@ public abstract class SmokeMachineMode : ObservableObject
 
     protected readonly SmokeMachine Machine;
 
-    protected SmokeMachineMode( SmokeMachine machine )
+    protected SmokeMode( SmokeMachine machine )
     {
         Machine = machine;
     }

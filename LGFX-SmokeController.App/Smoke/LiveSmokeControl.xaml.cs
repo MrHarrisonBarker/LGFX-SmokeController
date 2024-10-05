@@ -29,13 +29,13 @@ public partial class LiveSmokeControl : UserControl
     {
         Machine.StopImmediately();
 
-        if ( Machine.SmokeMode is TimedMode )
+        if ( Machine.SmokeMode is TimedSmokeMode )
         {
-            Machine.SmokeMode = new TriggerMode( Machine );
+            Machine.SmokeMode = new TriggerSmokeMode( Machine );
         }
         else
         {
-            Machine.SmokeMode = new TimedMode( Machine );
+            Machine.SmokeMode = new TimedSmokeMode( Machine );
         }
     }
 }
