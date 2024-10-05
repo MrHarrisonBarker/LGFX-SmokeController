@@ -207,7 +207,7 @@
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock Grid.Column="0" VerticalAlignment="Bottom" Margin="0,0,4,0">Last Checked:</TextBlock>
+                                    <!-- <TextBlock Grid.Column="0" VerticalAlignment="Bottom" Margin="0,0,4,0">Last Checked:</TextBlock> -->
                                     <!-- <TextBlock Grid.Column="1" VerticalAlignment="Bottom" -->
                                     <!--            Text="{Binding RelativeSource={RelativeSource AncestorType=local:SettingsWindow}, Path=ArtNetService.NodeManager.LastChecked}"> -->
                                     <!-- </TextBlock> -->
