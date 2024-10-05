@@ -49,6 +49,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -65,6 +73,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -193,7 +217,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:LGFX Smoke Controller"
         "ProductCode" = "8:{43A29214-E258-4070-B062-6490E194ABAF}"
-        "PackageCode" = "8:{DE4D7095-E276-448E-99C8-E7C041CEDB7D}"
+        "PackageCode" = "8:{B22EDA40-D2CF-49AC-9F54-BF989A70CF15}"
         "UpgradeCode" = "8:{FDCABC4A-5784-4BAD-A671-98645601D4FA}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -315,7 +339,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_1829E84E97A747039F31EFD6CA45AA03"
             {
-            "Name" = "8:Shortcut to %sPublish Items from LGFX-SmokeController.App (Active)"
+            "Name" = "8:LGFX Smoke Controller"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -329,7 +353,7 @@
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_9935DBD4CFF94B23B2764353358A1E9D"
             {
-            "Name" = "8:Shortcut to %sPublish Items from LGFX-SmokeController.App (Active)"
+            "Name" = "8:LGFX Smoke Controller"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
