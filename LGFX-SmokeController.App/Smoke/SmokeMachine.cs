@@ -191,8 +191,8 @@ public class SmokeMachine : ObservableObject
             case SmokeMachinePresets.Mdg:
                 VariableFan = false;
                 VariableSmoke = false;
-                SmokeLevel = byte.MaxValue;
-                FanLevel = byte.MaxValue;
+                SmokeLevel = MaxLevel;
+                FanLevel = MaxLevel;
                 break;
             case SmokeMachinePresets.Hazer:
                 VariableSmoke = true;
@@ -201,6 +201,7 @@ public class SmokeMachine : ObservableObject
             case SmokeMachinePresets.Viper:
                 VariableSmoke = true;
                 VariableFan = false;
+                FanLevel = MaxLevel;
                 break;
         }
     }
