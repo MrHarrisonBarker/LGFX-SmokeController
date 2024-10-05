@@ -67,6 +67,7 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                         </Grid>
                     </ItemsPanelTemplate>
@@ -90,6 +91,10 @@
                 <MenuItem Grid.Column="4"
                           Header="_Make HAZER"
                           Click="OnMakeHAZERClick"
+                          IsEnabled="{Binding ElementName=ListOfMachines, Path=SelectedItem, Mode=OneWay, Converter={StaticResource IsNotNullConverter}}" />
+                <MenuItem Grid.Column="5"
+                          Header="_Make VIPER"
+                          Click="OnMakeVIPERClick"
                           IsEnabled="{Binding ElementName=ListOfMachines, Path=SelectedItem, Mode=OneWay, Converter={StaticResource IsNotNullConverter}}" />
             </Menu>
         </Grid>

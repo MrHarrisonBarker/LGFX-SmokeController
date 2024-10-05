@@ -3,5 +3,6 @@
 public enum SmokeMachinePresets
 {
     Mdg,
-    Hazer
+    Hazer,
+    Viper
 }

@@ -145,4 +145,24 @@ public partial class MainMenu : UserControl, INotifyPropertyChanged
     private void OnSaveClick( object sender, RoutedEventArgs e ) => Controller.Save();
 
     private void OnNewClick( object sender, RoutedEventArgs e ) => Controller.New();
+
+    private void OnBoomtownPresetClick( object sender, RoutedEventArgs e )
+    {
+        Controller.ClearMachines();
+
+        Controller.SetMachines(
+            new SmokeMachine( "SL 1", 1, SmokeMachinePresets.Mdg ),
+            new SmokeMachine( "SL 2", 3, SmokeMachinePresets.Mdg ),
+            new SmokeMachine( "SR 3", 5, SmokeMachinePresets.Mdg ),
+            new SmokeMachine( "SR 4", 7, SmokeMachinePresets.Mdg ),
+            new SmokeMachine( "FOH 4", 9, SmokeMachinePresets.Hazer ),
+            new SmokeMachine( "FOH 5", 11, SmokeMachinePresets.Hazer ),
+            new SmokeMachine( "BAR 6", 13, SmokeMachinePresets.Viper ),
+            new SmokeMachine( "BAR 7", 15, SmokeMachinePresets.Viper ),
+            new SmokeMachine( "DELAY 8", 17, SmokeMachinePresets.Hazer ),
+            new SmokeMachine( "DELAY 9", 19, SmokeMachinePresets.Hazer )
+        );
+
+        Controller.Save();
+    }
 }

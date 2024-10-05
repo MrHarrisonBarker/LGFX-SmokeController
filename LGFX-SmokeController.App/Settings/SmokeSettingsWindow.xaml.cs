@@ -115,8 +115,8 @@ public partial class SmokeSettingsWindow : Window, INotifyPropertyChanged
         {
             machine.VariableFan = false;
             machine.VariableSmoke = false;
-            machine.SmokeLevel = byte.MaxValue;
-            machine.FanLevel = byte.MaxValue;
+            machine.SmokeLevel = SmokeMachine.MaxLevel;
+            machine.FanLevel = SmokeMachine.MaxLevel;
         }
     }
 
@@ -125,6 +125,16 @@ public partial class SmokeSettingsWindow : Window, INotifyPropertyChanged
         if ( ListOfMachines.SelectedItem is SmokeMachine machine )
         {
             machine.VariableFan = true;
+            machine.VariableSmoke = true;
+        }
+    }
+
+    private void OnMakeVIPERClick( object sender, RoutedEventArgs e )
+    {
+        if ( ListOfMachines.SelectedItem is SmokeMachine machine )
+        {
+            machine.VariableFan = false;
+            machine.FanLevel = SmokeMachine.MaxLevel;
             machine.VariableSmoke = true;
         }
     }

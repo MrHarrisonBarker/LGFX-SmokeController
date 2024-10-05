@@ -29,6 +29,7 @@
             <MenuItem Header="_Festival" Click="OnFestivalPresetClick"/>
             <MenuItem Header="_MDG Festival" Click="OnMDGFestivalPresetClick"/>
             <MenuItem Header="_HAZERS" Click="OnHAZERSPresetClick"/>
+            <MenuItem Header="_Boomtown" Click="OnBoomtownPresetClick"/>
         </MenuItem>
 
         <MenuItem

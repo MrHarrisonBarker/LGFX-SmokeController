@@ -198,6 +198,10 @@ public class SmokeMachine : ObservableObject
                 VariableSmoke = true;
                 VariableFan = true;
                 break;
+            case SmokeMachinePresets.Viper:
+                VariableSmoke = true;
+                VariableFan = false;
+                break;
         }
     }
 
