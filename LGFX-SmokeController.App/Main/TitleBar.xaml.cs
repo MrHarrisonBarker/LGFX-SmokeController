@@ -8,12 +8,12 @@ public partial class TitleBar : UserControl
 {
     private Window Window => ( ( Window )( ( DockPanel )( ( Grid )Parent ).Parent ).Parent );
     public string Version => Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "UNKNOWN";
-    
+
     public TitleBar()
     {
         InitializeComponent();
     }
-    
+
     private void OnMinimizeClick( object sender, RoutedEventArgs e )
     {
         Window.WindowState = WindowState.Minimized;
@@ -26,6 +26,7 @@ public partial class TitleBar : UserControl
 
     private void OnCloseClick( object sender, RoutedEventArgs e )
     {
+        ( ( App )Application.Current ).Controller.Save();
         Environment.Exit( 0 );
     }
 }

@@ -26,7 +26,11 @@ public partial class SmokeSettingsWindow : Window, INotifyPropertyChanged
     public SmokeSettingsWindow()
     {
         InitializeComponent();
-        Closed += ( _, _ ) => Controller.SelectedMachine = null;
+        Closed += ( _, _ ) =>
+        {
+            Controller.SelectedMachine = null;
+            Controller.Save();
+        };
     }
 
     private void OnCloseClick( object sender, RoutedEventArgs e )

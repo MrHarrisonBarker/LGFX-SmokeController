@@ -9,13 +9,17 @@ namespace LGFX_SmokeController.App.Settings;
 public partial class SettingsWindow : Window
 {
     public int[] UniverseDefaults { get; } = [ 0, 1, 2, 3, 4, 5 ];
-    public ArtNetService ArtNetService => ( ( App )Application.Current ).Controller.ArtNetService;
+
+    private Controller Controller => ( ( App )Application.Current ).Controller;
+    public ArtNetService ArtNetService => Controller.ArtNetService;
 
     public IEnumerable<NetworkInterface> Adapters => NetworkInterface.AvailableInterfaces;
 
     public SettingsWindow()
     {
         InitializeComponent();
+
+        Closed += ( _, _ ) => Controller.Save();
     }
 
     private void OnCloseClick( object sender, RoutedEventArgs e )
