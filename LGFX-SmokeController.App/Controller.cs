@@ -11,7 +11,7 @@ public class Controller : ObservableObject
 {
     private SmokeMachine? _SelectedMachine = null;
 
-    public readonly ArtNetService ArtNetService;
+    public ArtNetService ArtNetService { get; }
 
     public SmokeMachine? SelectedMachine
     {
@@ -27,6 +27,13 @@ public class Controller : ObservableObject
         ArtNetService = new ArtNetService( dispatcher, this );
         StorageManager = new StorageManager( this );
     }
+
+    public Controller()
+    {
+        ArtNetService = new ArtNetService( null, this );
+        StorageManager = new StorageManager( this ); 
+    }
+    
 
     public void Start() => ArtNetService.Start();
 

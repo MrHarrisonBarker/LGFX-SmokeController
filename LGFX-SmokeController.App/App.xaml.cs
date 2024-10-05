@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Windows;
+using LGFX_SmokeController.App.Main;
 
 namespace LGFX_SmokeController.App;
 
@@ -27,5 +28,9 @@ public partial class App : Application
         base.OnStartup( e );
         
         Controller.Start();
+
+        var mainWindow = new MainWindow(Controller);
+
+        mainWindow.Show();
     }
 }

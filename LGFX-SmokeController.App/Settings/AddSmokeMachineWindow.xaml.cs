@@ -6,7 +6,7 @@ namespace LGFX_SmokeController.App.Settings;
 
 public partial class AddSmokeMachineWindow : Window
 {
-    public Controller Controller => ( ( App )Application.Current ).Controller;
+    private Controller Controller => ( Controller )DataContext;
 
     public byte[] AddressDefaults { get; } = [ 1, 3, 5, 7, 9, 11, 13, 15, 17 ];
 
@@ -18,10 +18,11 @@ public partial class AddSmokeMachineWindow : Window
 
     public string FanMode { get; set; } = "Timed";
 
-    public AddSmokeMachineWindow()
+    public AddSmokeMachineWindow( Controller controller )
     {
+        DataContext = controller;
         MachineAddress = Controller.SmokeMachines.LastOrDefault()?.Address + 2 ?? 1;
-        
+
         InitializeComponent();
     }
 
@@ -33,7 +34,7 @@ public partial class AddSmokeMachineWindow : Window
     private void OnAddClick( object sender, RoutedEventArgs e )
     {
         var smokeMachine = new SmokeMachine( MachineName, ( short )MachineAddress, MachinePreset );
-        
+
         switch ( FanMode )
         {
             case "Instant":
@@ -46,7 +47,7 @@ public partial class AddSmokeMachineWindow : Window
                 smokeMachine.FanMode = new ConstantFanMode( smokeMachine );
                 break;
         }
-        
+
         Controller.SmokeMachines.Add( smokeMachine );
 
         Close();

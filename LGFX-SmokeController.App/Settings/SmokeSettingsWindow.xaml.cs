@@ -10,7 +10,7 @@ namespace LGFX_SmokeController.App.Settings;
 public partial class SmokeSettingsWindow : Window, INotifyPropertyChanged
 {
     private bool _IsAddNotOpen = true;
-    public Controller Controller => ( ( App )Application.Current ).Controller;
+    private Controller Controller => ( Controller )DataContext;
 
     public int[] SmokeTimingDefaults { get; } = [ 10, 20, 40, 60 ];
     public byte[] AddressDefaults { get; } = [ 1, 3, 5, 7, 9, 11, 13, 15, 17 ];
@@ -23,8 +23,9 @@ public partial class SmokeSettingsWindow : Window, INotifyPropertyChanged
         private set => SetField( ref _IsAddNotOpen, value );
     }
 
-    public SmokeSettingsWindow()
+    public SmokeSettingsWindow( Controller controller )
     {
+        DataContext = controller;
         InitializeComponent();
         Closed += ( _, _ ) =>
         {
@@ -40,7 +41,7 @@ public partial class SmokeSettingsWindow : Window, INotifyPropertyChanged
 
     private void OnAddClick( object sender, RoutedEventArgs e )
     {
-        var window = new AddSmokeMachineWindow();
+        var window = new AddSmokeMachineWindow( Controller );
         window.Closed += ( _, _ ) => IsAddNotOpen = true;
 
         window.Show();
@@ -76,7 +77,7 @@ public partial class SmokeSettingsWindow : Window, INotifyPropertyChanged
         PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
     }
 
-    protected bool SetField<T>( ref T field, T value, [CallerMemberName] string? propertyName = null )
+    private bool SetField<T>( ref T field, T value, [CallerMemberName] string? propertyName = null )
     {
         if ( EqualityComparer<T>.Default.Equals( field, value ) ) return false;
         field = value;
@@ -91,7 +92,7 @@ public partial class SmokeSettingsWindow : Window, INotifyPropertyChanged
             if ( comboBox.SelectedItem as string != machine.FanMode.Name )
             {
                 machine.StopImmediately();
-                
+
                 switch ( comboBox.SelectedItem as string )
                 {
                     case "Instant":

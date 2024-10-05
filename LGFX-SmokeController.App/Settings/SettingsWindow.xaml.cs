@@ -10,13 +10,14 @@ public partial class SettingsWindow : Window
 {
     public int[] UniverseDefaults { get; } = [ 0, 1, 2, 3, 4, 5 ];
 
-    private Controller Controller => ( ( App )Application.Current ).Controller;
-    public ArtNetService ArtNetService => Controller.ArtNetService;
+    private Controller Controller => ( Controller )DataContext;
+    private ArtNetService ArtNetService => Controller.ArtNetService;
 
     public IEnumerable<NetworkInterface> Adapters => NetworkInterface.AvailableInterfaces;
 
-    public SettingsWindow()
+    public SettingsWindow( Controller controller )
     {
+        DataContext = controller;
         InitializeComponent();
 
         Closed += ( _, _ ) => Controller.Save();

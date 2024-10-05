@@ -5,14 +5,13 @@ namespace LGFX_SmokeController.App.Main;
 
 public partial class MainWindow : Window
 {
-    public Controller Controller => ( ( App )Application.Current ).Controller;
-        
-    public MainWindow()
+    private Controller Controller => ( Controller )DataContext;
+
+    public MainWindow( Controller controller )
     {
-        
-        
+        DataContext = controller;
         InitializeComponent();
-        
+
         Width = double.Max( ( Controller.SmokeMachines.Count * 120 ) + 120, 440 );
     }
 

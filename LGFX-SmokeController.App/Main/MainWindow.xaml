@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LGFX_SmokeController.App.Main"
         xmlns:smoke="clr-namespace:LGFX_SmokeController.App.Smoke"
+        xmlns:app="clr-namespace:LGFX_SmokeController.App"
         mc:Ignorable="d"
         Title="MainWindow"
         Height="450"
@@ -12,7 +13,8 @@
         MinWidth="440"
         MinHeight="300"
         WindowStartupLocation="CenterScreen"
-        Style="{StaticResource WindowStyle}">
+        Style="{StaticResource WindowStyle}"
+        d:DataContext="{d:DesignInstance Type=app:Controller, IsDesignTimeCreatable=False}">
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="32"
@@ -27,7 +29,7 @@
             </Grid.RowDefinitions>
 
             <local:TitleBar Grid.Row="0"></local:TitleBar>
-            <local:MainMenu Grid.Row="1"></local:MainMenu>
+            <local:MainMenu DataContext="{Binding}" Grid.Row="1"></local:MainMenu>
         </Grid>
 
         <local:LiveStatus DockPanel.Dock="Bottom"></local:LiveStatus>
@@ -41,17 +43,20 @@
 
             <ItemsControl
                 Grid.Column="0"
-                ItemsSource="{Binding RelativeSource={ RelativeSource AncestorType=local:MainWindow }, Path=Controller.SmokeMachines}">
-                
+                ItemsSource="{Binding Path=SmokeMachines}">
+
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Columns="{Binding RelativeSource={ RelativeSource AncestorType=local:MainWindow }, Path=Controller.SmokeMachines.Count}"/>
+                        <UniformGrid
+                            Columns="{Binding Path=SmokeMachines.Count}" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type smoke:SmokeMachine}">
-                        <smoke:LiveSmokeControl HorizontalAlignment="Stretch" Machine="{Binding}"></smoke:LiveSmokeControl>
+                        <smoke:LiveSmokeControl
+                            HorizontalAlignment="Stretch" 
+                            Machine="{Binding}"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
 
@@ -71,9 +76,9 @@
                     <RowDefinition Height="2*" />
                 </Grid.RowDefinitions>
 
-                <Button Grid.Row="0" Click="OnStopAllClick" Content="Stop All"/>
-                <Button Grid.Row="1" Click="OnTriggerAll100" Content="Trigger 100%"/>
-                <Button Grid.Row="2" Click="OnTriggerAll" Content="Trigger All"/>
+                <Button Grid.Row="0" Click="OnStopAllClick" Content="Stop All" />
+                <Button Grid.Row="1" Click="OnTriggerAll100" Content="Trigger 100%" />
+                <Button Grid.Row="2" Click="OnTriggerAll" Content="Trigger All" />
             </Grid>
         </Grid>
 

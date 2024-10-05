@@ -4,15 +4,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:LGFX_SmokeController.App.Settings"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:controls="clr-namespace:LGFX_SmokeController.App.Controls"
         xmlns:smoke="clr-namespace:LGFX_SmokeController.App.Smoke"
+        xmlns:app="clr-namespace:LGFX_SmokeController.App"
         mc:Ignorable="d"
         Title="Smoke Settings"
         Height="300"
         Width="700"
         WindowStartupLocation="CenterScreen"
-        Style="{StaticResource WindowStyle}">
+        Style="{StaticResource WindowStyle}"
+        d:DataContext="{d:DesignInstance Type=app:Controller, IsDesignTimeCreatable=False}">
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="32"
@@ -110,7 +111,7 @@
 
                 <ListBox
                     Grid.Column="0"
-                    ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=local:SmokeSettingsWindow}, Path=Controller.SmokeMachines}"
+                    ItemsSource="{Binding Path=SmokeMachines}"
                     SelectionChanged="OnMachineSelected"
                     Name="ListOfMachines">
                     <ListBox.ItemTemplate>

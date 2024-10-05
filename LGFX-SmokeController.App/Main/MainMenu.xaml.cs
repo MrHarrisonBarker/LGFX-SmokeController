@@ -10,7 +10,7 @@ namespace LGFX_SmokeController.App.Main;
 
 public partial class MainMenu : UserControl, INotifyPropertyChanged
 {
-    public Controller Controller => ( ( App )Application.Current ).Controller;
+    private Controller Controller => ( Controller )DataContext;
 
     private bool _IsSettingsWindowNotOpen = true;
     private bool _IsSmokeSettingsWindowNotOpen = true;
@@ -35,7 +35,7 @@ public partial class MainMenu : UserControl, INotifyPropertyChanged
     private void OnSettingsClick( object sender, RoutedEventArgs e )
     {
         IsSettingsWindowNotOpen = false;
-        var window = new SettingsWindow();
+        var window = new SettingsWindow( Controller );
         window.Closed += ( _, _ ) => IsSettingsWindowNotOpen = true;
         window.Show();
     }
@@ -43,7 +43,7 @@ public partial class MainMenu : UserControl, INotifyPropertyChanged
     private void OnSmokeSettingsClick( object sender, RoutedEventArgs e )
     {
         IsSmokeSettingsWindowNotOpen = false;
-        var window = new SmokeSettingsWindow();
+        var window = new SmokeSettingsWindow( Controller );
         window.Closed += ( _, _ ) => IsSmokeSettingsWindowNotOpen = true;
         window.Show();
     }

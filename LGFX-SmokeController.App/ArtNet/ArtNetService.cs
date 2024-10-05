@@ -11,7 +11,7 @@ public class ArtNetService : ObservableObject
 {
     private const int ArtNetFrequency = 250;
 
-    private readonly Dispatcher Dispatcher;
+    private readonly Dispatcher? Dispatcher;
     private readonly Controller Controller;
 
     private readonly ArtNetDmxBuffer Buffer = new ();
@@ -60,7 +60,7 @@ public class ArtNetService : ObservableObject
     }
 
 
-    public ArtNetService( Dispatcher dispatcher, Controller controller )
+    public ArtNetService( Dispatcher? dispatcher, Controller controller )
     {
         Dispatcher = dispatcher;
         Controller = controller;
@@ -100,7 +100,7 @@ public class ArtNetService : ObservableObject
         if ( existing is null )
         {
             Console.WriteLine( Dispatcher );
-            Dispatcher.Invoke( () =>
+            Dispatcher?.Invoke( () =>
             {
                 Nodes.Add( new ArtNetNode( node.ShortName, node.LongName, node.Address ) );
                 Console.WriteLine( $"Nodes -> {string.Join( ",", Nodes )}" );
