@@ -9,6 +9,7 @@ namespace LGFX_SmokeController.App;
 
 public class Controller : ObservableObject
 {
+    public bool Ready = false;
     private SmokeMachine? _SelectedMachine = null;
 
     public ArtNetService ArtNetService { get; }
@@ -26,12 +27,14 @@ public class Controller : ObservableObject
     {
         ArtNetService = new ArtNetService( dispatcher, this );
         StorageManager = new StorageManager( this );
+        Ready = true;
     }
 
     public Controller()
     {
         ArtNetService = new ArtNetService( null, this );
         StorageManager = new StorageManager( this ); 
+        Ready = true;
     }
     
 

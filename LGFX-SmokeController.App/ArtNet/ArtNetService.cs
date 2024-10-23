@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Net;
 using System.Windows.Threading;
 using ART.NET;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -31,7 +32,7 @@ public class ArtNetService : ObservableObject
     private bool _IsBroadcasting;
     private short _Universe;
 
-    private ArtNetNodeManager? NodeManager { get; set; }
+    public ArtNetNodeManager? NodeManager { get; set; }
     public ObservableCollection<ArtNetNode> CustomNodes { get; set; } = [ ];
     public ObservableCollection<ArtNetNode> Nodes { get; set; } = [ ];
 
@@ -92,23 +93,26 @@ public class ArtNetService : ObservableObject
         }
     }
 
-    private void NodeManagerOnPollReceived( ArtNetNode node )
+    private void NodeManagerOnPollReceived( string shortName, string longName, IPAddress ip )
     {
-        Console.WriteLine( $"Got node!, {node}" );
-        var existing = Nodes.FirstOrDefault( x => Equals( x.Address, node.Address ) );
+        if ( Controller.Ready )
+        {
+            Console.WriteLine( $"Got poll from, {ip}" );
+            var existing = Nodes.FirstOrDefault( x => x.Address.Equals( ip ) );
 
-        if ( existing is null )
-        {
-            Console.WriteLine( Dispatcher );
-            Dispatcher?.Invoke( () =>
+            if ( existing is null )
             {
-                Nodes.Add( new ArtNetNode( node.ShortName, node.LongName, node.Address ) );
-                Console.WriteLine( $"Nodes -> {string.Join( ",", Nodes )}" );
-            } );
-        }
-        else
-        {
-            existing.IsConnected = true;
+                Console.WriteLine( Dispatcher );
+                Dispatcher?.Invoke( () =>
+                {
+                    Nodes.Add( new ArtNetNode( shortName, longName, ip ) );
+                    Console.WriteLine( $"Nodes -> {string.Join( ",", Nodes )}" );
+                } );
+            }
+            else
+            {
+                existing.IsConnected = true;
+            }
         }
     }
 

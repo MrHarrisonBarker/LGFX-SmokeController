@@ -8,7 +8,7 @@ public partial class TitleBar : UserControl
 {
     private Window Window => ( ( Window )( ( DockPanel )( ( Grid )Parent ).Parent ).Parent );
     private static Version AssemblyVersion => Assembly.GetExecutingAssembly().GetName().Version ?? new Version(0,0,0);
-    public string Version => $"v{AssemblyVersion.Major}.{AssemblyVersion.Minor}.{AssemblyVersion.MinorRevision}";
+    public string Version => $"v{AssemblyVersion.Major}.{AssemblyVersion.MajorRevision}.{AssemblyVersion.Build}";
 
     public TitleBar()
     {

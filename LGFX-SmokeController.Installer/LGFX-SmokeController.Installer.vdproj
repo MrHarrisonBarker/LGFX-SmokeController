@@ -56,6 +56,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -216,15 +224,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:LGFX Smoke Controller"
-        "ProductCode" = "8:{43A29214-E258-4070-B062-6490E194ABAF}"
-        "PackageCode" = "8:{B22EDA40-D2CF-49AC-9F54-BF989A70CF15}"
+        "ProductCode" = "8:{2B362032-2216-42E8-A6E2-6BDB5400464F}"
+        "PackageCode" = "8:{71EB3D2A-0968-4DB5-A17D-EB1ECBE3B5C6}"
         "UpgradeCode" = "8:{FDCABC4A-5784-4BAD-A671-98645601D4FA}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:2.0.0"
+        "ProductVersion" = "8:2.0.1"
         "Manufacturer" = "8:Laser Grafix Sales Ltd"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

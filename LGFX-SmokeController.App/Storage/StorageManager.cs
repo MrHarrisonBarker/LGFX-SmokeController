@@ -70,9 +70,10 @@ public class StorageManager
                 }
             }
 
-            Controller.ArtNetService.CustomNodes = new ObservableCollection<ArtNetNode>( storedNetwork.CustomNodes.Select( node => new ArtNetNode( node.ShortName, node.LongName, new IPAddress( node.Address ), node.IsSending ) ) );
-            Controller.ArtNetService.Nodes = new ObservableCollection<ArtNetNode>( storedNetwork.ConnectedNodes.Select( node => new ArtNetNode( node.ShortName, node.LongName, new IPAddress( node.Address ), node.IsSending, false ) ) );
-
+            
+            Controller.ArtNetService.CustomNodes = new ObservableCollection<ArtNetNode>( storedNetwork.CustomNodes.Select( node => new ArtNetNode( node.ShortName, node.ShortName, new IPAddress( node.Address ), node.IsSending ) ) );
+            Controller.ArtNetService.Nodes = new ObservableCollection<ArtNetNode>( storedNetwork.ConnectedNodes.Select( node => new ArtNetNode( node.ShortName, node.ShortName, new IPAddress( node.Address ), node.IsSending, false ) ) );
+            
             Controller.ArtNetService.IsBroadcasting = storedNetwork.IsBroadcasting;
             Controller.ArtNetService.Universe = storedNetwork.Universe;
         }

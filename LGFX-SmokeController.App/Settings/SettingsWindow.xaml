@@ -25,7 +25,7 @@
 
                 <TextBlock Grid.Column="0" Margin="0,0,6,0"
                            Text="{Binding Path=Address}" />
-                <TextBlock Grid.Column="1" Text="{Binding Path=LongName}" />
+                <TextBlock Grid.Column="1" Text="{Binding Path=ShortName}" />
             </Grid>
         </DataTemplate>
     </Window.Resources>
@@ -175,7 +175,7 @@
                                                                    Margin="0,0,6,0"
                                                                    Text="{Binding Path=Address}" />
                                                         <TextBlock Grid.Column="1"
-                                                                   Text="{Binding Path=LongName}" />
+                                                                   Text="{Binding Path=ShortName}" />
                                                     </Grid>
                                                 </CheckBox>
 
